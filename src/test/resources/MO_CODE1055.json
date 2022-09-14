@@ -1,0 +1,1024 @@
+{
+    "success": true,
+    "msg": "",
+    "errCode": "",
+    "status": "200",
+    "level": "",
+    "detailList": [
+        {
+            "schemaVOs": [
+                {
+                    "colName": "servicetype",
+                    "colType": "varchar(1)"
+                },
+                {
+                    "colName": "code",
+                    "colType": "varchar(4)"
+                },
+                {
+                    "colName": "pkgfom",
+                    "colType": "varchar(30)"
+                },
+                {
+                    "colName": "type",
+                    "colType": "varchar(1)"
+                },
+                {
+                    "colName": "priority",
+                    "colType": "int"
+                },
+                {
+                    "colName": "content",
+                    "colType": "varchar(64)"
+                },
+                {
+                    "colName": "seq",
+                    "colType": "int"
+                }
+            ],
+            "recordVOs": [
+                {
+                    "code": "/",
+                    "servicetype": "1",
+                    "content": "2G 元氣699型",
+                    "seq": 699,
+                    "pkgfom": "PKG_GENKI",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "1",
+                    "servicetype": "1",
+                    "content": "2G 基本600型",
+                    "seq": 600,
+                    "pkgfom": "PKG_2G_DATA",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "2",
+                    "servicetype": "1",
+                    "content": "2G 經濟200型",
+                    "seq": 200,
+                    "pkgfom": "PKG_2G_DATA",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "3",
+                    "servicetype": "5",
+                    "content": "原3G 元氣699型",
+                    "seq": 699,
+                    "pkgfom": "PKG_GENKI",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "4",
+                    "servicetype": "5",
+                    "content": "原3G 元氣999型",
+                    "seq": 999,
+                    "pkgfom": "PKG_GENKI",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "5",
+                    "servicetype": "5",
+                    "content": "原3G 183型",
+                    "seq": 183,
+                    "pkgfom": "PKG_3G_DATA",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "5",
+                    "servicetype": "7",
+                    "content": "預付卡型",
+                    "seq": 0,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "5",
+                    "servicetype": "8",
+                    "content": "簡訊套餐19型",
+                    "seq": 19,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "5",
+                    "servicetype": "9",
+                    "content": "預付卡型",
+                    "seq": 0,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "5",
+                    "servicetype": "M",
+                    "content": "預付卡",
+                    "seq": 0,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "5",
+                    "servicetype": "Q",
+                    "content": "預付卡",
+                    "seq": 0,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "6",
+                    "servicetype": "1",
+                    "content": "2G 大家講289型",
+                    "seq": 289,
+                    "pkgfom": "PKG_FAMILY",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "6",
+                    "servicetype": "5",
+                    "content": "原3G大家講289型",
+                    "seq": 289,
+                    "pkgfom": "PKG_FAMILY",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "6",
+                    "servicetype": "8",
+                    "content": "簡訊套餐99型",
+                    "seq": 99,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "7",
+                    "servicetype": "1",
+                    "content": "2G 大家講589型",
+                    "seq": 589,
+                    "pkgfom": "PKG_FAMILY",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "7",
+                    "servicetype": "5",
+                    "content": "原3G大家講589型",
+                    "seq": 589,
+                    "pkgfom": "PKG_FAMILY",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "7",
+                    "servicetype": "8",
+                    "content": "簡訊套餐199型",
+                    "seq": 199,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "8",
+                    "servicetype": "1",
+                    "content": "2G 大家講989型",
+                    "seq": 989,
+                    "pkgfom": "PKG_FAMILY",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "8",
+                    "servicetype": "5",
+                    "content": "原3G大家講989型",
+                    "seq": 989,
+                    "pkgfom": "PKG_FAMILY",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "8",
+                    "servicetype": "8",
+                    "content": "簡訊套餐299型",
+                    "seq": 299,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "9",
+                    "servicetype": "5",
+                    "content": "原3G放心講",
+                    "seq": 584,
+                    "pkgfom": "PKG_RELAX_TALK",
+                    "type": "X",
+                    "priority": null
+                },
+                {
+                    "code": "9",
+                    "servicetype": "8",
+                    "content": "簡訊套餐39型",
+                    "seq": 39,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "A",
+                    "servicetype": "1",
+                    "content": "2G 88型",
+                    "seq": 88,
+                    "pkgfom": "PKG_2G_DATA",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "A",
+                    "servicetype": "5",
+                    "content": "原3G大家講1789型",
+                    "seq": 1789,
+                    "pkgfom": "PKG_FAMILY",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "A001",
+                    "servicetype": "K",
+                    "content": "4G 236型",
+                    "seq": 236,
+                    "pkgfom": "PKG_4G_DATA",
+                    "type": "1",
+                    "priority": 236
+                },
+                {
+                    "code": "A002",
+                    "servicetype": "K",
+                    "content": "4G 436型",
+                    "seq": 436,
+                    "pkgfom": "PKG_4G_DATA",
+                    "type": "1",
+                    "priority": 436
+                },
+                {
+                    "code": "A003",
+                    "servicetype": "K",
+                    "content": "4G 636型",
+                    "seq": 636,
+                    "pkgfom": "PKG_4G_DATA",
+                    "type": "1",
+                    "priority": 636
+                },
+                {
+                    "code": "A004",
+                    "servicetype": "K",
+                    "content": "4G 936型",
+                    "seq": 936,
+                    "pkgfom": "PKG_4G_DATA",
+                    "type": "1",
+                    "priority": 936
+                },
+                {
+                    "code": "A005",
+                    "servicetype": "K",
+                    "content": "4G 1136型",
+                    "seq": 1136,
+                    "pkgfom": "PKG_4G_DATA",
+                    "type": "1",
+                    "priority": 1136
+                },
+                {
+                    "code": "A006",
+                    "servicetype": "K",
+                    "content": "4G 1336型",
+                    "seq": 1336,
+                    "pkgfom": "PKG_4G_DATA",
+                    "type": "1",
+                    "priority": 1336
+                },
+                {
+                    "code": "A007",
+                    "servicetype": "K",
+                    "content": "4G 1736型",
+                    "seq": 1736,
+                    "pkgfom": "PKG_4G_DATA",
+                    "type": "1",
+                    "priority": 1736
+                },
+                {
+                    "code": "A008",
+                    "servicetype": "K",
+                    "content": "4G 2636型",
+                    "seq": 2636,
+                    "pkgfom": "PKG_4G_DATA",
+                    "type": "1",
+                    "priority": 2636
+                },
+                {
+                    "code": "A010",
+                    "servicetype": "K",
+                    "content": "4G 399型",
+                    "seq": 399,
+                    "pkgfom": "PKG_4G_99_DATA",
+                    "type": "1",
+                    "priority": 399
+                },
+                {
+                    "code": "A011",
+                    "servicetype": "K",
+                    "content": "4G 599型",
+                    "seq": 599,
+                    "pkgfom": "PKG_4G_99_DATA",
+                    "type": "1",
+                    "priority": 599
+                },
+                {
+                    "code": "A012",
+                    "servicetype": "K",
+                    "content": "4G 799型",
+                    "seq": 799,
+                    "pkgfom": "PKG_4G_99_DATA",
+                    "type": "1",
+                    "priority": 799
+                },
+                {
+                    "code": "A013",
+                    "servicetype": "K",
+                    "content": "4G 999型",
+                    "seq": 999,
+                    "pkgfom": "PKG_4G_99_DATA",
+                    "type": "1",
+                    "priority": 999
+                },
+                {
+                    "code": "A014",
+                    "servicetype": "K",
+                    "content": "4G 1199 型",
+                    "seq": 1199,
+                    "pkgfom": "PKG_4G_99_DATA",
+                    "type": "1",
+                    "priority": 1199
+                },
+                {
+                    "code": "A015",
+                    "servicetype": "K",
+                    "content": "4G 1399 型",
+                    "seq": 1399,
+                    "pkgfom": "PKG_4G_99_DATA",
+                    "type": "1",
+                    "priority": 1399
+                },
+                {
+                    "code": "A016",
+                    "servicetype": "K",
+                    "content": "4G 1599 型",
+                    "seq": 1599,
+                    "pkgfom": "PKG_4G_99_DATA",
+                    "type": "1",
+                    "priority": 1599
+                },
+                {
+                    "code": "A017",
+                    "servicetype": "K",
+                    "content": "4G 1799 型",
+                    "seq": 1799,
+                    "pkgfom": "PKG_4G_99_DATA",
+                    "type": "1",
+                    "priority": 1799
+                },
+                {
+                    "code": "A018",
+                    "servicetype": "K",
+                    "content": "4G 2699型",
+                    "seq": 2699,
+                    "pkgfom": "PKG_4G_99_DATA",
+                    "type": "1",
+                    "priority": 2699
+                },
+                {
+                    "code": "A020",
+                    "servicetype": "K",
+                    "content": "4G 299 上網型",
+                    "seq": 299,
+                    "pkgfom": "PKG_4G_99_DATA2",
+                    "type": "1",
+                    "priority": 299
+                },
+                {
+                    "code": "A021",
+                    "servicetype": "K",
+                    "content": "4G 499 上網型",
+                    "seq": 499,
+                    "pkgfom": "PKG_4G_99_DATA2",
+                    "type": "1",
+                    "priority": 500
+                },
+                {
+                    "code": "A022",
+                    "servicetype": "K",
+                    "content": "4G 699 上網型",
+                    "seq": 699,
+                    "pkgfom": "PKG_4G_99_DATA2",
+                    "type": "1",
+                    "priority": 699
+                },
+                {
+                    "code": "A023",
+                    "servicetype": "K",
+                    "content": "4G 899 上網型",
+                    "seq": 899,
+                    "pkgfom": "PKG_4G_99_DATA2",
+                    "type": "1",
+                    "priority": 899
+                },
+                {
+                    "code": "A024",
+                    "servicetype": "K",
+                    "content": "4G 1199 上網型",
+                    "seq": 1199,
+                    "pkgfom": "PKG_4G_99_DATA2",
+                    "type": "1",
+                    "priority": 1200
+                },
+                {
+                    "code": "A025",
+                    "servicetype": "K",
+                    "content": "4G 1499 上網型",
+                    "seq": 1499,
+                    "pkgfom": "PKG_4G_99_DATA2",
+                    "type": "1",
+                    "priority": 1499
+                },
+                {
+                    "code": "A026",
+                    "servicetype": "K",
+                    "content": "4G 1799 上網型",
+                    "seq": 1799,
+                    "pkgfom": "PKG_4G_99_DATA2",
+                    "type": "1",
+                    "priority": 1800
+                },
+                {
+                    "code": "A027",
+                    "servicetype": "K",
+                    "content": "4G 2499 上網型",
+                    "seq": 2499,
+                    "pkgfom": "PKG_4G_99_DATA2",
+                    "type": "1",
+                    "priority": 2499
+                },
+                {
+                    "code": "A029",
+                    "servicetype": "K",
+                    "content": "4G 199型",
+                    "seq": 199,
+                    "pkgfom": "PKG_4G_99_DATA",
+                    "type": "1",
+                    "priority": 199
+                },
+                {
+                    "code": "A030",
+                    "servicetype": "K",
+                    "content": "4G 183型",
+                    "seq": 183,
+                    "pkgfom": "PKG_4G_83_DATA",
+                    "type": "3",
+                    "priority": 183
+                },
+                {
+                    "code": "A031",
+                    "servicetype": "K",
+                    "content": "4G 383型",
+                    "seq": 383,
+                    "pkgfom": "PKG_4G_83_DATA",
+                    "type": "3",
+                    "priority": 383
+                },
+                {
+                    "code": "A032",
+                    "servicetype": "K",
+                    "content": "4G 583型",
+                    "seq": 583,
+                    "pkgfom": "PKG_4G_83_DATA",
+                    "type": "3",
+                    "priority": 583
+                },
+                {
+                    "code": "A033",
+                    "servicetype": "K",
+                    "content": "4G 983型",
+                    "seq": 983,
+                    "pkgfom": "PKG_4G_83_DATA",
+                    "type": "3",
+                    "priority": 983
+                },
+                {
+                    "code": "A034",
+                    "servicetype": "K",
+                    "content": "4G 1683型",
+                    "seq": 1683,
+                    "pkgfom": "PKG_4G_83_DATA",
+                    "type": "3",
+                    "priority": 1683
+                },
+                {
+                    "code": "A035",
+                    "servicetype": "K",
+                    "content": "4G最高21M 499型",
+                    "seq": 499,
+                    "pkgfom": "PKG_4G_21M_DATA",
+                    "type": "1",
+                    "priority": 499
+                },
+                {
+                    "code": "B",
+                    "servicetype": "1",
+                    "content": "2G 188型",
+                    "seq": 188,
+                    "pkgfom": "PKG_2G_DATA",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "B",
+                    "servicetype": "5",
+                    "content": "原3G 450上網型",
+                    "seq": 450,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "B001",
+                    "servicetype": "K",
+                    "content": "B001",
+                    "seq": 3200,
+                    "pkgfom": "PKG_4G_DATA",
+                    "type": "2",
+                    "priority": 3200
+                },
+                {
+                    "code": "B002",
+                    "servicetype": "K",
+                    "content": "B002",
+                    "seq": 3300,
+                    "pkgfom": "PKG_4G_DATA",
+                    "type": "2",
+                    "priority": 3300
+                },
+                {
+                    "code": "B003",
+                    "servicetype": "K",
+                    "content": "B003",
+                    "seq": 3400,
+                    "pkgfom": "PKG_4G_DATA",
+                    "type": "2",
+                    "priority": 3400
+                },
+                {
+                    "code": "C",
+                    "servicetype": "1",
+                    "content": "2G 288型",
+                    "seq": 288,
+                    "pkgfom": "PKG_2G_DATA",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "C",
+                    "servicetype": "5",
+                    "content": "原3G 550上網型",
+                    "seq": 550,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "D",
+                    "servicetype": "1",
+                    "content": "2G 588型",
+                    "seq": 588,
+                    "pkgfom": "PKG_2G_DATA",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "E",
+                    "servicetype": "1",
+                    "content": "2G 988型",
+                    "seq": 988,
+                    "pkgfom": "PKG_2G_DATA",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "E001",
+                    "servicetype": "P",
+                    "content": "5G 體驗199型",
+                    "seq": 199,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "5",
+                    "priority": 1
+                },
+                {
+                    "code": "E002",
+                    "servicetype": "P",
+                    "content": "5G 體驗399型",
+                    "seq": 399,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "5",
+                    "priority": 2
+                },
+                {
+                    "code": "E003",
+                    "servicetype": "P",
+                    "content": "5G 體驗599型",
+                    "seq": 599,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "5",
+                    "priority": 3
+                },
+                {
+                    "code": "E004",
+                    "servicetype": "P",
+                    "content": "5G 體驗799型",
+                    "seq": 799,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "5",
+                    "priority": 4
+                },
+                {
+                    "code": "E005",
+                    "servicetype": "P",
+                    "content": "5G 體驗999型",
+                    "seq": 999,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "5",
+                    "priority": 5
+                },
+                {
+                    "code": "E006",
+                    "servicetype": "P",
+                    "content": "5G 體驗1199型",
+                    "seq": 1199,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "5",
+                    "priority": 6
+                },
+                {
+                    "code": "E007",
+                    "servicetype": "P",
+                    "content": "5G 體驗1399型",
+                    "seq": 1399,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "5",
+                    "priority": 7
+                },
+                {
+                    "code": "E008",
+                    "servicetype": "P",
+                    "content": "5G 體驗1599型",
+                    "seq": 1599,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "5",
+                    "priority": 8
+                },
+                {
+                    "code": "E009",
+                    "servicetype": "P",
+                    "content": "5G 體驗1799型",
+                    "seq": 1799,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "5",
+                    "priority": 9
+                },
+                {
+                    "code": "E010",
+                    "servicetype": "P",
+                    "content": "5G 體驗2699型",
+                    "seq": 2699,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "5",
+                    "priority": 10
+                },
+                {
+                    "code": "E011",
+                    "servicetype": "P",
+                    "content": "5G 599型",
+                    "seq": 599,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "1",
+                    "priority": 3
+                },
+                {
+                    "code": "E012",
+                    "servicetype": "P",
+                    "content": "5G 799型",
+                    "seq": 799,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "1",
+                    "priority": 4
+                },
+                {
+                    "code": "E013",
+                    "servicetype": "P",
+                    "content": "5G 999型",
+                    "seq": 999,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "1",
+                    "priority": 5
+                },
+                {
+                    "code": "E014",
+                    "servicetype": "P",
+                    "content": "5G 1199型",
+                    "seq": 1199,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "1",
+                    "priority": 6
+                },
+                {
+                    "code": "E015",
+                    "servicetype": "P",
+                    "content": "5G 1399型",
+                    "seq": 1399,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "1",
+                    "priority": 7
+                },
+                {
+                    "code": "E016",
+                    "servicetype": "P",
+                    "content": "5G 1599型",
+                    "seq": 1599,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "1",
+                    "priority": 8
+                },
+                {
+                    "code": "E017",
+                    "servicetype": "P",
+                    "content": "5G 1799型",
+                    "seq": 1799,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "1",
+                    "priority": 9
+                },
+                {
+                    "code": "E018",
+                    "servicetype": "P",
+                    "content": "5G 2699型",
+                    "seq": 2699,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "1",
+                    "priority": 10
+                },
+                {
+                    "code": "E019",
+                    "servicetype": "P",
+                    "content": "七日上網試用專屬資費",
+                    "seq": 129,
+                    "pkgfom": "PKG_5G_DATA",
+                    "type": "1",
+                    "priority": 111
+                },
+                {
+                    "code": "F",
+                    "servicetype": "1",
+                    "content": "2G 1688型",
+                    "seq": 1688,
+                    "pkgfom": "PKG_2G_DATA",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "G",
+                    "servicetype": "1",
+                    "content": "2G 超值128型",
+                    "seq": 128,
+                    "pkgfom": "PKG_2G_DATA",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "H",
+                    "servicetype": "2",
+                    "content": "GPRS 150型",
+                    "seq": 150,
+                    "pkgfom": "PKG_2G_GPRS",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "I",
+                    "servicetype": "2",
+                    "content": "GPRS 300型",
+                    "seq": 300,
+                    "pkgfom": "PKG_2G_GPRS",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "J",
+                    "servicetype": "2",
+                    "content": "GPRS 免月租型",
+                    "seq": 0,
+                    "pkgfom": "PKG_2G_GPRS",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "K",
+                    "servicetype": "2",
+                    "content": "GPRS 600型",
+                    "seq": 600,
+                    "pkgfom": "PKG_2G_GPRS",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "L",
+                    "servicetype": "1",
+                    "content": "2G 專案1688型",
+                    "seq": 1688,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "M",
+                    "servicetype": "2",
+                    "content": "GPRS Mdas免月租型",
+                    "seq": 0,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "N",
+                    "servicetype": "2",
+                    "content": "GPRS 900型",
+                    "seq": 900,
+                    "pkgfom": "PKG_2G_GPRS",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "O",
+                    "servicetype": "2",
+                    "content": "GPRS 1100型",
+                    "seq": 1100,
+                    "pkgfom": "PKG_2G_GPRS",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "P",
+                    "servicetype": "1",
+                    "content": "2G 摩登399型",
+                    "seq": 399,
+                    "pkgfom": "PKG_MODERN",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "Q",
+                    "servicetype": "2",
+                    "content": "GPRS 400型(專案)",
+                    "seq": 400,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "R",
+                    "servicetype": "2",
+                    "content": "GPRS 50型",
+                    "seq": 50,
+                    "pkgfom": "PKG_2G_GPRS",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "S",
+                    "servicetype": "5",
+                    "content": "原3G 383型",
+                    "seq": 383,
+                    "pkgfom": "PKG_3G_DATA",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "T",
+                    "servicetype": "5",
+                    "content": "原3G 583型",
+                    "seq": 583,
+                    "pkgfom": "PKG_3G_DATA",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "U",
+                    "servicetype": "5",
+                    "content": "原3G 983型",
+                    "seq": 983,
+                    "pkgfom": "PKG_3G_DATA",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "V",
+                    "servicetype": "5",
+                    "content": "原3G 1683型",
+                    "seq": 1683,
+                    "pkgfom": "PKG_3G_DATA",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "W",
+                    "servicetype": "5",
+                    "content": "原3G 400上網型",
+                    "seq": 400,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "X",
+                    "servicetype": "5",
+                    "content": "原3G無限上網型",
+                    "seq": 850,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "Y",
+                    "servicetype": "1",
+                    "content": "2G 摩登599型",
+                    "seq": 599,
+                    "pkgfom": "PKG_MODERN",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "Y",
+                    "servicetype": "5",
+                    "content": "原3G 200上網型",
+                    "seq": 200,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "Z",
+                    "servicetype": "1",
+                    "content": "2G 元氣999型",
+                    "seq": 999,
+                    "pkgfom": "PKG_GENKI",
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "Z",
+                    "servicetype": "5",
+                    "content": "原3G 650上網型",
+                    "seq": 650,
+                    "pkgfom": null,
+                    "type": null,
+                    "priority": null
+                },
+                {
+                    "code": "Z999",
+                    "servicetype": "Y",
+                    "content": "物聯網Z999型",
+                    "seq": 0,
+                    "pkgfom": null,
+                    "type": "7",
+                    "priority": null
+                },
+                {
+                    "code": "Z999",
+                    "servicetype": "Z",
+                    "content": "物聯網Z999型",
+                    "seq": 0,
+                    "pkgfom": null,
+                    "type": "7",
+                    "priority": null
+                }
+            ]
+        }
+    ]
+}

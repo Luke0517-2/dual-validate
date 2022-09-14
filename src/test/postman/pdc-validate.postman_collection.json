@@ -1,0 +1,401 @@
+{
+	"info": {
+		"_postman_id": "02697381-1402-4edb-bf8b-fa0a7590aaac",
+		"name": "pdc-validate",
+		"description": "Api Documentation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "transfer",
+			"item": [
+				{
+					"name": "透過固網聯單號碼取得源系統的聯單並進行TMF622轉換",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cht/transfer/fOrder/:id/tmf622",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cht",
+								"transfer",
+								"fOrder",
+								":id",
+								"tmf622"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "TY1S17003549",
+									"description": "(Required) 聯單號碼"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "透過行動聯單號碼取得源系統的聯單並進行TMF622轉換",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cht/transfer/mOrder/:id/tmf622",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cht",
+								"transfer",
+								"mOrder",
+								":id",
+								"tmf622"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "M09LDMZ0BMZA8",
+									"description": "(Required) 聯單號碼"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "validate",
+			"item": [
+				{
+					"name": "開始進行驗證測試，會重新統計報表",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get uuid\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var uuid = jsonData.uuid;\r",
+									"    console.log(\"uuid:\" + uuid);    \r",
+									"    pm.globals.set(\"uuid\", uuid);\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cht/validate/startTest",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cht",
+								"validate",
+								"startTest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get uuid\", function () { ",
+									"    let uuid = pm.response.headers.get(\"uuid\")",
+									"    console.log(\"uuid:\" + uuid);    ",
+									"    pm.globals.set(\"uuid\", uuid);",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "uuid",
+								"value": "{{uuid}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"caseNo\": \"M09CL1N000047\",\n    \"expectedResult\": \"\",\n    \"actualResult\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cht/validate/runTestCase",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cht",
+								"validate",
+								"runTestCase"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得現行統計報表，產出EXCEL檔案",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.ms-excel",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.ms-excel",
+								"type": "text"
+							},
+							{
+								"key": "uuid",
+								"value": "{{uuid}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/cht/validate/currentReport",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cht",
+								"validate",
+								"currentReport"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得現行統計報表，直接回傳JSON列表",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "uuid",
+								"value": "{{uuid}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/cht/validate/currentReport",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cht",
+								"validate",
+								"currentReport"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得現行統計報表，產出Zip檔案",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "uuid",
+								"value": "{{uuid}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/cht/validate/currentReportWithZip",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cht",
+								"validate",
+								"currentReportWithZip"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "清除目前的驗證測試，會清空相關測試資料",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "uuid",
+								"value": "{{uuid}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/cht/validate/stopTest",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cht",
+								"validate",
+								"stopTest"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "整合測試",
+			"item": [
+				{
+					"name": "透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "uuid",
+								"value": "{{uuid}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"caseNo\": \"{{caseNo}}\",\n    \"expectedResult\": \"\",\n    \"actualResult\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cht/validate/runTestCase?Content-Type=application/json&uuid={{uuid}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cht",
+								"validate",
+								"runTestCase"
+							],
+							"query": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "uuid",
+									"value": "{{uuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "//localhost:8080/"
+		}
+	]
+}

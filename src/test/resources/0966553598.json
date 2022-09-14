@@ -1,0 +1,243 @@
+{
+    "BMS": {
+        "Status": "0",
+        "Msg": "成功",
+        "TelNum": "0966553598",
+        "Data": {
+            "CurrentVoice": {
+                "Code": "4G199",
+                "Name": "4G 199型"
+            },
+            "User": {
+                "UseName": "",
+                "UserId": "G837287720"
+            },
+            "NextSMEffectDate": "",
+            "telinfo": {
+                "NumCause": "",
+                "Office": "2911",
+                "NumUseCause": "新裝",
+                "RemindTel": "86660464",
+                "NumUseType": "使用中",
+                "ServiceType": "4G語_數(語音_數據)",
+                "NumEffectDate": "2020-03-18",
+                "ServiceTypeCode": "J",
+                "Imei": "",
+                "HLR": "4L1HSS"
+            },
+            "NewPackageList": {
+                "NewPackage": [
+                    {
+                        "EffectDate": "",
+                        "Month": "THIS",
+                        "Service": "4G",
+                        "Package": "4G 199型",
+                        "PackageCode": "A029"
+                    },
+                    {
+                        "EffectDate": "",
+                        "Month": "NEXT",
+                        "Service": "4G",
+                        "Package": "4G 199型",
+                        "PackageCode": "A029"
+                    }
+                ]
+            },
+            "NextGPRSEffectDate": "",
+            "Next4GEffectDate": "",
+            "ThisMonth3G": "",
+            "PromoList": {
+                "Promo": [
+                    {
+                        "StartDate": "2020-03-18",
+                        "ProjId": "30697",
+                        "Noeffectdate": "2022-03-17",
+                        "PlanId": "9208",
+                        "ProdDesc": "Hami Point 100點",
+                        "ProdGroup": "SUB5",
+                        "PlanDesc": "幸福199優惠方案(網路門市限定)",
+                        "ProjService": "主要通信案",
+                        "WapUrl": "",
+                        "ProjDesc": "月繳199元通信優惠(24個月)",
+                        "Productid": "280624",
+                        "Damage": "0"
+                    },
+                    {
+                        "StartDate": "2020-03-18",
+                        "ProjId": "30697",
+                        "Noeffectdate": "2022-03-17",
+                        "PlanId": "9208",
+                        "ProdDesc": "贈送上網量2872MB/月",
+                        "ProdGroup": "SUB1",
+                        "PlanDesc": "幸福199優惠方案(網路門市限定)",
+                        "ProjService": "主要通信案",
+                        "WapUrl": "",
+                        "ProjDesc": "月繳199元通信優惠(24個月)",
+                        "Productid": "279705",
+                        "Damage": "0"
+                    },
+                    {
+                        "StartDate": "2020-03-18",
+                        "ProjId": "30697",
+                        "Noeffectdate": "2022-03-17",
+                        "PlanId": "9208",
+                        "ProdDesc": "[新+NP]月繳199元通信優惠(24)",
+                        "ProdGroup": "MAIN",
+                        "PlanDesc": "幸福199優惠方案(網路門市限定)",
+                        "ProjService": "主要通信案",
+                        "WapUrl": "",
+                        "ProjDesc": "月繳199元通信優惠(24個月)",
+                        "Productid": "279704",
+                        "Damage": "0"
+                    },
+                    {
+                        "StartDate": "2020-03-18",
+                        "ProjId": "30697",
+                        "Noeffectdate": "2022-03-17",
+                        "PlanId": "9208",
+                        "ProdDesc": "贈送市話通話優惠5分鐘",
+                        "ProdGroup": "SUB4",
+                        "PlanDesc": "幸福199優惠方案(網路門市限定)",
+                        "ProjService": "主要通信案",
+                        "WapUrl": "",
+                        "ProjDesc": "月繳199元通信優惠(24個月)",
+                        "Productid": "279708",
+                        "Damage": "3"
+                    },
+                    {
+                        "StartDate": "2020-03-18",
+                        "ProjId": "30697",
+                        "Noeffectdate": "2022-03-17",
+                        "PlanId": "9208",
+                        "ProdDesc": "贈送網外通話優惠20分鐘",
+                        "ProdGroup": "SUB3",
+                        "PlanDesc": "幸福199優惠方案(網路門市限定)",
+                        "ProjService": "主要通信案",
+                        "WapUrl": "",
+                        "ProjDesc": "月繳199元通信優惠(24個月)",
+                        "Productid": "279707",
+                        "Damage": "6"
+                    },
+                    {
+                        "StartDate": "2020-03-18",
+                        "ProjId": "30697",
+                        "Noeffectdate": "2022-03-17",
+                        "PlanId": "9208",
+                        "ProdDesc": "贈送網內通話優惠200分鐘",
+                        "ProdGroup": "SUB2",
+                        "PlanDesc": "幸福199優惠方案(網路門市限定)",
+                        "ProjService": "主要通信案",
+                        "WapUrl": "",
+                        "ProjDesc": "月繳199元通信優惠(24個月)",
+                        "Productid": "279706",
+                        "Damage": "57"
+                    }
+                ]
+            },
+            "SpsvcList": {
+                "Spsvc": [
+                    {
+                        "StartDate": "2020/03/31",
+                        "SorderNo": "M09TY6Z01OP08",
+                        "EorderNo": "",
+                        "SpsvcName": "關閉語音信箱",
+                        "EndDate": "",
+                        "SpsvcCode": "VM"
+                    },
+                    {
+                        "StartDate": "2020/03/18",
+                        "SorderNo": "M09TC0Z01DZ14",
+                        "EorderNo": "",
+                        "SpsvcName": "限撥國際語音",
+                        "EndDate": "",
+                        "SpsvcCode": "BI"
+                    },
+                    {
+                        "StartDate": "2020/03/18",
+                        "SorderNo": "M09TC0Z01DZ14",
+                        "EorderNo": "",
+                        "SpsvcName": "限友限撥",
+                        "EndDate": "",
+                        "SpsvcCode": "NF"
+                    },
+                    {
+                        "StartDate": "2020/03/18",
+                        "SorderNo": "M09TC0Z01DZ14",
+                        "EorderNo": "",
+                        "SpsvcName": "限撥0204",
+                        "EndDate": "",
+                        "SpsvcCode": "24"
+                    },
+                    {
+                        "StartDate": "2020/03/18",
+                        "SorderNo": "M09TC0Z01DZ14",
+                        "EorderNo": "",
+                        "SpsvcName": "限制國際漫遊服務",
+                        "EndDate": "",
+                        "SpsvcCode": "BR"
+                    },
+                    {
+                        "StartDate": "2020/03/18",
+                        "SorderNo": "M09AK1D002VA4",
+                        "EorderNo": "",
+                        "SpsvcName": "emome APN",
+                        "EndDate": "",
+                        "SpsvcCode": "G1"
+                    },
+                    {
+                        "StartDate": "2020/03/18",
+                        "SorderNo": "M09AK1D002VA4",
+                        "EorderNo": "",
+                        "SpsvcName": "來電捕手",
+                        "EndDate": "",
+                        "SpsvcCode": "PT"
+                    }
+                ],
+                "Specsvc": "關閉語音信箱,限撥國際語音,限友限撥,限撥0204,限制國際漫遊服務,emome APN,來電捕手"
+            },
+            "ThisMonth4G": "4G 199型",
+            "NextMonth4G": "4G 199型",
+            "TelNum": "0966553598",
+            "NextMonth3G": "",
+            "contractinfo": {
+                "Office": "2911",
+                "AgentEmpNo": "",
+                "AgentPos": "",
+                "RemindTel": "",
+                "CustTitle": "一般客戶",
+                "BusinessCode": "08",
+                "ApplyMode": "1",
+                "ServiceTypeCode": "J",
+                "AccumDebtAmt": "無",
+                "ESApplyMode": "SHOP",
+                "NPFlag": "Y",
+                "CTStatus": "正常使用",
+                "OprCode": "ESHOP",
+                "ApplyType": "免保證金",
+                "Not3GSunsetNotify": "N",
+                "ServiceType": "4G語_數(語音_數據)",
+                "ApplyTypeCode": "5",
+                "StartRent": "2020-03-18",
+                "Business": "個人"
+            },
+            "NextMonthGSM": "",
+            "Renter": {
+                "BossName": "",
+                "BosspId": "",
+                "VRentId": "",
+                "CustAddr": "",
+                "RentId": "G837287720",
+                "RentName": "",
+                "rentcustid": "",
+                "renttype": "01",
+                "RentIdType": "12",
+                "CustMailCode": "231",
+                "email": "",
+                "BirthDate": ""
+            },
+            "CurrentSM": "",
+            "ThisMonthGSM": "",
+            "CurrentData": ""
+        }
+    }
+}

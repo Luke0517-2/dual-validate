@@ -1,0 +1,45 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+	<pluginGroups>
+		<pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
+	</pluginGroups>
+	<profiles>
+		<profile>
+			<id>sonar</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<!-- Optional URL to server. Default value is http://localhost:9000 -->
+				<sonar.host.url>
+					http://sonarqube-sonarqube.apps.ocp.iisi.test
+				</sonar.host.url>
+			</properties>
+			<repositories>
+				<repository>
+					<id>CHT</id>
+					<url>https://pkgs.dev.azure.com/iisiD200542-a-m/PDC/_packaging/CHT/maven/v1</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>CHT</id>
+					<url>https://pkgs.dev.azure.com/iisiD200542-a-m/PDC/_packaging/CHT/maven/v1</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles>
+</settings>

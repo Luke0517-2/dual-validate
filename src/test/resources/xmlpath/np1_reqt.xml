@@ -1,0 +1,35 @@
+<Channel>ESHOP</Channel><Type>APPLY</Type><Action>NPTICKETMOB</Action><EshopOrder>C10C06012532</EshopOrder><Custid>A123456789</Custid><Telnum>0976787514</Telnum><ServiceType>J</ServiceType><PackageCode3G>A035</PackageCode3G><PackageCodeSM /><ModelCode /><EShopProd>132135,40475</EShopProd><ProductList /><Officecode>3a</Officecode><Oprcode>ESHOP</Oprcode><Business>08</Business><ApplyType>5</ApplyType><BillPhase>1</BillPhase><CustTitle>2</CustTitle><BossId /><BossName /><ReceiptName /><ReceiptId /><TaxZip /><TaxAddr /><NormalTaxAddr /><RepId /><RepName /><RepId2 /><RepId2Type /><Empdiscnt /><ApplyMode>SHOP</ApplyMode><Bankdesc /><PrepayChoice>Y</PrepayChoice><StartPromoNow>Y</StartPromoNow><CuName>����</CuName><CuId2>000066969442</CuId2><CuId2Type>01</CuId2Type><CuZip>333</CuZip><CuAddr>��饫�t�s�ϸU�ظ��G�q1111��1��</CuAddr><NormalCustAddr>
+    <city>��饫</city>
+    <codecityzip>�t�s��</codecityzip>
+    <section>�G�q</section>
+    <type>N</type>
+    <room />
+    <number>1��</number>
+    <suballey />
+    <mailbox />
+    <post />
+    <road>�U�ظ�</road>
+    <extra />
+    <neighborhood />
+    <village />
+    <alley />
+    <floor>�|��</floor>
+    <lane>1111��</lane>
+</NormalCustAddr><BillZip>333</BillZip><BillAddr>��饫�t�s�ϸU�ظ��G�q1111��2���|��</BillAddr><NormalBillAddr>
+    <city>��饫</city>
+    <codecityzip>�t�s��</codecityzip>
+    <section>�G�q</section>
+    <type>N</type>
+    <room />
+    <number>1��</number>
+    <suballey />
+    <mailbox />
+    <post />
+    <road>�U�ظ�</road>
+    <extra />
+    <neighborhood />
+    <village />
+    <alley />
+    <floor>�|��</floor>
+    <lane>1111��</lane>
+</NormalBillAddr><RemindTel>0976787514</RemindTel><PayremindTel /><CuBirth>820514</CuBirth><CuEmail>test@gmail.com</CuEmail><UserId>G221959463</UserId><UserName>����</UserName><UserBirth>820514</UserBirth><UserEmail>test@gmail.com</UserEmail><MainOrder /><MobOrder /><ReceiptNO /><InvoiceNo /><Simcard /><SpecsvcList /><Idtype>12</Idtype><prodAppendList /><Employeecare /><TotalPrice>0</TotalPrice><delivertype /><deliverzip /><deliveraddr /><ContractAppend>N</ContractAppend><CheckPassDate /><notsmsbill>N</notsmsbill><Hamipoint /><RepTelNo /><RepZip /><RepAddr /><NormalRepAddr /><UpdPackageService /><UpdShareMembers /><sourcechannel />

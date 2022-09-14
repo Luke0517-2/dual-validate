@@ -1,0 +1,870 @@
+{
+    "Parameter": {
+        "oldAreaCode": 47,
+        "followUpdate": "",
+        "lineMgrResult": "成功(有線/註銷)",
+        "SM_FCTime": -1,
+        "notifyZipCode": "",
+        "SM_ExecuteComTime": 3178,
+        "noClass": "",
+        "deleteEmpNo": "",
+        "oldNoClass": "",
+        "personalEmail": "",
+        "broadBandPayStyle": "",
+        "queryFlag": 0,
+        "oldCable": "",
+        "supplementServiceList": {
+            "_RECORD": {
+                "_F": [
+                    "LP",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ]
+            }
+        },
+        "SM_ExecuteTime": 3178,
+        "hiflyEndDate": "",
+        "disConnectDate": "",
+        "serviceEndDate": "",
+        "oldUpSpeedName": "40M",
+        "indoorLineFlag": 0,
+        "hiflyBillingAddress": "CM555     9             0",
+        "oldSubAddress": "",
+        "hiflyType": "",
+        "epTag": "可處理",
+        "refOrderNo": "",
+        "customerName": "趙希捷",
+        "hiflyStartDate": "2008/06/13",
+        "nextStage": "",
+        "hinetPayStyle": "",
+        "disConnectTime": "",
+        "freeInstallAddress": "彰化縣和美鎮仁美路9巷0號",
+        "fixLineServiceProvider": "",
+        "routerPortIp": "",
+        "flowStatus": 1,
+        "broadbandRefOrderNo": "",
+        "acceptEDM": "11111010010000000001",
+        "joinBillFlag": "",
+        "oldVdslAttachAreaCode": "04",
+        "wifiDiscountList": "4U1MWU2MWU3MWU4MW 5    U1SWU2SWU3SW",
+        "contactPerson": "本人",
+        "pcFlag": "",
+        "OSPRemark": "",
+        "lisEaiFlag": 2,
+        "執行機器名稱": "TOPS-NAP150",
+        "ospVerifyFlag": 0,
+        "numExgOffice": "CHHM",
+        "billZipCode": 50845,
+        "recall": [{
+                "_RECORD": {
+                    "_F": [
+                        374411,
+                        "2021/03/02 10:05:43"
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        "流控",
+                        "2021/01/25 12:28:33"
+                    ]
+                }
+            }
+        ],
+        "hiflyFreeBillingAddress": "彰化縣和美鎮仁美路9巷0號",
+        "customerId": "X105910242",
+        "freeBillAddress": "彰化縣和美鎮仁美路9巷0號",
+        "applyMethod": "K",
+        "installZipCode": 50845,
+        "vdslAttachTelNo": 7561628,
+        "publishName": "不刊",
+        "phoneEquipmentList": [{
+                "_RECORD": {
+                    "_F": [
+                        4,
+                        "F",
+                        0,
+                        "FV35",
+                        "",
+                        "",
+                        "",
+                        "",
+                        1,
+                        "2015/04/16 08:41:57",
+                        "",
+                        1,
+                        1,
+                        "",
+                        ""
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        4,
+                        90,
+                        0,
+                        "0719",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "A",
+                        "",
+                        2,
+                        "",
+                        ""
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        4,
+                        91,
+                        0,
+                        1703,
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "A",
+                        "",
+                        3,
+                        "",
+                        ""
+                    ]
+                }
+            }
+        ],
+        "vaServiceList": [{
+                "_RECORD": {
+                    "_F": [
+                        19070446,
+                        "04",
+                        "U",
+                        "2008/06/13",
+                        "",
+                        30005266833,
+                        30012502429,
+                        "U",
+                        "2004/05/19"
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        70003112766,
+                        "03",
+                        "P",
+                        "",
+                        "",
+                        30005771178,
+                        30012502429,
+                        "A",
+                        ""
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        19070446,
+                        "04",
+                        "U",
+                        "2008/06/13",
+                        "",
+                        30005266833,
+                        30012502429,
+                        "",
+                        "2004/05/19"
+                    ]
+                }
+            }
+        ],
+        "modSubDataList": {
+            "_RECORD": {
+                "_F": [
+                    "TCHS29750673",
+                    30009495762,
+                    0,
+                    "",
+                    "02",
+                    "M50515738",
+                    "2017/08/04/00/00/00",
+                    3,
+                    "",
+                    2
+                ]
+            }
+        },
+        "oldTelNo": "Y053815",
+        "bringDoc": "",
+        "oldOftLen": "",
+        "oldInstallZipCode": 50845,
+        "papersDataList": {
+            "_RECORD": {
+                "_F": [
+                    "B",
+                    "Z",
+                    377333,
+                    "",
+                    "",
+                    0
+                ]
+            }
+        },
+        "oftLen": 0,
+        "lineResult": {
+            "_RECORD": {
+                "_F": [
+                    999999,
+                    "",
+                    "",
+                    999999,
+                    "2021/01/25 11:43:44",
+                    "成功(有線/註銷)",
+                    "查詢原心線"
+                ]
+            }
+        },
+        "alternate": "",
+        "applyClass": 11,
+        "oldOutLength": "",
+        "floorFlag": "",
+        "alternateId": "",
+        "spip": "",
+        "DSISDataList": {
+            "_RECORD": {
+                "_F": [
+                    87895827,
+                    "N",
+                    "T",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "00000000001100000000",
+                    "",
+                    25,
+                    "",
+                    "",
+                    "",
+                    0
+                ]
+            }
+        },
+        "SM_Receive": "2021/06/10 17:30:30",
+        "canAccpetFlag": 1,
+        "preInstallLineFlag": "",
+        "permanentZipCode": 50845,
+        "doFlag": "",
+        "contactTelNo": "02-22222222",
+        "workMgrStatus": "已處理",
+        "numberStatus": "U",
+        "secondContactTelNo": "02-22222222",
+        "hinetFlag": 0,
+        "trunkFlag": "N",
+        "newUpSpeedName": "40M",
+        "applyDate": "2021/01/25 11:43:43",
+        "oldAddressType": "N",
+        "rentDay": "",
+        "serviceType": 41,
+        "freeSupplementService": "",
+        "oldInstallAddress": "CM555     9             0",
+        "pcAssociateTelNo": "",
+        "bookFlag": 0,
+        "businessId": "",
+        "cusAddressType": "N",
+        "hiflyZipCode": 50845,
+        "workAsgnDate": "2021/03/02",
+        "upLinkSpeed": "N",
+        "outLength": 0,
+        "taxFreeEndDate": "",
+        "ISPLinkDataList": {
+            "_RECORD": {
+                "_F": [
+                    25,
+                    "",
+                    87895827,
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "I",
+                    "",
+                    "U",
+                    "",
+                    "",
+                    "2008/06/13",
+                    "",
+                    "",
+                    "",
+                    0,
+                    "",
+                    ""
+                ]
+            }
+        },
+        "workAsgnResultData": {
+            "_RECORD": {
+                "_F": [
+                    374411,
+                    "2021/03/02 10:05:28",
+                    "成功",
+                    "指定預施",
+                    "2021/03/02",
+                    "FORCE確認"
+                ]
+            }
+        },
+        "customerType": 1,
+        "oldOperationUnitId": 47,
+        "promiseTelNo": "",
+        "serviceAgentList": [{
+                "_RECORD": {
+                    "_F": [
+                        2,
+                        26,
+                        "Z21369",
+                        "連碧雲",
+                        47,
+                        "A",
+                        "",
+                        "",
+                        "",
+                        "04-7284406"
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        2,
+                        "2C",
+                        "Z21369",
+                        "連碧雲",
+                        47,
+                        "A",
+                        "",
+                        "",
+                        "",
+                        "04-7284406"
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        2,
+                        "2HO",
+                        "Z21369",
+                        "連碧雲",
+                        47,
+                        "A",
+                        "",
+                        "",
+                        "",
+                        "04-7284406"
+                    ]
+                }
+            }
+        ],
+        "cable": "",
+        "freePermanentAddress": "彰化縣和美鎮仁美路                                              9巷                                   0號",
+        "xorderPbxNo": "",
+        "newDownSpeedName": "100M",
+        "orderNo": "CHHS24641925",
+        "oldDownSpeedName": "100M",
+        "workMgrResult": "成功",
+        "oldFreeInstallAddress": "彰化縣和美鎮仁美路9巷0號",
+        "addressType": "N",
+        "customerGroup": "072010",
+        "hiflyChargeMethod": "",
+        "workAsgnTime": 8,
+        "regEmpNo": 244570,
+        "sendHinetFlag": 1,
+        "leamisFlag": "",
+        "telNo": "Y053815",
+        "coopNo": "",
+        "serviceCenterId": "CHH",
+        "printResult": [{
+                "_RECORD": {
+                    "_F": [
+                        "未報竣管制單",
+                        ""
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        "竣工前待處理單",
+                        ""
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        "竣工前待處理清單",
+                        ""
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        "無法施工函",
+                        ""
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        "無法施工清單",
+                        ""
+                    ]
+                }
+            }
+        ],
+        "areaCode": 47,
+        "billAddress": "CM555     9             0",
+        "taxId": "",
+        "hiflyBillingName": "研發環境甲種用戶",
+        "accAddressType": "N",
+        "totalFloor": "",
+        "exceptResultList": [{
+                "_RECORD": {
+                    "_F": [
+                        "SPRO施工",
+                        "Z16682",
+                        "2021/02/19 14:36:23",
+                        "用戶要求更動施工日期",
+                        "資料已更正",
+                        374411,
+                        "2021/03/02 10:05:43",
+                        "退例外案(FORCE退)"
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        "SPRO施工",
+                        "Z16682",
+                        "2021/03/02 10:22:55",
+                        "用戶要求暫緩施工",
+                        "",
+                        "",
+                        "",
+                        "退例外案(FORCE退)"
+                    ]
+                }
+            }
+        ],
+        "oldFloorFlag": "",
+        "vipFlag": "",
+        "flowControlLog": [{
+                "_RECORD": {
+                    "_F": [
+                        1,
+                        "受理",
+                        "查訂線",
+                        "2021/01/25 11:43:43",
+                        "流控",
+                        "已處理",
+                        1
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        2,
+                        "查訂線",
+                        "SPRO調訂",
+                        "2021/01/25 11:43:44",
+                        "流控",
+                        "已處理",
+                        1
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        3,
+                        "SPRO調訂",
+                        "預施",
+                        "2021/01/25 12:28:32",
+                        "流控",
+                        "已處理",
+                        1
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        4,
+                        "預施",
+                        "SPRO施工",
+                        "2021/01/25 12:28:33",
+                        "流控",
+                        "更正",
+                        1
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        4,
+                        "預施",
+                        "回叫",
+                        "2021/01/25 12:28:33",
+                        "流控",
+                        "更正",
+                        1
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        5,
+                        "SPRO施工",
+                        "例外案",
+                        "2021/02/19 14:36:23",
+                        "Z16682",
+                        "更正",
+                        1
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        7,
+                        "例外案",
+                        "回叫",
+                        "2021/03/02 10:05:43",
+                        374411,
+                        "可處理",
+                        1
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        7,
+                        "例外案",
+                        "SPRO施工",
+                        "2021/03/02 10:05:43",
+                        374411,
+                        "已退案",
+                        1
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        8,
+                        "SPRO施工",
+                        "例外案",
+                        "2021/03/02 10:22:54",
+                        "Z16682",
+                        "可處理",
+                        1
+                    ]
+                }
+            }
+        ],
+        "birthday": "1986/04/16",
+        "oldVdslAttachTelNo": 7561628,
+        "armyNo": "",
+        "discountList": [{
+                "_RECORD": {
+                    "_F": [
+                        30020234892,
+                        "STD1",
+                        "2014/10/02",
+                        "2017/10/02",
+                        "",
+                        "",
+                        "",
+                        "",
+                        1,
+                        1,
+                        "D",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "2014/09/18/09/47/37",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        70018158085,
+                        "S27O",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        1,
+                        2,
+                        "A",
+                        "",
+                        "",
+                        "",
+                        "01",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        70018158084,
+                        "S170",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        1,
+                        1,
+                        "A",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        70018158083,
+                        "MJA1",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "A",
+                        "",
+                        "",
+                        "",
+                        "01",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        70018158082,
+                        "MDAI",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "A",
+                        "",
+                        "",
+                        "",
+                        "01",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        70018158081,
+                        "MCD4",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "A",
+                        "",
+                        "",
+                        "",
+                        "01",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            }
+        ],
+        "lineExgOffice": "CHHM",
+        "doBeforeContactTelNo": "02-22222222",
+        "orderEndDate": "",
+        "oldLineExgOffice": "CHHM",
+        "orderStatus": "P",
+        "recallTag": "可處理",
+        "waTag": "已處理",
+        "remark": "電銷.利用原芯線更正前預施日期:2021/01/27",
+        "customerWorkAsgnDate": "",
+        "notAssignFlag": "",
+        "customerWorkAsgnTime": "",
+        "operationUnitId": 47,
+        "subAddress": "",
+        "promiseAreaCode": "",
+        "fttbResult": [{
+                "_RECORD": {
+                    "_F": [
+                        "流控",
+                        "2021/01/25 11:43:49",
+                        "2021/01/25 13:29:21",
+                        "2021/01/25",
+                        100,
+                        "SPRO調訂單",
+                        "施工竣工",
+                        "已處理"
+                    ]
+                }
+            },
+            {
+                "_RECORD": {
+                    "_F": [
+                        374411,
+                        "2021/03/02 10:21:10",
+                        "2021/03/02 10:22:54",
+                        "",
+                        "HIOSS退案",
+                        "SPRO施工單",
+                        "HiNet 連線下行速率錯誤",
+                        "處理中"
+                    ]
+                }
+            }
+        ],
+        "vdslAttachAreaCode": "04",
+        "oldNumExgOffice": "CHHM",
+        "permanentAddress": "CM555     9             0",
+        "communityId": "",
+        "flowControlFlag": "000000010000",
+        "noWorkFlag": "",
+        "lineMgrStatus": "已處理",
+        "deleteDate": "",
+        "downLinkSpeed": "T",
+        "applyItem": "D01831522",
+        "quantity": "4 4 5 3",
+        "otherId": "",
+        "repName": "",
+        "modDataList": {
+            "_RECORD": {
+                "_F": [
+                    70003112766,
+                    "M81708995",
+                    "B",
+                    "",
+                    "P",
+                    "",
+                    "00000000",
+                    "01",
+                    1,
+                    "A",
+                    "01",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "01",
+                    "",
+                    4
+                ]
+            }
+        },
+        "installAddress": "CM555     9             0",
+        "deleteReason": "",
+        "repId": "",
+        "taxFreeNo": "",
+        "SM_SendToCA": "2021/06/10 17:30:33",
+        "oldNumberStatus": "U",
+        "serviceStartDate": "2008/06/13",
+        "SM_SendToSM": -1,
+        "pcAssociateAreaCode": "",
+        "fixLinePayType": "A",
+        "laTag": "已處理",
+        "businessType": 4,
+        "notifyAddress": ""
+    }
+}

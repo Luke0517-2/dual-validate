@@ -1,0 +1,33 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "idtype": "SET",
+                "productid": "285305",
+                "eshopid": "107503",
+                "mainpro": "Y"
+            },
+            {
+                "idtype": "SET",
+                "productid": "285307",
+                "eshopid": "107503",
+                "mainpro": ""
+            },
+            {
+                "idtype": "SET",
+                "productid": "285308",
+                "eshopid": "107503",
+                "mainpro": ""
+            },
+            {
+                "idtype": "SET",
+                "productid": "285328",
+                "eshopid": "107503",
+                "mainpro": ""
+            }
+        ],
+        "tablename": "eshopprodinfo",
+        "querytype": "1"
+    }
+}
