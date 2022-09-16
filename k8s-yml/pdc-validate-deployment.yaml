@@ -1,0 +1,97 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dual-validate
+  labels:
+    app: dual-validate
+    version: m5
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dual-validate
+  template:
+    metadata:
+      labels:
+        app: dual-validate
+        version: m5
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: '8080'
+        prometheus.io/scheme: http
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/inject: 'true'
+    spec:
+      containers:
+      - name: dual-validate
+        image: >-
+          image-registry.openshift-image-registry.svc:5000/mwbss-0000/dual-validate:latest
+        imagePullPolicy: Always
+        livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: compares-data
+          mountPath: /app/comparelogs
+        env:
+        - name: MEMORY_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: requests.memory
+        - name: MEMORY_LIMIT
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: limits.memory
+        - name: JAVA_OPTS
+          value: >-
+                -Xms1G -Xmx1536m -Dgit.branch=main
+                -Dcheck.url=http://pdc-check-scenario-api.mwbss-0000.svc.cluster.local:8080
+                -Dsearch.url=http://pdc-search.mwbss-0000.svc.cluster.local:8080
+                -javaagent:/app/elastic-apm-agent-1.28.3.jar 
+                -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
+                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.application_packages=cht.bss
+                -Delastic.apm.trace_methods=cht.bss.*
+                -Delastic.apm.trace_methods_duration_threshold=40ms
+                -Delastic.apm.stack_trace_limit=80
+                -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
+                -Delastic.apm.transaction_max_spans=1500
+                -Dlogging.level.root=WARN
+                -Dmbms.source.root-path=/app/testCases/DualTrackSample
+                -Dmbms.source.eshopapply-path=/20220208
+                -Dmbms.source.check-oraccept-path=/
+#          value: '-Xms1G -Xmx1536m -Dgit.branch=dev/milestone4 -Dcheck.url=http://pdc-check.mwbss-0000.svc.cluster.local:8080 -Dsearch.url=http://pdc-search.mwbss-0000.svc.cluster.local:8080'
+        - name: pdc-search.api.maximum-pool-size
+          value: '6'  
+        resources:
+          requests: 
+            memory: 1Gi
+            cpu: 500m
+          limits: 
+            memory: 1536Mi
+            cpu: "1"
+      volumes:
+      - name: compares-data
+        persistentVolumeClaim:
+          claimName: mwbss-data
