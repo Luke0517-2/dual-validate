@@ -55,7 +55,7 @@ steps:
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       javaHomeOption: 'JDKVersion'
-      jdkVersionOption: '11'
+      jdkVersionOption: '8'
       mavenVersionOption: 'Default'
       mavenOptions: '-Xmx3072m  $(MAVEN_OPTS)'
       mavenAuthenticateFeed: true

@@ -6,9 +6,9 @@
 	<artifactId>dual-validate</artifactId>
 	<packaging>jar</packaging>
 	<name>dual-validate</name>
-	<version>1.0.5-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,15 +36,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-cache</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.github.ben-manes.caffeine</groupId>
-			<artifactId>caffeine</artifactId>
-			<version>3.0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -158,13 +149,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.json/json -->
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20211205</version>
-		</dependency>
-
 	</dependencies>
 	<build>
 		<plugins>
@@ -181,7 +165,6 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 					<fork>false</fork>
 					<optimize>true</optimize>
-					<release>${java.version}</release>
 				</configuration>
 				<dependencies>
 					<dependency>

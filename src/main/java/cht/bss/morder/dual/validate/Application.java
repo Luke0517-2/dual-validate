@@ -1,4 +1,4 @@
-package cht.bss;
+package cht.bss.morder.dual.validate;
 
 
 import java.util.concurrent.Executors;
@@ -22,7 +22,7 @@ import reactor.core.scheduler.Schedulers;
 /**
  * @author <a href="mailto:jerry.chang@iisigroup.com">Jerry Chang</a>
  * @author <a href="mailto:robert.lee@iisigroup.com">Robert Lee</a>
- *
+ * @author <a href="mailto:hsin.chen@iisigroup.com">Hsin Chen</a>
  */
 @SuppressWarnings("PMD")
 @SpringBootApplication
