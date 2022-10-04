@@ -79,53 +79,53 @@ public class ReportService {
 	 * @return the byte[]
 	 */
 	public byte[] processReport(final Report report) {
+		// TODO: 產生報表
+//		byte[] content = null;
+//		try (XSSFWorkbook workbook = new XSSFWorkbook()) {
+//			final XSSFSheet sheet = workbook.createSheet("TestCases");
+//			final Row titleRow = sheet.createRow(0);
+//			final String[] columns = new String[] { "案例號碼", "預計結果", "實際結果", "比對結果", "錯誤原因", "檔案路徑" };
+//
+//			int t = 0;
+//			for (final String columnName : columns) {
+//				final Cell cell = titleRow.createCell(t++);
+//				cell.setCellValue(columnName);
+//			}
+//
+//			final List<TestCase> testCases = report.getTestCases();
+//
+//			int rowNum = 0;
+//
+//			for (final TestCase testCase : testCases) {
+//				final Row dataRow = sheet.createRow(++rowNum);
+//
+//				final String[] path = testCase.getDataPath().split("/");
+//
+//				int r = 0;
+//				dataRow.createCell(r++).setCellValue(testCase.getCaseNo());
+//				dataRow.createCell(r++).setCellValue(testCase.getExpectedResult());
+//				dataRow.createCell(r++).setCellValue(testCase.getActualResult());
+//				dataRow.createCell(r++).setCellValue(testCase.getCompareResult().toString());
+//				dataRow.createCell(r++).setCellValue(testCase.getErrorReason());
+//				dataRow.createCell(r++).setCellValue("/" + path[path.length - 1]);
+//			}
+//
+//			ByteArrayOutputStream out = new ByteArrayOutputStream();
+//			workbook.write(out);
+//			content = out.toByteArray();
+//		} catch (IOException e) {
+//			log.error("", e);
+//		}
 
-		byte[] content = null;
-		try (XSSFWorkbook workbook = new XSSFWorkbook()) {
-			final XSSFSheet sheet = workbook.createSheet("TestCases");
-			final Row titleRow = sheet.createRow(0);
-			final String[] columns = new String[] { "案例號碼", "預計結果", "實際結果", "比對結果", "錯誤原因", "檔案路徑" };
-
-			int t = 0;
-			for (final String columnName : columns) {
-				final Cell cell = titleRow.createCell(t++);
-				cell.setCellValue(columnName);
-			}
-
-			final List<TestCase> testCases = report.getTestCases();
-
-			int rowNum = 0;
-
-			for (final TestCase testCase : testCases) {
-				final Row dataRow = sheet.createRow(++rowNum);
-
-				final String[] path = testCase.getDataPath().split("/");
-
-				int r = 0;
-				dataRow.createCell(r++).setCellValue(testCase.getCaseNo());
-				dataRow.createCell(r++).setCellValue(testCase.getExpectedResult());
-				dataRow.createCell(r++).setCellValue(testCase.getActualResult());
-				dataRow.createCell(r++).setCellValue(testCase.getCompareResult().toString());
-				dataRow.createCell(r++).setCellValue(testCase.getErrorReason());
-				dataRow.createCell(r++).setCellValue("/" + path[path.length - 1]);
-			}
-
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			workbook.write(out);
-			content = out.toByteArray();
-		} catch (IOException e) {
-			log.error("", e);
-		}
-
-		return content;
+		return null;
 	}
 
 	/**
-	 * Strat report.
+	 * Start report.
 	 *
 	 * @return the report
 	 */
-	public Report stratReport() {
+	public Report startReport() {
 		final UUID uuid = UUID.randomUUID();
 
 		final Report newReport = new Report();
@@ -154,7 +154,7 @@ public class ReportService {
 	 * @return the string
 	 */
 	private String buildDataPath(final Report report, final TestCase testCase) {
-		return String.format("%s/%s", report.getBasePath(), testCase.getCaseNo());
+		return String.format("%s/%s_%s", report.getBasePath(), testCase.getTelNum(), testCase.getCustId());
 	}
 
 	/**
