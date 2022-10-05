@@ -38,12 +38,14 @@ public class QueryInputFactoryTest {
 		validataComparedData(data);
 		assertEquals(data.getData(), telnum);
 		assertEquals(data.getTable(), "telnum");
+		assertEquals("querycustinfo", data.getQueryService());
 
 		ComparedData data2 = queryInputFactory.getComparedData(QueryCustinfoType.custbehavior, case1);
 
 		validataComparedData(data2);
 		assertEquals(data2.getData(), custid);
 		assertEquals(data2.getTable(), "custbehavior");
+		assertEquals("querycustinfo", data.getQueryService());
 	}
 
 	@Test
@@ -57,6 +59,7 @@ public class QueryInputFactoryTest {
 		validataComparedData(data);
 		assertEquals(data.getData(), telnum);
 		assertEquals(data.getTable(), "");
+		assertEquals("qrysalebehavior", data.getQueryService());
 	}
 
 	@Test
