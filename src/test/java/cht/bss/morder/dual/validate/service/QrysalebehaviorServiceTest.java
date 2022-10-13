@@ -27,7 +27,7 @@ public class QrysalebehaviorServiceTest {
 
 		assertNotNull(result);
 		assertNotEquals(0, result);
-		assertEquals(2, result.size());
+		assertEquals(1, result.size());
 	}
 
 	private TestCase getTestCase() {

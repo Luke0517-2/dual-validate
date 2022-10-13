@@ -312,7 +312,7 @@ public class MoqueryService extends QueryService {
 
 			return CompletableFuture.supplyAsync(() -> {
 				callTo(comparedDataForFirstQuery);
-				String value = getValue(comparedDataForFirstQuery.getDataFromCht());
+				String value = getValue(comparedDataForFirstQuery.getDataFromIISI());
 				testCaseForServer.setSpsvc(value);
 				ComparedData comparedDataWithSecondQuery = factory.getComparedData(secondQueryEnum, testCaseForServer);
 				if (StringUtils.isEmpty(value)) {
@@ -325,8 +325,14 @@ public class MoqueryService extends QueryService {
 		}
 
 		private String getValue(String returnString) {
-			AbstractJSONPathModel resVO = ResponseVOFactory.getResponseModel(responseType, returnString);
-			return resVO.getValue();
+			try {
+				AbstractJSONPathModel resVO = ResponseVOFactory.getResponseModel(responseType, returnString);
+				return resVO.getValue();
+			} catch (Exception e) {
+				
+				return null;
+			}
+
 		};
 
 		private void callTo(ComparedData comparedData) {
