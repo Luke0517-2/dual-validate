@@ -94,7 +94,7 @@ steps:
       tags: 'latest'
   # A script task about tagging version number
   - script: |
-      sed -i 's/pdc-validate:latest/pdc-validate:$(Build.BuildNumber)/1' k8s-yml/pdc-validate-deployment.yaml     
+      sed -i 's/dual-validate:latest/dual-validate:$(Build.BuildNumber)/1' k8s-yml/dual-validate-deployment.yaml     
     displayName: 'tagging version number'
     
   - task: PublishPipelineArtifact@1

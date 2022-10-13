@@ -51,7 +51,7 @@ public class Application implements ApplicationListener<ApplicationReadyEvent>{
 	private final Integer connectionPoolSize;
 	
 	@Autowired
-	public Application(@Value("${pdc-validate.api.maximum-pool-size:4}") Integer connectionPoolSize) {
+	public Application(@Value("${dual-validate.api.maximum-pool-size:4}") Integer connectionPoolSize) {
 		this.connectionPoolSize = connectionPoolSize;
 		 
 	}

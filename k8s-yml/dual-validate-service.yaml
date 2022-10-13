@@ -2,9 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: pdc-validate
-    service: pdc-validate
-  name: pdc-validate
+    app: dual-validate
+    service: dual-validate
+  name: dual-validate
 spec:
   ports:
   - name: http
@@ -12,6 +12,6 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: pdc-validate
+    app: dual-validate
   sessionAffinity: None
   type: ClusterIP
