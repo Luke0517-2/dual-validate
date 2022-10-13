@@ -276,10 +276,10 @@ public class MoqueryService extends QueryService {
 			return CompletableFuture.supplyAsync(() -> {
 				callTo(comparedDataForFirstQuery);
 				String value = getValue(comparedDataForFirstQuery.getDataFromCht());
-				testCaseForServer.setSpsvc(value);
+				setValue(testCaseForServer, value, secondQueryEnum);
 				ComparedData comparedDataWithSecondQuery = factory.getComparedData(secondQueryEnum, testCaseForServer);
 				if (StringUtils.isEmpty(value)) {
-					return comparedDataForFirstQuery.clone();
+					return comparedDataWithSecondQuery.clone();
 				} else {
 					callTo(comparedDataWithSecondQuery);
 					return comparedDataWithSecondQuery;
@@ -294,6 +294,16 @@ public class MoqueryService extends QueryService {
 
 		private void callTo(ComparedData comparedData) {
 			queryCht(comparedData);
+		}
+	}
+
+	protected void setValue(TestCase testCase, String value, MoqueryEnumInterface secondQueryEnum) {
+		if (secondQueryEnum instanceof MoquerySpsvcType) {
+			testCase.setSpsvc(value);
+		} else if (secondQueryEnum instanceof MoqueryOrderNoType) {
+			testCase.setOrderno(value);
+		} else {
+			testCase.setErrorReason(value);
 		}
 	}
 
@@ -313,10 +323,10 @@ public class MoqueryService extends QueryService {
 			return CompletableFuture.supplyAsync(() -> {
 				callTo(comparedDataForFirstQuery);
 				String value = getValue(comparedDataForFirstQuery.getDataFromIISI());
-				testCaseForServer.setSpsvc(value);
+				setValue(testCaseForServer, value, secondQueryEnum);
 				ComparedData comparedDataWithSecondQuery = factory.getComparedData(secondQueryEnum, testCaseForServer);
 				if (StringUtils.isEmpty(value)) {
-					return comparedDataForFirstQuery.clone();
+					return comparedDataWithSecondQuery.clone();
 				} else {
 					callTo(comparedDataWithSecondQuery);
 					return comparedDataWithSecondQuery;
@@ -329,10 +339,8 @@ public class MoqueryService extends QueryService {
 				AbstractJSONPathModel resVO = ResponseVOFactory.getResponseModel(responseType, returnString);
 				return resVO.getValue();
 			} catch (Exception e) {
-				
 				return null;
 			}
-
 		};
 
 		private void callTo(ComparedData comparedData) {

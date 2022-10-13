@@ -31,7 +31,6 @@ public class TestCase implements Cloneable {
 	@JsonProperty("telNum")
 	private String telNum;
 
-	@JsonIgnore
 	@Schema(description = "行網證號")
 	@JsonProperty("custId")
 	private String custId;

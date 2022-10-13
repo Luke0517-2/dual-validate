@@ -50,17 +50,17 @@ public class ComparedData implements Cloneable {
 
 	}
 
-	protected String getFileNameInIISI() {
+	public String getFileNameInIISI() {
 		String template = "%s_%s_IISI";
 		return String.format(template, table, data);
 	}
 
-	protected String getFileNameInCHT() {
+	public String getFileNameInCHT() {
 		String template = "%s_%s_CHT";
 		return String.format(template, table, data);
 	}
 
 	public ComparedData clone() {
-		return ComparedData.builder().queryInput(queryInput).table(table).queryService(queryService).build();
+		return ComparedData.builder().queryInput(queryInput).table(table).data(data).queryService(queryService).build();
 	}
 }

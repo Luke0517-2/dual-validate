@@ -24,19 +24,17 @@ public class QueryCustInfoInputFactory extends QueryInputFactory {
 		}
 	}
 
-
-
 	private QueryInput buildQueryInputWithCustid(TestCase testCase) {
 		QueryInput queryCustInfoInput = buildInput();
-		queryCustInfoInput.setParam(Params.builder().telnum(testCase.getTelNum()).querydata(
-				"telinfo;contractinfo;accountinfo;renter;user;simcard;package_all;spsvc_current;wap_current;promo_current;grouppromo_current;AWInfo;spsvcitem;sernum;vipdata;deposit;mcpsstore;basecontract;taxexempt;empdata;npinfo;CMPInfo;")
-				.build());
+		queryCustInfoInput.setParam(Params.builder().custid(testCase.getCustId()).querydata("custbehavior;").build());
 		return queryCustInfoInput;
 	}
 
 	private QueryInput buildQueryInputWithTelnum(TestCase testCase) {
 		QueryInput queryCustInfoInput = buildInput();
-		queryCustInfoInput.setParam(Params.builder().custid(testCase.getCustId()).querydata("custbehavior;").build());
+		queryCustInfoInput.setParam(Params.builder().telnum(testCase.getTelNum()).querydata(
+				"telinfo;contractinfo;accountinfo;renter;user;simcard;package_all;spsvc_current;wap_current;promo_current;grouppromo_current;AWInfo;spsvcitem;sernum;vipdata;deposit;mcpsstore;basecontract;taxexempt;empdata;npinfo;CMPInfo;")
+				.build());
 		return queryCustInfoInput;
 	}
 
