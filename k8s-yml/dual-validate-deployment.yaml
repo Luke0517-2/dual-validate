@@ -66,8 +66,6 @@ spec:
         - name: JAVA_OPTS
           value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
-                -Dcheck.url=http://pdc-check-scenario-api.mwbss-0000.svc.cluster.local:8080
-                -Dsearch.url=http://pdc-search.mwbss-0000.svc.cluster.local:8080
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
                 -Delastic.apm.service_name=dual-validate
@@ -79,11 +77,6 @@ spec:
                 -Delastic.apm.transaction_max_spans=1500
                 -Dlogging.level.root=WARN
                 -Dmbms.source.root-path=/app/testCases/DualTrackSample
-                -Dmbms.source.eshopapply-path=/20220208
-                -Dmbms.source.check-oraccept-path=/
-#          value: '-Xms1G -Xmx1536m -Dgit.branch=dev/milestone4 -Dcheck.url=http://pdc-check.mwbss-0000.svc.cluster.local:8080 -Dsearch.url=http://pdc-search.mwbss-0000.svc.cluster.local:8080'
-        - name: pdc-search.api.maximum-pool-size
-          value: '6'  
         resources:
           requests: 
             memory: 1Gi
@@ -91,7 +84,7 @@ spec:
           limits: 
             memory: 1536Mi
             cpu: "1"
-      volumes:
-      - name: compares-data
-        persistentVolumeClaim:
-          claimName: mwbss-data
+      # volumes:
+      # - name: compares-data
+      #   persistentVolumeClaim:
+      #     claimName: mwbss-data
