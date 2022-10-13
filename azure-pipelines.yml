@@ -112,6 +112,21 @@ steps:
     continueOnError: true    
 
 
+
+  - script: |
+      ls
+      ls $(System.DefaultWorkingDirectory)
+      echo '-----------------------------------------------------'
+      ls ./dual-validate
+      echo '-----------------------------------------------------'
+      ls $(System.DefaultWorkingDirectory)/dual-validate
+      echo '-----------------------------------------------------'
+      ls $(System.DefaultWorkingDirectory)/dual-validate/target
+      echo '-----------------------------------------------------'
+      tree   $(System.DefaultWorkingDirectory)/dual-validate/target
+      echo '-----------------------------------------------------'
+    displayName: 'inspect dual-validate folder structure ' 
+
   # A script task making use of 'oc'
   - script: |
       oc -n d210641 get pods
