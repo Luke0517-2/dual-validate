@@ -117,13 +117,9 @@ steps:
       ls
       ls $(System.DefaultWorkingDirectory)
       echo '-----------------------------------------------------'
-      ls ./dual-validate
+      tree   $(System.DefaultWorkingDirectory)/k8s-yml/target
       echo '-----------------------------------------------------'
-      ls $(System.DefaultWorkingDirectory)/dual-validate
-      echo '-----------------------------------------------------'
-      ls $(System.DefaultWorkingDirectory)/dual-validate/target
-      echo '-----------------------------------------------------'
-      tree   $(System.DefaultWorkingDirectory)/dual-validate/target
+      tree   $(System.DefaultWorkingDirectory)/target
       echo '-----------------------------------------------------'
     displayName: 'inspect dual-validate folder structure ' 
 
