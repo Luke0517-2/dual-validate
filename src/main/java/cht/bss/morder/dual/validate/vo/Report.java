@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -17,39 +15,6 @@ import lombok.Data;
 @Data
 public class Report {
 
-	public enum CompareResultType {
-		EQUAL("一致"), // 比對一致
-		NONEQUAL("不相同"), // 比對不一致
-		FORMATERROR("格式錯誤"),
-		MSG_EQUAL(""), MSG_ISEMPTY("有一回應為空值"), MSG_JSONFORMATERR("JSON格式錯誤"); //MSG_ISNULL("有一回應為null"), 
-
-		CompareResultType(final String value) {
-			this.value = value;
-		}
-
-		private final String value;
-
-		public String getValue() {
-			return this.value;
-		}
-
-		public static String returnCompareResultAsString(ComparedData comparedData) {
-			return comparedData.getComparedResult().getValue();			
-		}
-		
-		public static String getErrorMessageAsString(ComparedData comparedData) {
-			return comparedData.getErrorMessage().getValue();
-		}
-
-		@Override
-		public String toString() {
-			return this.value;
-		}
-	}
-
-	@JsonIgnore
-	private CompareResultType compareResult;
-	
 	/**
 	 * 此次報告的唯一識別UUID
 	 */

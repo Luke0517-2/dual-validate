@@ -57,8 +57,8 @@ public class QueryInputFactoryTest {
 		ComparedData data = queryInputFactory.getComparedData(QrySalebehaviorType.qrySalebehavior, case1);
 
 		validataComparedData(data);
-		assertEquals(data.getData(), telnum);
-		assertEquals(data.getTable(), "");
+		assertEquals(telnum, data.getData());
+		assertEquals("qrysalebehavior", data.getTable());
 		assertEquals("qrysalebehavior", data.getQueryService());
 	}
 

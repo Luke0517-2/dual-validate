@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
 import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
-import cht.bss.morder.dual.validate.enums.MoqueryTelnumType;
 import cht.bss.morder.dual.validate.enums.QrySalebehaviorType;
 import cht.bss.morder.dual.validate.enums.QueryCustinfoType;
 import cht.bss.morder.dual.validate.vo.ComparedData;

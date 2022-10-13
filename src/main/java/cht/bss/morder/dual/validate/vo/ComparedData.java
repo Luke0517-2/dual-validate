@@ -8,14 +8,12 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import cht.bss.morder.dual.validate.vo.Report.CompareResultType;
+import cht.bss.morder.dual.validate.enums.CompareResultType;
 import lombok.Builder;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Builder
-@Slf4j
 public class ComparedData implements Cloneable {
 
 	private QueryInput queryInput;
@@ -32,13 +30,15 @@ public class ComparedData implements Cloneable {
 	protected boolean equals() {
 		return StringUtils.equals(getDataFromCht(), getDataFromIISI());
 	}
-	
+
 	/**
 	 * 回傳dataFromCht與dataFromIISI的比對結果。
 	 * 
 	 * @return
+	 * @throws JsonProcessingException 
+	 * @throws JsonMappingException 
 	 */
-	public CompareResultType getComparedResult() {
+	public CompareResultType getComparedResult(ObjectMapper mapper) throws JsonMappingException, JsonProcessingException {
 		if (StringUtils.equals(getDataFromCht(), getDataFromIISI())) {
 			return CompareResultType.EQUAL;
 		} else if (StringUtils.isEmpty(getDataFromCht()) && StringUtils.isEmpty(getDataFromIISI())) {
@@ -46,41 +46,25 @@ public class ComparedData implements Cloneable {
 		} else if (StringUtils.isEmpty(getDataFromCht()) || StringUtils.isEmpty(getDataFromIISI())) {
 			return CompareResultType.NONEQUAL;
 		} else {
-			return compareJsonOfDataFromChtAndDataFromIISI();
+			return compareJsonStructure(mapper);
 		}
 	}
 
 	/**
 	 * 對dataFromCht與dataFromIISI，進行JsonNode比對。
+	 * @param mapper 
 	 * 
 	 * @return
+	 * @throws JsonProcessingException 
+	 * @throws JsonMappingException 
 	 */
-	private CompareResultType compareJsonOfDataFromChtAndDataFromIISI() {
-		mapper = new ObjectMapper();
-		try {
-			JsonNode jsonDataFromCht = getMapper().readTree(getDataFromCht());
-			JsonNode jsonDataFromIISI = getMapper().readTree(getDataFromIISI());
-			if (jsonDataFromCht.equals(jsonDataFromIISI)) {
-				return CompareResultType.EQUAL;
-			} else {
-				return CompareResultType.NONEQUAL;
-			}
-		} catch (JsonMappingException e) {
-			log.error("ComparedData.class equals() error", e);
-			return CompareResultType.FORMATERROR;
-		} catch (JsonProcessingException e) {
-			log.error("ComparedData.class equals() error", e);
-			return CompareResultType.FORMATERROR;
-		}
-	}
-
-	public CompareResultType getErrorMessage() {
-		if (getComparedResult().equals(CompareResultType.EQUAL)) {
-			return CompareResultType.MSG_EQUAL;
-		} else if (getComparedResult().equals(CompareResultType.FORMATERROR)) {
-			return CompareResultType.MSG_JSONFORMATERR;
+	private CompareResultType compareJsonStructure(ObjectMapper mapper) throws JsonMappingException, JsonProcessingException {
+		JsonNode jsonDataFromCht = mapper.readTree(getDataFromCht());
+		JsonNode jsonDataFromIISI = mapper.readTree(getDataFromIISI());
+		if (jsonDataFromCht.equals(jsonDataFromIISI)) {
+			return CompareResultType.EQUAL;
 		} else {
-			return CompareResultType.MSG_ISEMPTY;
+			return CompareResultType.NONEQUAL;
 		}
 	}
 

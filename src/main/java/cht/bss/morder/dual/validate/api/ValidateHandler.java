@@ -94,7 +94,7 @@ public class ValidateHandler {
 	}
 
 	protected Mono<ServerResponse> currentReportWithExcel(final String uuid) {
-		final Report currentReport = reportService.getReportByUiid(uuid);
+		final Report currentReport = reportService.getReportByUuid(uuid);
 		final Consumer<HttpHeaders> header = getConsumerHttpHeaders(currentReport.getStartDate().toInstant(), "xlsx");
 		final byte[] byteArray = reportService.processReport(currentReport);
 		return ServerResponse.ok().headers(header).bodyValue(byteArray).log(log.getName(), FINE).subscribeOn(scheduler);
@@ -107,7 +107,7 @@ public class ValidateHandler {
 
 	protected Mono<ServerResponse> currentReportWithJSON(final String uuid) {
 		final Callable<Report> takeAWhile = () -> {
-			final Report currentReport = reportService.getReportByUiid(uuid);
+			final Report currentReport = reportService.getReportByUuid(uuid);
 			return currentReport;
 		};
 		Mono<Report> mono = Mono.fromCallable(takeAWhile);
@@ -116,7 +116,7 @@ public class ValidateHandler {
 
 	public Mono<ServerResponse> currentReportWithZip(final ServerRequest request) {
 		final String uuid = getUUID(request);
-		final Report currentReport = reportService.getReportByUiid(uuid);
+		final Report currentReport = reportService.getReportByUuid(uuid);
 
 		final Consumer<HttpHeaders> header = getConsumerHttpHeaders(currentReport.getStartDate().toInstant(), "zip");
 
@@ -133,7 +133,7 @@ public class ValidateHandler {
 
 	public Mono<ServerResponse> stopTest(final ServerRequest request) {
 		final String uuid = getUUID(request);
-		reportService.cleanUpReportByUiid(uuid);
+		reportService.cleanUpReportByUuid(uuid);
 		return ServerResponse.ok().build();
 	}
 }

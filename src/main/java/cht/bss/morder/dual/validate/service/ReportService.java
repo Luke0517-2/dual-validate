@@ -16,18 +16,23 @@ import java.util.concurrent.ConcurrentMap;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import cht.bss.morder.dual.validate.common.CalendarUtil;
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
+import cht.bss.morder.dual.validate.enums.CompareResultType;
 import cht.bss.morder.dual.validate.vo.ComparedData;
 import cht.bss.morder.dual.validate.vo.Report;
-import cht.bss.morder.dual.validate.vo.Report.CompareResultType;
 import cht.bss.morder.dual.validate.vo.TestCase;
 import lombok.extern.slf4j.Slf4j;
 import net.lingala.zip4j.io.outputstream.ZipOutputStream;
@@ -48,6 +53,9 @@ public class ReportService {
 
 	/** 有多個測試報告同時執行. */
 	private ConcurrentMap<String, Report> uuidReportMap;
+
+	@Autowired
+	private ObjectMapper mapper;
 
 	/**
 	 * Post construct.
@@ -143,8 +151,19 @@ public class ReportService {
 				dataRow.createCell(2).setCellValue(comparedData.getQueryService());
 				dataRow.createCell(3).setCellValue(comparedData.getTable());
 				dataRow.createCell(4).setCellValue(comparedData.getData());
-				dataRow.createCell(5).setCellValue(CompareResultType.returnCompareResultAsString(comparedData));
-				dataRow.createCell(6).setCellValue(CompareResultType.getErrorMessageAsString(comparedData));
+
+				String error = comparedData.getError();
+				if (StringUtils.isEmpty(error)) {
+					try {
+						dataRow.createCell(5).setCellValue(comparedData.getComparedResult(mapper).getValue());
+					} catch (JsonProcessingException e) {
+						dataRow.createCell(5).setCellValue(CompareResultType.NONEQUAL.getValue());
+						dataRow.createCell(6).setCellValue("文字資料不一致，轉成json結構比較時出錯");
+					}
+				} else {
+					dataRow.createCell(6).setCellValue(error);
+				}
+
 				dataRow.createCell(7).setCellValue("/" + path[path.length - 1]);
 			}
 		}
@@ -206,7 +225,6 @@ public class ReportService {
 		final File excelFile = new File(uuidPath.toString() + File.separator + excelFileName);
 		FileUtils.writeByteArrayToFile(excelFile, excelStream);
 
-		final String compFileName = String.format("report_%s.zip", sdf.format(date));
 		final File uuidFolder = new File(uuidPath.toString());
 
 		byte[] byteArray = getZipStream(uuidFolder);
@@ -265,22 +283,22 @@ public class ReportService {
 	}
 
 	/**
-	 * Gets the report by uiid.
+	 * Gets the report by uuid.
 	 *
 	 * @param uuid the uuid
-	 * @return the report by uiid
+	 * @return the report by uuid
 	 */
-	public Report getReportByUiid(final String uuid) {
+	public Report getReportByUuid(final String uuid) {
 		return this.uuidReportMap.get(uuid);
 	}
 
 	/**
-	 * Clean up report by uiid.
+	 * Clean up report by uuid.
 	 *
 	 * @param uuid the uuid
 	 */
-	public void cleanUpReportByUiid(final String uuid) {
-		final Report report = getReportByUiid(uuid);
+	public void cleanUpReportByUuid(final String uuid) {
+		final Report report = getReportByUuid(uuid);
 		if (report != null) {
 			final String basePath = report.getBasePath();
 			FileUtils.deleteQuietly(new File(basePath));

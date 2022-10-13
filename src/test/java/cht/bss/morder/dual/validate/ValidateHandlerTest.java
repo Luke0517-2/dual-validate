@@ -69,7 +69,7 @@ public class ValidateHandlerTest {
 		ReportService reportService = mock(ReportService.class);
 		when(reportService.startReport()).thenReturn(getReport());
 		when(reportService.addTestCaseToReport(Mockito.anyString(), Mockito.any())).thenReturn(testCase);
-		when(reportService.getReportByUiid(Mockito.anyString())).thenReturn(getReport());
+		when(reportService.getReportByUuid(Mockito.anyString())).thenReturn(getReport());
 		when(reportService.processReport(Mockito.any())).thenReturn(new byte[111]);
 		when(reportService.getCurrentReportWithZip(Mockito.any())).thenReturn(new byte[1100]);
 		ReflectionTestUtils.setField(handler, "reportService", reportService);
