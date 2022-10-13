@@ -1,10 +1,6 @@
 package cht.bss.morder.dual.validate.vo.json;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-
-import org.apache.commons.lang3.StringUtils;
 
 import com.jayway.jsonpath.JsonPath;
 
@@ -37,5 +33,9 @@ public class SpecsvcIDResponseVO extends AbstractJSONPathModel{
 		
 		Optional<Object> specsvcid = getSingleValueByParams(GET_SPECSVCID_FROM_DATALIST);
 		return specsvcid.isPresent()? specsvcid.get().toString():null;
+	}
+	
+	public String getValue() {
+		return getSpecsvcID();
 	}
 }

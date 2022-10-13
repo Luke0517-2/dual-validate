@@ -1,5 +1,6 @@
 package cht.bss.morder.dual.validate.service.query;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -21,26 +22,32 @@ public class QueryCustInfoService extends QueryService {
 
 	@Override
 	protected List<ComparedData> queryData(TestCase testCase) {
+
+		ComparedData comparedDataByTelnum = queryByTelnum(testCase);
+		ComparedData comparedDataByCustId = queryByCustId(testCase);
+		return Arrays.asList(new ComparedData[] { comparedDataByTelnum, comparedDataByCustId });
+	}
+
+	private ComparedData queryByCustId(TestCase testCase) {
+		ComparedData comparedData = factory.getComparedData(QueryCustinfoType.custbehavior, testCase);
+		CompletableFuture<ComparedData> result = queryResult(comparedData);
 		try {
-			List<ComparedData> comparedDataByTelnum = queryByTelnum(testCase);
-			List<ComparedData> comparedDataByCustId = queryByCustId(testCase);
-			comparedDataByCustId.addAll(comparedDataByCustId);
-			return comparedDataByTelnum;
+			return result.get();
 		} catch (InterruptedException | ExecutionException e) {
-			throw new BusinessException(e.getMessage());
+			comparedData.setError("執行發生錯誤");
+			return comparedData;
 		}
 	}
 
-	private List<ComparedData> queryByCustId(TestCase testCase) throws InterruptedException, ExecutionException {
-		ComparedData comparedData = factory.getComparedData(QueryCustinfoType.custbehavior, testCase);
-		CompletableFuture<List<ComparedData>> result = queryResult(comparedData);
-		return result.get();
-	}
-
-	private List<ComparedData> queryByTelnum(TestCase testCase) throws InterruptedException, ExecutionException {
+	private ComparedData queryByTelnum(TestCase testCase) {
 		ComparedData comparedData = factory.getComparedData(QueryCustinfoType.telnum, testCase);
-		CompletableFuture<List<ComparedData>> result = queryResult(comparedData);
-		return result.get();
+		CompletableFuture<ComparedData> result = queryResult(comparedData);
+		try {
+			return result.get();
+		} catch (InterruptedException | ExecutionException e) {
+			comparedData.setError("執行發生錯誤");
+			return comparedData;
+		}
 	}
 
 }

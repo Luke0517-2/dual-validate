@@ -1,10 +1,6 @@
 package cht.bss.morder.dual.validate.vo.json;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-
-import org.apache.commons.lang3.StringUtils;
 
 import com.jayway.jsonpath.JsonPath;
 
@@ -41,4 +37,7 @@ public class ContractIDResponseVO extends AbstractJSONPathModel{
 		return contractid.isPresent()? contractid.get().toString():null;
 	}
 
+	public String getValue() {
+		return getContractID();
+	}
 }

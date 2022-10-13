@@ -92,6 +92,7 @@ public class ValidateHandlerTest {
 	private void generateTestCase() throws Exception {
 		testCase = TestCase.builder().custId("id").telNum("telnum").build();
 		testCaseBody = mapper.writeValueAsString(testCase);
+		System.out.println(testCaseBody);
 	}
 
 	@AfterEach

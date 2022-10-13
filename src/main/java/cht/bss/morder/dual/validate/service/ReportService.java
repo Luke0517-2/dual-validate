@@ -138,7 +138,7 @@ public class ReportService {
 
 		final File newDir = new File(basePath);
 		log.info("dir path:{}", newDir.getAbsolutePath());
-		final boolean successMkDir = newDir.mkdir();
+		final boolean successMkDir = newDir.mkdirs();
 		if (!successMkDir) {
 			log.warn("Can't mkdir for this report:{}", uuid);
 		}

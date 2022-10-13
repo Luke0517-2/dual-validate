@@ -2,6 +2,8 @@ package cht.bss.morder.dual.validate.vo;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -20,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TestCase {
+public class TestCase implements Cloneable {
 
 	/**
 	 * 行網電話號碼
@@ -34,14 +36,13 @@ public class TestCase {
 	@JsonProperty("custId")
 	private String custId;
 
-	
 	@JsonIgnore
 	private List<ComparedData> comparedData;
 
 	private String contract;
 	private String orderno;
 	private String spsvc;
-	
+
 	/**
 	 * 顯示錯誤原因
 	 */
@@ -55,5 +56,10 @@ public class TestCase {
 
 	@JsonIgnore
 	private String dataPath;
+
+	@Override
+	public TestCase clone() {
+		return TestCase.builder().telNum(telNum).custId(custId).build();
+	}
 
 }

@@ -13,7 +13,7 @@ import com.jayway.jsonpath.ReadContext;
 /**
  * @author 1909002 建立 json path model
  */
-public class AbstractJSONPathModel {
+public abstract class AbstractJSONPathModel {
 
   /**
    * LOGGER
@@ -158,4 +158,6 @@ public class AbstractJSONPathModel {
     return result;
   }
 
+  
+  public abstract String getValue();
 }

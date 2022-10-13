@@ -1,16 +1,12 @@
 package cht.bss.morder.dual.validate.service.query;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
 import cht.bss.morder.dual.validate.service.MOrderFacade;
 import cht.bss.morder.dual.validate.vo.ComparedData;
-import cht.bss.morder.dual.validate.vo.QueryInput;
 import cht.bss.morder.dual.validate.vo.TestCase;
 
 public abstract class QueryService {
@@ -29,47 +25,26 @@ public abstract class QueryService {
 		return morderFacade;
 	}
 
-	protected CompletableFuture<String> queryIISI(QueryInput queryInput) {
+	protected void queryIISI(ComparedData comparedData) {
 		MOrderFacade facade = getMOrderFacade();
-		return CompletableFuture.supplyAsync(() -> facade.queryIISI(queryInput));
+		String dataFromIISI = facade.queryIISI(comparedData.getQueryInput());
+		comparedData.setDataFromIISI(dataFromIISI);
 	}
 
-	protected CompletableFuture<String> queryCht(QueryInput queryInput) {
+	protected void queryCht(ComparedData comparedData) {
 		MOrderFacade facade = getMOrderFacade();
-		return CompletableFuture.supplyAsync(() -> facade.queryCht(queryInput));
-	}
-	
-	protected ComparedData queryForData(ComparedData comparedData) {
-		QueryInput queryInput = comparedData.getQueryInput();
-		CompletableFuture<String> dataFromIISI = queryIISI(queryInput);
-		CompletableFuture<String> dataFromCht = queryCht(queryInput);
-
-		List<String> errors = new ArrayList<>();
-
-		try {
-			comparedData.setDataFromCht(dataFromCht.get());
-		} catch (InterruptedException | ExecutionException e) {
-			errors.add(e.getMessage());
-		}
-
-		try {
-			comparedData.setDataFromIISI(dataFromIISI.get());
-		} catch (InterruptedException | ExecutionException e) {
-			errors.add(e.getMessage());
-		}
-
-		if (errors.isEmpty()) {
-			return comparedData;
-		} else {
-			String template = "查詢發生錯誤: %s";
-			throw new BusinessException(String.format(template, String.join(",", errors)));
-		}
+		String dataFromCht = facade.queryCht(comparedData.getQueryInput());
+		comparedData.setDataFromCht(dataFromCht);
 	}
 
-	protected CompletableFuture<List<ComparedData>> queryResult(ComparedData comparedData) {
-		ComparedData data = queryForData(comparedData);
-		List<ComparedData> result = new ArrayList<>();
-		result.add(data);
-		return CompletableFuture.supplyAsync(()-> result);
+	protected ComparedData queryBothServer(ComparedData comparedData) {
+		queryIISI(comparedData);
+		queryCht(comparedData);
+		return comparedData;
+	}
+
+	protected CompletableFuture<ComparedData> queryResult(ComparedData comparedData) {
+		ComparedData data = queryBothServer(comparedData);
+		return CompletableFuture.supplyAsync(() -> data);
 	}
 }
