@@ -164,7 +164,7 @@ public class ReportService {
 					dataRow.createCell(6).setCellValue(error);
 				}
 
-				dataRow.createCell(7).setCellValue("/" + path[path.length - 1]);
+				dataRow.createCell(7).setCellValue("/" + path[path.length - 1]+"/"+comparedData.getQueryService());
 			}
 		}
 	}

@@ -1,0 +1,12 @@
+parameters:
+  param: []
+
+steps:
+  - ${{ each p in parameters.param }}: 
+    # A script task about deployment by 'oc'
+    - script: |
+        oc -n d210641 import-image d210641.azurecr.io/${{ lower( p ) }}:latest --from="d210641.azurecr.io/${{ lower( p ) }}:latest" --confirm --reference-policy=local
+        oc tag image-registry.openshift-image-registry.svc:5000/d210641/${{ lower( p ) }}:latest  d210641/${{ lower( p ) }}:$(Build.BuildNumber)
+        oc -n d210641 apply -f ${{ p }}/k8s-yml/${{ lower( p ) }}-deploy.yaml
+      displayName: 'deployment ${{ p }} by oc '
+      continueOnError: true          

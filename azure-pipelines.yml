@@ -103,3 +103,23 @@ steps:
       targetPath:  $(System.DefaultWorkingDirectory)/k8s-yml
       artifactName: 'k8s-yml'
     displayName: 'uploading yaml files'
+
+  # Install oc so that it can be used within a 'script' or bash 'task'
+  - task: oc-setup@2
+    inputs:
+       openshiftService: 'ocp-4.11'
+       version: '4.9.28'
+    continueOnError: true    
+
+
+  # A script task making use of 'oc'
+  - script: |
+      oc -n d210641 get pods
+      oc -n d210641 get deployment
+    displayName: 'use oc cli'
+    continueOnError: true    
+
+  - template: template-oc.yml
+    parameters:
+      param: 
+        - dual-validate
