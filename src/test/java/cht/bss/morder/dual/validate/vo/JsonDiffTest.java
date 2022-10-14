@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -45,5 +46,11 @@ public class JsonDiffTest {
 
 		assertNotEquals(jsonFirst, jsonSecond);
 	}
-
+	
+	@Test
+	public void testStringUtilsEquals() {
+		boolean restult = StringUtils.equals(json1, json2);
+		
+		assertEquals(false, restult);
+	}
 }

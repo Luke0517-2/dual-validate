@@ -16,16 +16,22 @@ import java.util.concurrent.ConcurrentMap;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import cht.bss.morder.dual.validate.common.CalendarUtil;
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
+import cht.bss.morder.dual.validate.enums.CompareResultType;
+import cht.bss.morder.dual.validate.vo.ComparedData;
 import cht.bss.morder.dual.validate.vo.Report;
 import cht.bss.morder.dual.validate.vo.TestCase;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +53,9 @@ public class ReportService {
 
 	/** 有多個測試報告同時執行. */
 	private ConcurrentMap<String, Report> uuidReportMap;
+
+	@Autowired
+	private ObjectMapper mapper;
 
 	/**
 	 * Post construct.
@@ -79,45 +88,85 @@ public class ReportService {
 	 * @return the byte[]
 	 */
 	public byte[] processReport(final Report report) {
-		// TODO: 產生報表
-//		byte[] content = null;
-//		try (XSSFWorkbook workbook = new XSSFWorkbook()) {
-//			final XSSFSheet sheet = workbook.createSheet("TestCases");
-//			final Row titleRow = sheet.createRow(0);
-//			final String[] columns = new String[] { "案例號碼", "預計結果", "實際結果", "比對結果", "錯誤原因", "檔案路徑" };
-//
-//			int t = 0;
-//			for (final String columnName : columns) {
-//				final Cell cell = titleRow.createCell(t++);
-//				cell.setCellValue(columnName);
-//			}
-//
-//			final List<TestCase> testCases = report.getTestCases();
-//
-//			int rowNum = 0;
-//
-//			for (final TestCase testCase : testCases) {
-//				final Row dataRow = sheet.createRow(++rowNum);
-//
-//				final String[] path = testCase.getDataPath().split("/");
-//
-//				int r = 0;
-//				dataRow.createCell(r++).setCellValue(testCase.getCaseNo());
-//				dataRow.createCell(r++).setCellValue(testCase.getExpectedResult());
-//				dataRow.createCell(r++).setCellValue(testCase.getActualResult());
-//				dataRow.createCell(r++).setCellValue(testCase.getCompareResult().toString());
-//				dataRow.createCell(r++).setCellValue(testCase.getErrorReason());
-//				dataRow.createCell(r++).setCellValue("/" + path[path.length - 1]);
-//			}
-//
-//			ByteArrayOutputStream out = new ByteArrayOutputStream();
-//			workbook.write(out);
-//			content = out.toByteArray();
-//		} catch (IOException e) {
-//			log.error("", e);
-//		}
+		try (XSSFWorkbook workbook = new XSSFWorkbook()) {
 
-		return null;
+			generateExcelByReport(workbook, report);
+
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			workbook.write(out);
+			byte[] content = out.toByteArray();
+			return content;
+		} catch (IOException e) {
+			log.error("", e);
+			throw new BusinessException(e.getMessage());
+		}
+	}
+
+	/**
+	 * 產製Excel內容
+	 * 
+	 * @param workbook
+	 * @param report
+	 * @throws IOException
+	 */
+	protected void generateExcelByReport(XSSFWorkbook workbook, Report report) throws IOException {
+
+		final XSSFSheet sheet = workbook.createSheet("TestCases");
+
+		final String[] columns = new String[] { "比對門號", "證號", "比對類別", "比對參數or表格", "參數欄位或資料", "比對CHT與IISI結果", "錯誤資訊",
+				"檔案路徑" };
+		insertTitleRows(sheet, columns);
+		insertData(sheet, report);
+	}
+
+	/**
+	 * 設定Excel顯示欄位名稱
+	 * 
+	 * @param sheet
+	 * @param columns
+	 */
+	private void insertTitleRows(XSSFSheet sheet, String[] columns) {
+		final Row titleRow = sheet.createRow(0);
+		for (int indexOfCell = 0; indexOfCell < columns.length; indexOfCell++) {
+			titleRow.createCell(indexOfCell).setCellValue(columns[indexOfCell]);
+		}
+	}
+
+	/**
+	 * 產製報告內容，一份report有多項testCase，一項testCase會有多列comparedData
+	 * 
+	 * @param sheet
+	 * @param report
+	 */
+	private void insertData(XSSFSheet sheet, Report report) {
+		List<TestCase> testCases = report.getTestCases();
+		int rowNum = 0;
+		for (final TestCase testCase : testCases) {
+			for (ComparedData comparedData : testCase.getComparedData()) {
+				final Row dataRow = sheet.createRow(++rowNum);
+				final String[] path = testCase.getDataPath().split("/");
+
+				dataRow.createCell(0).setCellValue(testCase.getTelNum());
+				dataRow.createCell(1).setCellValue(testCase.getCustId());
+				dataRow.createCell(2).setCellValue(comparedData.getQueryService());
+				dataRow.createCell(3).setCellValue(comparedData.getTable());
+				dataRow.createCell(4).setCellValue(comparedData.getData());
+
+				String error = comparedData.getError();
+				if (StringUtils.isEmpty(error)) {
+					try {
+						dataRow.createCell(5).setCellValue(comparedData.getComparedResult(mapper).getValue());
+					} catch (JsonProcessingException e) {
+						dataRow.createCell(5).setCellValue(CompareResultType.NONEQUAL.getValue());
+						dataRow.createCell(6).setCellValue("文字資料不一致，轉成json結構比較時出錯");
+					}
+				} else {
+					dataRow.createCell(6).setCellValue(error);
+				}
+
+				dataRow.createCell(7).setCellValue("/" + path[path.length - 1]+"/"+comparedData.getQueryService());
+			}
+		}
 	}
 
 	/**
@@ -138,7 +187,7 @@ public class ReportService {
 
 		final File newDir = new File(basePath);
 		log.info("dir path:{}", newDir.getAbsolutePath());
-		final boolean successMkDir = newDir.mkdir();
+		final boolean successMkDir = newDir.mkdirs();
 		if (!successMkDir) {
 			log.warn("Can't mkdir for this report:{}", uuid);
 		}
@@ -176,7 +225,6 @@ public class ReportService {
 		final File excelFile = new File(uuidPath.toString() + File.separator + excelFileName);
 		FileUtils.writeByteArrayToFile(excelFile, excelStream);
 
-		final String compFileName = String.format("report_%s.zip", sdf.format(date));
 		final File uuidFolder = new File(uuidPath.toString());
 
 		byte[] byteArray = getZipStream(uuidFolder);
@@ -235,22 +283,22 @@ public class ReportService {
 	}
 
 	/**
-	 * Gets the report by uiid.
+	 * Gets the report by uuid.
 	 *
 	 * @param uuid the uuid
-	 * @return the report by uiid
+	 * @return the report by uuid
 	 */
-	public Report getReportByUiid(final String uuid) {
+	public Report getReportByUuid(final String uuid) {
 		return this.uuidReportMap.get(uuid);
 	}
 
 	/**
-	 * Clean up report by uiid.
+	 * Clean up report by uuid.
 	 *
 	 * @param uuid the uuid
 	 */
-	public void cleanUpReportByUiid(final String uuid) {
-		final Report report = getReportByUiid(uuid);
+	public void cleanUpReportByUuid(final String uuid) {
+		final Report report = getReportByUuid(uuid);
 		if (report != null) {
 			final String basePath = report.getBasePath();
 			FileUtils.deleteQuietly(new File(basePath));

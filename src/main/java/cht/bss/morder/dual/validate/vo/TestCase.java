@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TestCase {
+public class TestCase implements Cloneable {
 
 	/**
 	 * 行網電話號碼
@@ -29,19 +29,17 @@ public class TestCase {
 	@JsonProperty("telNum")
 	private String telNum;
 
-	@JsonIgnore
 	@Schema(description = "行網證號")
 	@JsonProperty("custId")
 	private String custId;
 
-	
 	@JsonIgnore
 	private List<ComparedData> comparedData;
 
 	private String contract;
 	private String orderno;
 	private String spsvc;
-	
+
 	/**
 	 * 顯示錯誤原因
 	 */
@@ -55,5 +53,10 @@ public class TestCase {
 
 	@JsonIgnore
 	private String dataPath;
+
+	@Override
+	public TestCase clone() {
+		return TestCase.builder().telNum(telNum).custId(custId).build();
+	}
 
 }

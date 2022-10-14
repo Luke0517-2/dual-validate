@@ -28,7 +28,7 @@ import cht.bss.morder.dual.validate.vo.TestCase;
 import reactor.core.scheduler.Scheduler;
 
 @Configuration
-@ConditionalOnProperty(prefix = "pdc.validate.api", name = "mode", havingValue = "REACTIVE")
+// @ConditionalOnProperty(prefix = "pdc.validate.api", name = "mode", havingValue = "REACTIVE")
 public class ValidateRoutes {
 	private static final String MAIN_REQUEST_MAPPING = "/cht/validate";
 	private static final String VALIDATE_START_MAPPING = "/startTest";

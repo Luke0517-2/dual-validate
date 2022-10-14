@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum MoqueryOrderNoType implements MoqueryEnumInterface {
 
-	Modelinsrec("modelinsrec", "1", "%s");
+	Modelinsrec("modelinsrec", "1", "%s"), Modeldeliverdetail("modeldeliverdetail", "1", "%s");
 
 	private final String tableName;
 	private final String type;

@@ -1,10 +1,6 @@
 package cht.bss.morder.dual.validate.vo.json;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-
-import org.apache.commons.lang3.StringUtils;
 
 import com.jayway.jsonpath.JsonPath;
 
@@ -38,6 +34,10 @@ public class OrderNoResponseVO extends AbstractJSONPathModel{
 	
 		Optional<Object> orderno = getSingleValueByParams(GET_ORDERNO_FROM_DATALIST);
 		return orderno.isPresent()? orderno.get().toString():null;
+	}
+	
+	public String getValue() {
+		return getOrderNo();
 	}
 }
 

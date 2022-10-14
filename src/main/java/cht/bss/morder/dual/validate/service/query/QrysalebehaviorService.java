@@ -1,5 +1,6 @@
 package cht.bss.morder.dual.validate.service.query;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -21,11 +22,13 @@ public class QrysalebehaviorService extends QueryService {
 	@Override
 	public List<ComparedData> queryData(TestCase testCase) {
 		ComparedData comparedData = buildQueryInputIntoComparedData(testCase);
-		CompletableFuture<List<ComparedData>> result = queryResult(comparedData);
+		CompletableFuture<ComparedData> result = queryResult(comparedData);
 		try {
-			return result.get();
+			ComparedData returnedData = result.get();
+			return Arrays.asList(new ComparedData[] { returnedData });
 		} catch (InterruptedException | ExecutionException e) {
-			throw new BusinessException();
+			comparedData.setError("執行發生錯誤");
+			return Arrays.asList(new ComparedData[] {comparedData});
 		}
 	}
 

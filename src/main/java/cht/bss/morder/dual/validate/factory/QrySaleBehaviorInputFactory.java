@@ -12,7 +12,7 @@ public class QrySaleBehaviorInputFactory extends QueryInputFactory {
 
 	public ComparedData getComparedData(TestCase testCase) {
 		QueryInput queryInput = buildQueryInputWithTelnum(testCase);
-		return builder("qrysalebehavior").data(testCase.getTelNum()).table("").queryInput(queryInput).build();
+		return builder("qrysalebehavior").data(testCase.getTelNum()).table("qrysalebehavior").queryInput(queryInput).build();
 	}
 
 	private QueryInput buildQueryInputWithTelnum(TestCase testCase) {

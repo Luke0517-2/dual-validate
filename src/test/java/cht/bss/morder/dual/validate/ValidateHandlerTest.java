@@ -53,11 +53,27 @@ public class ValidateHandlerTest {
 
 	private String testCaseBody;
 
+	@Autowired
+	private ValidateService validateService;
+
+	@Autowired
+	private ReportService reportService;
+
+	private ReportService reportServiceOri;
+
+	private ValidateService validateServiceOri;
+
 	@BeforeEach
 	protected void setUp() throws Exception {
 		generateTestCase();
 		client = WebTestClient.bindToRouterFunction(config.validateRouterFunctionSwagger(handler)).build();
 		setUpServices();
+	}
+
+	@AfterEach
+	protected void setDown() throws Exception {
+		ReflectionTestUtils.setField(handler, "validateService", validateServiceOri);
+		ReflectionTestUtils.setField(handler, "reportService", reportServiceOri);
 	}
 
 	private void setUpServices() throws InvalidFormatException, IOException {
@@ -66,13 +82,14 @@ public class ValidateHandlerTest {
 	}
 
 	private void setUpReportService() throws InvalidFormatException, IOException {
-		ReportService reportService = mock(ReportService.class);
-		when(reportService.startReport()).thenReturn(getReport());
-		when(reportService.addTestCaseToReport(Mockito.anyString(), Mockito.any())).thenReturn(testCase);
-		when(reportService.getReportByUiid(Mockito.anyString())).thenReturn(getReport());
-		when(reportService.processReport(Mockito.any())).thenReturn(new byte[111]);
-		when(reportService.getCurrentReportWithZip(Mockito.any())).thenReturn(new byte[1100]);
-		ReflectionTestUtils.setField(handler, "reportService", reportService);
+		ReportService newReportService = mock(ReportService.class);
+		when(newReportService.startReport()).thenReturn(getReport());
+		when(newReportService.addTestCaseToReport(Mockito.anyString(), Mockito.any())).thenReturn(testCase);
+		when(newReportService.getReportByUuid(Mockito.anyString())).thenReturn(getReport());
+		when(newReportService.processReport(Mockito.any())).thenReturn(new byte[111]);
+		when(newReportService.getCurrentReportWithZip(Mockito.any())).thenReturn(new byte[1100]);
+		reportServiceOri = reportService;
+		ReflectionTestUtils.setField(handler, "reportService", newReportService);
 	}
 
 	private Report getReport() {
@@ -84,14 +101,16 @@ public class ValidateHandlerTest {
 	}
 
 	private void setUpValidateService() {
-		ValidateService validateService = mock(ValidateService.class);
-		when(validateService.validateCheck(Mockito.any())).thenReturn(testCase);
-		ReflectionTestUtils.setField(handler, "validateService", validateService);
+		ValidateService newValidateService = mock(ValidateService.class);
+		when(newValidateService.validateCheck(Mockito.any())).thenReturn(testCase);
+		validateServiceOri = validateService;
+		ReflectionTestUtils.setField(handler, "validateService", newValidateService);
 	}
 
 	private void generateTestCase() throws Exception {
 		testCase = TestCase.builder().custId("id").telNum("telnum").build();
 		testCaseBody = mapper.writeValueAsString(testCase);
+		System.out.println(testCaseBody);
 	}
 
 	@AfterEach

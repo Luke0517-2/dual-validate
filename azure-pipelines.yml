@@ -94,7 +94,7 @@ steps:
       tags: 'latest'
   # A script task about tagging version number
   - script: |
-      sed -i 's/pdc-validate:latest/pdc-validate:$(Build.BuildNumber)/1' k8s-yml/pdc-validate-deployment.yaml     
+      sed -i 's/dual-validate:latest/dual-validate:$(Build.BuildNumber)/1' k8s-yml/dual-validate-deployment.yaml     
     displayName: 'tagging version number'
     
   - task: PublishPipelineArtifact@1
@@ -103,3 +103,34 @@ steps:
       targetPath:  $(System.DefaultWorkingDirectory)/k8s-yml
       artifactName: 'k8s-yml'
     displayName: 'uploading yaml files'
+
+  # Install oc so that it can be used within a 'script' or bash 'task'
+  - task: oc-setup@2
+    inputs:
+       openshiftService: 'ocp-4.11'
+       version: '4.9.28'
+    continueOnError: true    
+
+
+
+  - script: |
+      ls
+      ls $(System.DefaultWorkingDirectory)
+      echo '-----------------------------------------------------'
+      tree   $(System.DefaultWorkingDirectory)/k8s-yml/target
+      echo '-----------------------------------------------------'
+      tree   $(System.DefaultWorkingDirectory)/target
+      echo '-----------------------------------------------------'
+    displayName: 'inspect dual-validate folder structure ' 
+
+  # A script task making use of 'oc'
+  - script: |
+      oc -n d210641 get pods
+      oc -n d210641 get deployment
+    displayName: 'use oc cli'
+    continueOnError: true    
+
+  - template: template-oc.yml
+    parameters:
+      param: 
+        - dual-validate

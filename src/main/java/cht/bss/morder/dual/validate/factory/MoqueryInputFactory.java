@@ -18,7 +18,7 @@ import cht.bss.morder.dual.validate.vo.TestCase;
 
 @Service
 public class MoqueryInputFactory extends QueryInputFactory {
-
+	
 	public ComparedData getComparedData(MoqueryEnumInterface moqueryEnum, TestCase testCase) {
 		QueryInput queryInput = buildQueryInput(moqueryEnum, testCase);
 		Params param = queryInput.getParam();

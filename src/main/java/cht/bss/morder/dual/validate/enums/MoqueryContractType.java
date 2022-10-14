@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 public enum MoqueryContractType implements MoqueryEnumInterface {
 
 	Projmember("projmember", "3", "%s"), AgentMobileSet("agentmobset", "1", "%s"),
-	AgentMobileSetPart("agentmobsetpart", "1", "%s"), Modeldeliverdetail("modeldeliverdetail", "1", "%s"),
+	AgentMobileSetPart("agentmobsetpart", "1", "%s"),
+
 	Suspresumerec1("suspresumerec", "1", "%s"), Suspresumerec2("suspresumerec", "2", "%s"),
 	SpecsvcidMN("specialsvc", "1", "%s&MN"), SpecsvcidMV("specialsvc", "1", "%s&MV"),
 	SponsorSpsvc("sponsorspsvc", "1", "%s"), Datashareinfo("datashareinfo", "1", "%s"),
