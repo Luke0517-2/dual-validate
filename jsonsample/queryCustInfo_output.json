@@ -1,0 +1,317 @@
+
+{
+    "BMS": {
+        "Status": "0",
+        "Msg": "成功",
+        "TelNum": "0928879901",
+        "Data": {
+            "CurrentVoice": {
+                "Code": "4G399",
+                "Name": "4G 399型"
+            },
+            "User": {
+                "UseName": "",
+                "UserId": "G499280561"
+            },
+            "telinfo": {
+                "NumCause": "",
+                "Office": "297",
+                "NumUseCause": "改種類",
+                "RemindTel": "0289712002",
+                "NumUseType": "使用中",
+                "ServiceType": "4G語_數(語音_數據)",
+                "NumEffectDate": "2019-12-17",
+                "ServiceTypeCode": "J",
+                "Imei": "",
+                "HLR": "2L3HSS"
+            },
+            "NewPackageList": {
+                "NewPackage": [
+                    {
+                        "EffectDate": "",
+                        "Month": "THIS",
+                        "Service": "4G",
+                        "Package": "4G 399型",
+                        "PackageCode": "A010"
+                    },
+                    {
+                        "EffectDate": "",
+                        "Month": "NEXT",
+                        "Service": "4G",
+                        "Package": "4G 399型",
+                        "PackageCode": "A010"
+                    }
+                ]
+            },
+            "NextSM": "",
+            "Next4GEffectDate": "",
+            "ThisMonth3G": "",
+            "PromoList": {
+                "Promo": [
+                    {
+                        "StartDate": "2018-04-09",
+                        "ProjId": "26829",
+                        "Noeffectdate": "",
+                        "PlanId": "8128",
+                        "ProdDesc": "自助管道屆期換約註記(優惠並存)",
+                        "ProdGroup": "MAIN",
+                        "PlanDesc": "3G屆期同意移轉",
+                        "ProjService": "其他",
+                        "WapUrl": "",
+                        "ProjDesc": "3G屆期同意移轉(僅註記用)",
+                        "Productid": "236800",
+                        "Damage": "0"
+                    }
+                ],
+                "NewDiscnt": "基地台優惠3G983/650,4G全,5G無優惠"
+            },
+            "mcpsstore": {
+                "BalanceAmt": "0",
+                "PrepayFlag": "N"
+            },
+            "SpsvcList": {
+                "Spsvc": [
+                    {
+                        "StartDate": "2022/06/14",
+                        "SorderNo": "M11TP3Z08RLV8",
+                        "EorderNo": "",
+                        "SpsvcName": "VoLTE語音",
+                        "EndDate": "",
+                        "SpsvcCode": "LT"
+                    },
+                    {
+                        "StartDate": "2022/06/14",
+                        "SorderNo": "M11TP3Z08RLV8",
+                        "EorderNo": "",
+                        "SpsvcName": "One Number服務",
+                        "EndDate": "",
+                        "SpsvcCode": "AW"
+                    },
+                    {
+                        "StartDate": "2022/06/14",
+                        "SorderNo": "M11TP3Z08RLV8",
+                        "EorderNo": "",
+                        "SpsvcName": "VoWiFi語音",
+                        "EndDate": "",
+                        "SpsvcCode": "WF"
+                    },
+                    {
+                        "StartDate": "2019/12/17",
+                        "SorderNo": "M08FK1A05W721",
+                        "EorderNo": "",
+                        "SpsvcName": "emome APN",
+                        "EndDate": "",
+                        "SpsvcCode": "G1"
+                    },
+                    {
+                        "StartDate": "2011/05/07",
+                        "SorderNo": "M00SC1U003CM9",
+                        "EorderNo": "",
+                        "SpsvcName": "EMOME",
+                        "EndDate": "",
+                        "SpsvcCode": "EM"
+                    },
+                    {
+                        "StartDate": "2007/06/21",
+                        "SorderNo": "",
+                        "EorderNo": "",
+                        "SpsvcName": "來電捕手",
+                        "EndDate": "",
+                        "SpsvcCode": "PT"
+                    },
+                    {
+                        "StartDate": "1999/11/23",
+                        "SorderNo": "",
+                        "EorderNo": "",
+                        "SpsvcName": "多方",
+                        "EndDate": "",
+                        "SpsvcCode": "MT"
+                    }
+                ],
+                "Specsvc": "VoLTE語音,One Number服務,VoWiFi語音,emome APN,EMOME,來電捕手,多方"
+            },
+            "TelNum": "0928879901",
+            "NextMonth3G": "",
+            "AWInfo": {
+                "AWItemList": [
+                    {
+                        "TelType": "MAIN",
+                        "AWItem": [
+                            {
+                                "MainTel": "0928879901",
+                                "MainId": "G499280561",
+                                "SubTel": "0974003864",
+                                "StartRent": "2022-06-14",
+                                "SpsvcCode": "AW",
+                                "EndRent": ""
+                            }
+                        ]
+                    }
+                ]
+            },
+            "CurrentSM": "",
+            "ThisMonthGSM": "",
+            "CurrentData": "",
+            "empdata": {
+                "EmpID": "",
+                "EmpUnit": "",
+                "EmpOrg": ""
+            },
+            "simcard": {
+                "SimcardNo": "2LY19AT427250",
+                "CardType": "",
+                "Iccid": "89886920042034223003",
+                "Imsi": "466924203422300",
+                "Puk2": "44446274",
+                "Puk1": "44446274"
+            },
+            "NextVoice": {
+                "Code": "4G399",
+                "Name": "4G 399型"
+            },
+            "vipdata": {
+                "VipBusinessId": "",
+                "VipClass": ""
+            },
+            "NextData": "",
+            "sernum": {
+                "SerNumData": "",
+                "SerNumFax": ""
+            },
+            "NextSMEffectDate": "",
+            "NextGPRSEffectDate": "",
+            "taxexempt": {
+                "EGDate": "",
+                "EGCardNo": ""
+            },
+            "WapUrlList": {
+                "WapUrl": [
+                    {
+                        "StartDate": "2022-06-14",
+                        "Code": "W471",
+                        "EndDate": "",
+                        "Name": "４Ｇ影城通影迷俱樂部"
+                    }
+                ]
+            },
+            "accountinfo": {
+                "BillAddr": "",
+                "BillPhase": "1",
+                "NextBillPhase": "1",
+                "BillPeriod": "1",
+                "BillForm": "N",
+                "AccountNo": "M88NC115955",
+                "BankAcctNo": "",
+                "TaxCustName": "",
+                "TaxID": "",
+                "BillZipCode": "24857",
+                "BDdetail": "無包月明細,無限制索閱",
+                "BillOffice": "297"
+            },
+            "ThisMonth4G": "4G 399型",
+            "NextMonth4G": "4G 399型",
+            "contractinfo": {
+                "Office": "297",
+                "AgentEmpNo": "237581",
+                "AgentPos": "",
+                "RemindTel": "",
+                "CustTitle": "一般客戶",
+                "BusinessCode": "08",
+                "ApplyMode": "1",
+                "ServiceTypeCode": "J",
+                "AccumDebtAmt": "無",
+                "ESApplyMode": "",
+                "NPFlag": "",
+                "CTStatus": "正常使用",
+                "OprCode": "225002",
+                "ApplyType": "免保證金",
+                "Not3GSunsetNotify": "N",
+                "ServiceType": "4G語_數(語音_數據)",
+                "ApplyTypeCode": "5",
+                "StartRent": "1999-11-23",
+                "Business": "個人"
+            },
+            "NextMonthGSM": "",
+            "Renter": {
+                "BossName": "",
+                "BosspId": "",
+                "VRentId": "",
+                "CustAddr": "",
+                "RentId": "G499280561", 
+                "RentName": "",
+                "rentcustid": "",
+                "renttype": "",
+                "RentIdType": "",
+                "CustMailCode": "24870",
+                "email": "",
+                "BirthDate": ""
+            },
+            "basecontract": {
+                "BCStartDate": "1999-07-23",
+                "BaseCoNo": "N20143",
+                "NDStartDate": "2000-01-20",
+                "BCCancelDate": "",
+                "BCEndDate": "2029-10-22"
+            },
+            "deposit": {
+                "FeeAmt": "0",
+                "ReceiptNo": "null",
+                "ChkDate": "2004-09-14"
+            },
+            "Spsvcitemlist": {
+                "Spsvcitem": [
+                    {
+                        "itemid": "ST018",
+                        "SorderNo": "M10TP3N013L17",
+                        "EndTime": "",
+                        "EorderNo": "",
+                        "startdate": "2021/11/25",
+                        "desc": "中國-新"
+                    }
+                ]
+            },
+            "npinfo": {
+                "Tel4BuyPhone": "0905812579",
+                "NPTel": ""
+            },
+            "CMPInfo": {
+                "SpsvcStartDateTime": "2018-07-04 19:13:27",
+                "APNName": "",
+                "IoTMode": "LTE",
+                "EEType": "",
+                "EEMemType": "",
+                "EEMainProductId": "",
+                "NumCause": "新裝",
+                "BillPhase": "1",
+                "TelNum": "0905678998",
+                "ITGroupId": "6128707",
+                "ServiceType": "4G數據服務",
+                "MNSubProductId": "",
+                "StartRent": "2016-09-01",
+                "EESubProductId": "",
+                "SpsvcCode": "IC",
+                "NextBillPhase": "1",
+                "EEGroupId": "",
+                "ITMemType": "群首",
+                "RentId": "84081293",
+                "IP": "",
+                "EEIP": "",
+                "ServiceTypeCode": "K",
+                "NumEffectDate": "2016-09-01",
+                "ITMainProductId": "289635",
+                "ITSubProductId": "",
+                "CTStatus": "正常使用",
+                "EEAPN": "",
+                "NumUseType": "使用中",
+                "MNMainProductId": "",
+                "Iccid": "8988692004251823760",
+                "Imsi": "466924251823760",
+                "SimCardNo": "4LY165T987528",
+                "Package": "4G 236型",
+                "MNMemType": "",
+                "MNGroupId": ""
+            }
+        }
+    }
+}
+

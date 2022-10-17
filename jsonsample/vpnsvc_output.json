@@ -1,0 +1,24 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "incid": "34222",
+                "billcoid": "24035131",
+                "sorderno": "M09T29Z08I2Y5",
+                "eorderno": "",
+                "vpntype": "4",
+                "startdate": "2020-09-29",
+                "zonename": "",
+                "recordid": "1595211",
+                "uid": "2016",
+                "specsvcid": "140448893",
+                "pnp": "2016",
+                "enddate": "",
+                "vpntel": ""
+            }
+        ],
+        "tablename": "vpnsvc",
+        "querytype": "1"
+    }
+}

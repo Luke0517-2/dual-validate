@@ -1,0 +1,29 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "poexp": "288",
+                "insurancer": "鍾ＯＯ",
+                "recoverchannel": "",
+                "list_price": "31900",
+                "fom2printflag": "",
+                "agentpost": "",
+                "ott": "K",
+                "porderno1": "M08ZW1Z0N4S64",
+                "porderno2": "M08ZW1Z0N4SG9",
+                "pono": "CHTMB3000020532",
+                "insuranceno": "HA6L717879",
+                "wapcode": "U808",
+                "contractid": "1427680",
+                "modelcode": "ATSAN102WA",
+                "officecode": "3477",
+                "imei": "359193104084280",
+                "fom1printflag": "Y",
+                "moborderno": "M08ZW1Z0N4S62"
+            }
+        ],
+        "tablename": "modelinsrec",
+        "querytype": "1"
+    }
+}

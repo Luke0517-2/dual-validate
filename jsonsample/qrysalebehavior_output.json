@@ -1,0 +1,24 @@
+{
+    "BMS": {
+        "Status": "0",
+        "Msg": {
+            "notanalysis": "N",
+            "notdrawing": "N",
+            "notpartnermobilesms": "N",
+            "notpaidsmnotify": "N",
+            "notmarket": "N",
+            "notremitprize": "N",
+            "notmobilesale": "N",
+            "notedmsale": "N",
+            "notbillsale": "N",
+            "payremindtel": "",
+            "notpartneredmsale": "Y",
+            "notmobilesms": "N",
+            "notpartnerbillsale": "Y",
+            "notpartnersale": "Y",
+            "notbillpaynotify": "N",
+            "notsmsbill": ""
+        },
+        "telnum": "0933123456"
+    }
+}

@@ -27,7 +27,7 @@ public class MoqueryServiceTest {
 
 		assertNotNull(result);
 		assertNotEquals(0, result);
-		assertEquals(16, result.size());
+		assertEquals(17, result.size());
 	}
 
 	private TestCase getTestCase() {

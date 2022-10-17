@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import cht.bss.morder.dual.validate.vo.TestCase;
+
 @SpringBootTest(properties="dual-validate.mode=FILE")
 public class MOrderFacadeFileImplTest {
 	
@@ -19,4 +21,7 @@ public class MOrderFacadeFileImplTest {
 		
 	}
 	
+	private TestCase getTestCase() {
+		return TestCase.builder().telNum("11223").custId("33445").build();
+	}
 }

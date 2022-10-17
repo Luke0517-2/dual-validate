@@ -1,0 +1,30 @@
+
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "custno": "216791413",
+                "inserttime": "2018-04-27 10:37:50",
+                "replytime": "",
+                "executedate": "2018-05-11",
+                "startrenttime": "2014-10-22 17:30:38",
+                "endrenttime": "2014-12-02 16:22:29",
+                "executetime": "2018-05-11 03:00:01",
+                "blreplytime": "",
+                "fmsreplytime": "",
+                "contid": "207541882",
+                "acctno": "208428626",
+                "replymsg": "",
+                "spiporderno": "3042A000212226",
+                "ftpdate": "2018-04-28",
+                "custid": "",
+                "renttype": "ALL",
+                "ratingreplytime": "",
+                "telnum": "0905801128"
+            }
+        ],
+        "tablename": "delcustinfoapply",
+        "querytype": "1"
+    }
+}

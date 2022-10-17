@@ -1,0 +1,42 @@
+
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "reason": "自台中營運處調派至彰化營運處",
+                "auto": "",
+                "orderno": "M00CHHZ00MGB9",
+                "birthdate": "",
+                "useid": "",
+                "lendout": "0",
+                "orderdate": "2011-02-16",
+                "applytypedesc": "B2",
+                "repid": "",
+                "applyitem": "modify",
+                "useempno": "808442",
+                "sec_reptype": "",
+                "custmailcode": "",
+                "repname": "",
+                "useldap": "leowu",
+                "sec_rentcustid": "",
+                "reptelnum": "",
+                "sec_repcustid": "",
+                "formno": "10001-174",
+                "sec_renttype": "",
+                "email": "",
+                "rentid": "",
+                "budget": "0",
+                "custaddr": "",
+                "rentname": "",
+                "usename": "",
+                "fromsite": "EFORM",
+                "remindtel": "",
+                "telnum": "0988377932",
+                "remindcust": ""
+            }
+        ],
+        "tablename": "eformapplyrec",
+        "querytype": "1"
+    }
+}

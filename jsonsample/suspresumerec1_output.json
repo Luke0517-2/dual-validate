@@ -1,0 +1,22 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "suspendorderno": "M98LDMZ009PE6",
+                "resumeorderno": "M98LDMX002HU8",
+                "resumeofficecode": "1",
+                "suspenddate": "2009-01-31",
+                "contractid": "8749917",
+                "resumedate": "2009-02-06",
+                "cause": "E",
+                "suspendofficecode": "1",
+                "resumeoprcode": "721808",
+                "telnum": "0937924730",
+                "suspendoprcode": "667702"
+            }
+        ],
+        "tablename": "suspresumerec",
+        "querytype": "1"
+    }
+}

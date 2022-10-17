@@ -1,8 +1,10 @@
 package cht.bss.morder.dual.validate.factory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -55,7 +57,10 @@ public class QueryInputFactoryTest {
 		TestCase case1 = TestCase.builder().telNum(telnum).custId(custid).build();
 
 		ComparedData data = queryInputFactory.getComparedData(QrySalebehaviorType.qrySalebehavior, case1);
-
+		String telnumFromComparedData = getTelnumFromComparedData(data);
+		assertFalse(StringUtils.isEmpty(telnumFromComparedData));
+		assertEquals(telnum,telnumFromComparedData);
+		
 		validataComparedData(data);
 		assertEquals(telnum, data.getData());
 		assertEquals("qrysalebehavior", data.getTable());
@@ -158,4 +163,7 @@ public class QueryInputFactoryTest {
 		assertNotNull(input.getParam());
 	}
 
+	private String getTelnumFromComparedData(ComparedData data) {
+		return data.getQueryInput().getParam().getTelnum();
+	}
 }

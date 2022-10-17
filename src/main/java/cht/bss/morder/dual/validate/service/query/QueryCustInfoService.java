@@ -49,5 +49,10 @@ public class QueryCustInfoService extends QueryService {
 			return comparedData;
 		}
 	}
+//	private List<ComparedData> queryByCustinfoType(Enum<QueryCustinfoType> type,TestCase testCase) throws InterruptedException, ExecutionException {
+//		ComparedData comparedData = factory.getComparedData(type, testCase);
+//		CompletableFuture<List<ComparedData>> result = queryResult(comparedData);
+//		return result.get();
+//	}
 
 }

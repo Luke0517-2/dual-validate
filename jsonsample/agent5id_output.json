@@ -1,0 +1,24 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "deloprcode": "",
+                "poscode": "",
+                "canceltime": "",
+                "type": "W",
+                "applytime": "2012-02-16 11:15:42",
+                "recordid": "18130",
+                "subid": "Q060",
+                "agentcode": "",
+                "effectdate": "2012-02-16",
+                "enddate": "",
+                "oprcode": "669944",
+                "id": "0933123456",
+                "empidlist": ""
+            }
+        ],
+        "tablename": "agent5id",
+        "querytype": "1"
+    }
+}

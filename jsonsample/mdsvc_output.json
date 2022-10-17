@@ -1,0 +1,22 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "recordid": "768581",
+                "specsvcid": "226226700",
+                "enddate": "",
+                "ip": "",
+                "groupid": "12",
+                "alerttelnum": "",
+                "description": "",
+                "pdpname": "TPC01",
+                "vpntype": "2",
+                "startdate": "2022-08-23",
+                "ipmark": "D"
+            }
+        ],
+        "tablename": "mdsvc",
+        "querytype": "1"
+    }
+}

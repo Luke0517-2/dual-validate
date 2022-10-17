@@ -1,0 +1,22 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "recordid": "21",
+                "sharequota": "50",
+                "newrecordid": "0",
+                "contractid": "16331271",
+                "enddatetime": "",
+                "sorderno": "M09L2AA00M0G0",
+                "eorderno": "",
+                "telcnt": "3",
+                "type": "1",
+                "setdatetime": "2020-06-19 17:56:04",
+                "startdatetime": "2020-06-19 17:56:04"
+            }
+        ],
+        "tablename": "datashareinfo",
+        "querytype": "1"
+    }
+}

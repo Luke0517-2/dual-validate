@@ -1,0 +1,12 @@
+{
+    "BMS": {
+        "Status": "0",
+        "Msg": "成功",
+        "CustID": "G499280561",
+        "Data": [
+            {
+                "notsmsbill": "N"
+            }
+        ]
+    }
+}
