@@ -21,6 +21,11 @@ public class MOrderFacadeFileImplTest {
 		
 	}
 	
+	@Test
+	public void testQueryIISI() {
+		
+	}
+	
 	private TestCase getTestCase() {
 		return TestCase.builder().telNum("11223").custId("33445").build();
 	}

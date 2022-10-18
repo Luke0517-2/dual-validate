@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
+import cht.bss.morder.dual.validate.enums.QrySalebehaviorType;
 import cht.bss.morder.dual.validate.enums.QueryCustinfoType;
 import cht.bss.morder.dual.validate.vo.ComparedData;
 import cht.bss.morder.dual.validate.vo.Params;
@@ -30,15 +32,12 @@ public class ObjectMapperTest {
 	
 	@Test
 	public void testGetComparedData_In_QueryCustInfo_Telnum() throws JsonProcessingException {
-		final String telnum = "0912345678";
-		final String custid = "Helloworld";
-		TestCase case1 = TestCase.builder().telNum(telnum).custId(custid).build();
+		TestCase case1 = getTestCase();
 
 		ComparedData data = queryInputFactory.getComparedData(QueryCustinfoType.telnum, case1);
-		
 			String queryInputString = mapper.writeValueAsString(data.getQueryInput());
-			//readValue執行，param內皆為空值，待處理
 			QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
+			
 			assertEquals("QueryCustInfo", queryInput.getCmd());
 			assertEquals("123456", queryInput.getEmpno());
 			assertEquals("EAI", queryInput.getFromSite());
@@ -46,10 +45,32 @@ public class ObjectMapperTest {
 			assertEquals("0912345678", queryInput.getParam().getTelnum());
 			assertNull(queryInput.getParam().getCustid());
 			assertEquals("telinfo;contractinfo;accountinfo;renter;user;simcard;package_all;spsvc_current;wap_current;promo_current;grouppromo_current;AWInfo;spsvcitem;sernum;vipdata;deposit;mcpsstore;basecontract;taxexempt;empdata;npinfo;CMPInfo;", 
-						  queryInput.getParam().getTelnum());
+						  queryInput.getParam().getQuerydata());
 			
-
 	}
 	
-
+	@Test
+	public void testGetComparedData_In_QrySaleBehavior() throws JsonProcessingException {
+		TestCase testCase = getTestCase();
+		ComparedData data = queryInputFactory.getComparedData(QrySalebehaviorType.qrySalebehavior, testCase);
+		
+		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
+		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
+		
+		assertEquals("qrysalebehavior", queryInput.getCmd());
+		assertEquals("123456", queryInput.getEmpno());
+		assertEquals("EAI", queryInput.getFromSite());
+		assertEquals("10.144.1.1", queryInput.getClientip());
+		assertEquals("0912345678", queryInput.getParam().getTelnum());
+		assertNull(queryInput.getParam().getQuerydata());
+		
+	}
+	
+	private TestCase getTestCase() {
+		// TODO Auto-generated method stub
+		final String telnum = "0912345678";
+		final String custid = "Helloworld";
+		TestCase case1 = TestCase.builder().telNum(telnum).custId(custid).build();
+		return case1;
+	}
 }
