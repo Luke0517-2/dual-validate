@@ -1,0 +1,36 @@
+
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "userecid": "2568910",
+                "amount": "300",
+                "busitype": "P",
+                "bonus": "",
+                "fcalldetectdate": "2001-04-24",
+                "channel": "",
+                "couponno": "",
+                "expiredate": "2001-10-21",
+                "startdate": "2001-04-17",
+                "offercodeid": "",
+                "cardno": "KSS014D083032",
+                "lastvoucherdate": "",
+                "ispair": "Y",
+                "balanceamt": "",
+                "iccid": "",
+                "enddate": "2002-05-16",
+                "bkttype": "",
+                "contractid": "202039070",
+                "defexpiredate": "2002-12-31",
+                "firstcalldate": "2001-04-24",
+                "postingdate": "",
+                "lang": "0",
+                "telnum": "0912040017",
+                "status": "5"
+            }
+        ],
+        "tablename": "pasuserec",
+        "querytype": "1"
+    }
+}

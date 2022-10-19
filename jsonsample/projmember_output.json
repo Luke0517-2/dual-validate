@@ -1,0 +1,21 @@
+
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "oprtime": "2020-09-10 22:05:10",
+                "projcustid": "POUT",
+                "officecode": "227",
+                "projcusttype": "1_POUT",
+                "mgtcode": "22",
+                "allowamt": "1",
+                "content": "10034799",
+                "opremp": "poutIn",
+                "status": "USED"
+            }
+        ],
+        "tablename": "projmember",
+        "querytype": "3"
+    }
+}

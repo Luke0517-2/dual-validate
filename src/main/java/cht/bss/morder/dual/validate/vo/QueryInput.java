@@ -1,6 +1,7 @@
 package cht.bss.morder.dual.validate.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.Data;
 
 @Data
 @Builder
+@JsonPropertyOrder({ "cmd", "empno", "fromSite", "clientip", "param" })
 public class QueryInput {
 		
 	@Schema(description = "指令名稱", example = "QueryCustInfo")

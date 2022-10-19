@@ -1,0 +1,22 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "start_time": "2020-08-19 11:02:30",
+                "create_time": "2020-08-19 11:02:30",
+                "receiver_number": "0953928616",
+                "share_type": "1",
+                "start_orderno": "M09LDMZ0EQST8",
+                "contractid": "15813195",
+                "end_time": "2020-08-31 23:59:59",
+                "rec_serial": "987",
+                "end_orderno": "",
+                "share_quota": "10",
+                "release_time": ""
+            }
+        ],
+        "tablename": "data_share_rec",
+        "querytype": "1"
+    }
+}

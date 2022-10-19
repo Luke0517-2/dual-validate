@@ -1,0 +1,81 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "item": "ADDR",
+                "contractid": "106854408",
+                "moborderno": "M10TP3S037M26",
+                "content": "新北市深坑區三腳木５６號"
+            },
+            {
+                "item": "CUSTNAME",
+                "contractid": "106854408",
+                "moborderno": "M10TP3S037M26",
+                "content": "hello"
+            },
+            {
+                "item": "EMAIL",
+                "contractid": "106854408",
+                "moborderno": "M10TP3S037M26",
+                "content": "1221@cht.com.tw"
+            },
+            {
+                "item": "WORKTIME",
+                "contractid": "106854408",
+                "moborderno": "M10TP3S037M26",
+                "content": "20210514"
+            },
+            {
+                "item": "PM",
+                "contractid": "106854408",
+                "moborderno": "M10TP3S037M26",
+                "content": "dddd"
+            },
+            {
+                "item": "PMTEL",
+                "contractid": "106854408",
+                "moborderno": "M10TP3S037M26",
+                "content": "0988112385"
+            },
+            {
+                "item": "MDVPNAPN",
+                "contractid": "106854408",
+                "moborderno": "M10TP3S037M26",
+                "content": "TEST"
+            },
+            {
+                "item": "MDVPNIP",
+                "contractid": "106854408",
+                "moborderno": "M10TP3S037M26",
+                "content": "10323232323"
+            },
+            {
+                "item": "Res_1_or",
+                "contractid": "106854408",
+                "moborderno": "M10TP3S037M26",
+                "content": "!8CL8K"
+            },
+            {
+                "item": "Res_1_od",
+                "contractid": "106854408",
+                "moborderno": "M10TP3S037M26",
+                "content": "2021-05-19"
+            },
+            {
+                "item": "Res_1_st",
+                "contractid": "106854408",
+                "moborderno": "M10TP3S037M26",
+                "content": "2021-05-19 08:53:50"
+            },
+            {
+                "item": "Res_1_de",
+                "contractid": "106854408",
+                "moborderno": "M10TP3S037M26",
+                "content": "廠商至鴻科技股份有限公司已抽單"
+            }
+        ],
+        "tablename": "modeldeliverdetail",
+        "querytype": "1"
+    }
+}

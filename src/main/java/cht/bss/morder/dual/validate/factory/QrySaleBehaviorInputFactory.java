@@ -17,7 +17,7 @@ public class QrySaleBehaviorInputFactory extends QueryInputFactory {
 
 	private QueryInput buildQueryInputWithTelnum(TestCase testCase) {
 		QueryInput qrysalebehaviorInput = buildInput();
-		qrysalebehaviorInput.setParam(Params.builder().custid(testCase.getCustId()).querydata("custbehavior;").build());
+		qrysalebehaviorInput.setParam(Params.builder().telnum(testCase.getTelNum()).build());
 
 		return qrysalebehaviorInput;
 	}

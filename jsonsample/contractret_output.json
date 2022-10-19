@@ -1,0 +1,25 @@
+
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "orderno": "M09TY1S02T273",
+                "workdate": "",
+                "poscode": "",
+                "valid": "",
+                "discntcode": "",
+                "agentcode": "",
+                "applyitem": "S45",
+                "applydate": "2020-09-01",
+                "enddate": "",
+                "contractid": "4083556",
+                "oprcode": "",
+                "retdate": "",
+                "telnum": "0911373829"
+            }
+        ],
+        "tablename": "contractret",
+        "querytype": "1"
+    }
+}

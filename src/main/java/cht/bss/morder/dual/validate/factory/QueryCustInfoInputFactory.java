@@ -24,11 +24,13 @@ public class QueryCustInfoInputFactory extends QueryInputFactory {
 		}
 	}
 
+
 	private QueryInput buildQueryInputWithCustid(TestCase testCase) {
-		QueryInput queryCustInfoInput = buildInput();
-		queryCustInfoInput.setParam(Params.builder().custid(testCase.getCustId()).querydata("custbehavior;").build());
-		return queryCustInfoInput;
-	}
+	QueryInput queryCustInfoInput = buildInput();
+	queryCustInfoInput.setParam(Params.builder().custid(testCase.getCustId()).querydata("custbehavior;").build());
+	return queryCustInfoInput;
+}
+
 
 	private QueryInput buildQueryInputWithTelnum(TestCase testCase) {
 		QueryInput queryCustInfoInput = buildInput();
