@@ -1,14 +1,20 @@
 package cht.bss.morder.dual.validate.vo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@JsonInclude(Include.NON_NULL)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Params {
 	@Schema(description = "門號", example = "0912345678")
 	@JsonProperty("telnum")
