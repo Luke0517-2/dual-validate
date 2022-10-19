@@ -1,0 +1,82 @@
+trigger:
+  - 415-newman-testing
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  dual-validate-postman-script: CHT MOrder Dual-validate.postman_collection.json
+  baseUrl: http://mwbss-0000-istio-system.apps.ocp.iisi.test
+
+stages:
+- stage: dual-validate_newman-testing
+  displayName: dual-validate_newman-testing
+  jobs:
+  - job: dual-validate_newman-testing
+    displayName: dual-validate_newman-testing
+    timeoutInMinutes: 360 # how long to run the job before automatically cancelling
+    steps:
+      # 主機環境設定
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            
+            sudo -- sh -c "echo '60.250.171.28    mwbss-0000-istio-system.apps.ocp.iisi.test' >> /etc/hosts"
+            
+            echo 'hosts檔案內容'
+            cat /etc/hosts
+            
+            echo '目前路徑'
+            pwd
+            
+            export BUILD_NUMBER=$(Build.BuildNumber)
+            echo 'build 編號  #'${BUILD_NUMBER}
+            
+            timedatectl
+            echo 'set timezone to Asia/Taipei'
+            sudo timedatectl set-timezone Asia/Taipei
+            timedatectl
+            
+            echo '產生結果報表放置的目錄'
+            mkdir $(Build.SourcesDirectory)/report
+            echo $(Build.SourcesDirectory)/report
+        displayName: 'set env'
+
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '16.x'
+
+      - script: |
+          npm install -g newman
+          npm install -g newman-reporter-html
+        displayName: 'install newman'
+
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            echo '開始進行驗證測試，會重新統計報表'
+            UUID=$(curl -s '$(baseUrl)/cht/validate/startTest' | jq -r '.uuid')
+            echo  $UUID
+            
+            echo '透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對'
+            newman run $(Build.SourcesDirectory)/$(dual-validate-postman-script) --env-var="baseUrl=$(baseUrl)" --global-var="uuid=$UUID" --folder validate -r junit,html
+            
+            echo '取得現行統計報表，產出Zip檔案'
+            curl -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
+            ls $(Build.SourcesDirectory)/report
+            
+            echo '清除目前的驗證測試，會清空相關測試資料'
+            curl --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/stopTest'
+            
+            echo ' 成功執行'
+        continueOnError: false
+        displayName: '執行雙軌驗證'
+        
+      - task: PublishPipelineArtifact@1
+        continueOnError: true
+        inputs:
+          targetPath: $(Build.SourcesDirectory)/report
+          artifact: 'report'
+        displayName: '上傳 report'
