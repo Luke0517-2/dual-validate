@@ -9,11 +9,11 @@ variables:
   baseUrl: http://mwbss-0000-istio-system.apps.ocp.iisi.test
 
 stages:
-- stage: dual-validate_newman-testing
-  displayName: dual-validate_newman-testing
+- stage: dual_validate_newman
+  displayName: dual_validate_newman
   jobs:
-  - job: dual-validate_newman-testing
-    displayName: dual-validate_newman-testing
+  - job: dual_validate_newman
+    displayName: dual_validate_newman
     timeoutInMinutes: 360 # how long to run the job before automatically cancelling
     steps:
       # 主機環境設定
