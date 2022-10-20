@@ -5,7 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  dual-validate-postman-script: CHT MOrder Dual-validate.postman_collection.json
+  dual-validate-postman-script: CHT_MOrder_Dual-validate.postman_collection.json
   baseUrl: http://mwbss-0000-istio-system.apps.ocp.iisi.test
 
 stages:
