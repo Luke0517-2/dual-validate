@@ -25,7 +25,7 @@ spec:
       containers:
       - name: dual-validate
         image: >-
-          image-registry.openshift-image-registry.svc:5000/mwbss-0000/dual-validate:latest
+          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
         imagePullPolicy: Always
         livenessProbe:
             httpGet:
@@ -50,8 +50,8 @@ spec:
         ports:
         - containerPort: 8080
         volumeMounts:
-        - name: compares-data
-          mountPath: /app/comparelogs
+        - name: dual-validate-config
+          mountPath: /app/data
         env:
         - name: MEMORY_REQUEST
           valueFrom:
@@ -84,7 +84,7 @@ spec:
           limits: 
             memory: 1536Mi
             cpu: "1"
-      # volumes:
-      # - name: compares-data
-      #   persistentVolumeClaim:
-      #     claimName: mwbss-data
+        volumes:
+        - name: dual-validate-config
+          persistentVolumeClaim:
+            claimName: dual-validate-data
