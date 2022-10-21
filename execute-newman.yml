@@ -22,7 +22,7 @@ stages:
           targetType: 'inline'
           script: |
             
-            sudo -- sh -c "echo '60.250.171.28    subnp.ocp.iisi.test' >> /etc/hosts"
+            sudo -- sh -c "echo '60.250.171.28    dual-validate-d210641.apps.ocp.iisi.test' >> /etc/hosts"
             
             echo 'hosts檔案內容'
             cat /etc/hosts
