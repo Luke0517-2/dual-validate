@@ -6,7 +6,7 @@ pool:
 
 variables:
   dual-validate-postman-script: CHT_MOrder_Dual-validate.postman_collection.json
-  baseUrl: http://mwbss-0000-istio-system.apps.ocp.iisi.test
+  baseUrl: http://subnp.ocp.iisi.test
 
 stages:
 - stage: dual_validate_newman
@@ -22,7 +22,7 @@ stages:
           targetType: 'inline'
           script: |
             
-            sudo -- sh -c "echo '60.250.171.28    mwbss-0000-istio-system.apps.ocp.iisi.test' >> /etc/hosts"
+            sudo -- sh -c "echo '60.250.171.28    subnp.ocp.iisi.test' >> /etc/hosts"
             
             echo 'hosts檔案內容'
             cat /etc/hosts
