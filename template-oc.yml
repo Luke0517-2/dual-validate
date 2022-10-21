@@ -10,6 +10,7 @@ steps:
         oc -n d210641 apply -f $(System.DefaultWorkingDirectory)/k8s-yml/${{ lower( p ) }}-deployment.yaml
         oc -n d210641 apply -f $(System.DefaultWorkingDirectory)/k8s-yml/${{ lower( p ) }}-service.yaml
         oc -n d210641 apply -f $(System.DefaultWorkingDirectory)/k8s-yml/${{ lower( p ) }}-ingress.yaml
+        oc -n d210641 apply -f $(System.DefaultWorkingDirectory)/k8s-yml/${{ lower( p ) }}-route.yaml
         oc -n d210641 apply -f $(System.DefaultWorkingDirectory)/k8s-yml/${{ lower( p ) }}-persistentVolumeClaim.yaml
       displayName: 'deployment ${{ p }} by oc '
       continueOnError: true          
