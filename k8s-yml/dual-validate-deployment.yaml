@@ -84,7 +84,7 @@ spec:
           limits: 
             memory: 1536Mi
             cpu: "1"
-        volumes:
-        - name: compares-data
-          persistentVolumeClaim:
-            claimName: dual-validate-data
+      volumes:
+      - name: compares-data
+        persistentVolumeClaim:
+          claimName: dual-validate-data
