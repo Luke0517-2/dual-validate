@@ -1,5 +1,5 @@
 trigger:
-  - master
+  - 415-newman-testing
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -114,7 +114,15 @@ steps:
 
 
   - script: |
+      echo '$(Pipeline.Workspace ) = '$(Pipeline.Workspace)
+      echo '$(System.DefaultWorkingDirectory ) = '$(System.DefaultWorkingDirectory)
+      echo '-----------------------------------------------------'
       ls
+      echo '-----------------------------------------------------'
+      echo 'show result of ls $(Pipeline.Workspace )'
+      ls $(Pipeline.Workspace)
+      echo '-----------------------------------------------------'
+      echo 'show result of ls $(System.DefaultWorkingDirectory )'
       ls $(System.DefaultWorkingDirectory)
       echo '-----------------------------------------------------'
       tree   $(System.DefaultWorkingDirectory)/k8s-yml/target
