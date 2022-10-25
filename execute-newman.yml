@@ -1,5 +1,5 @@
 trigger:
-  - 415-newman-testing
+  - master
 
 pool:
   vmImage: 'ubuntu-latest'
