@@ -1,6 +1,7 @@
 FROM adoptopenjdk/openjdk11:alpine
 
 COPY ./target/dual-validate-*.jar /app/dual-validate.jar
+COPY ./jsonsample /app/jsonsample
 
 WORKDIR /app
 
