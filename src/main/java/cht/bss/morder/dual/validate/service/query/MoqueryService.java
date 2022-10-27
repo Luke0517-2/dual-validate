@@ -35,7 +35,7 @@ public class MoqueryService extends QueryService {
 
 	private static final MoqueryEnumInterface[] enumsQueryWithContractId = { MoqueryContractType.Projmember,
 			MoqueryContractType.Suspresumerec1, MoqueryContractType.Suspresumerec2, MoqueryContractType.Datashareinfo,
-			MoqueryContractType.Data_share_rec,MoqueryContractType.SponsorSpsvc };
+			MoqueryContractType.Data_share_rec, MoqueryContractType.SponsorSpsvc };
 	private static final MoqueryEnumInterface[] enumsQueryWithContractIdWithTelnum = {
 			MoqueryContractWithTelnumType.Contractret, MoqueryContractWithTelnumType.Pasuserec };
 	private static final MoqueryEnumInterface[] enumsQueryForSpsvc = { MoqueryContractType.SpecsvcidMN,
@@ -218,7 +218,7 @@ public class MoqueryService extends QueryService {
 
 		ComparedData obj = comparedForCht.clone();
 		obj.setDataFromCht(comparedForCht.getDataFromCht());
-		obj.setDataFromIISI(comparedForCht.getDataFromIISI());
+		obj.setDataFromIISI(comparedForIISI.getDataFromIISI());
 
 		return obj;
 	}
