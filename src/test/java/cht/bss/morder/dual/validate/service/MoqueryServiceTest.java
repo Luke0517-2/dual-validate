@@ -3,6 +3,7 @@ package cht.bss.morder.dual.validate.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import cht.bss.morder.dual.validate.service.query.MoqueryService;
 import cht.bss.morder.dual.validate.vo.ComparedData;
+import cht.bss.morder.dual.validate.vo.QueryInput;
 import cht.bss.morder.dual.validate.vo.TestCase;
 
 @SpringBootTest
@@ -32,6 +34,30 @@ public class MoqueryServiceTest {
 
 	private TestCase getTestCase() {
 		return TestCase.builder().telNum("11223").custId("33445").build();
+	}
+	
+	@Test
+	void testmergeQuerys() {
+		QueryInput queryInput = mock(QueryInput.class);
+		ComparedData comparedDataFromCht = ComparedData.builder().queryInput(queryInput).dataFromCht("fromCht").dataFromIISI(null).data("data").queryService("moquery").build();
+		ComparedData comparedDataFromIISI = ComparedData.builder().queryInput(queryInput).dataFromCht(null).dataFromIISI("fromIISI").data("data").queryService("moquery").build();
+		
+		MoqueryServiceJUnit moqueryServiceJUnit = new MoqueryServiceJUnit();
+		ComparedData mergedData = moqueryServiceJUnit.mergeQuerysTesting(comparedDataFromCht, comparedDataFromIISI);
+		
+		assertNotNull(mergedData.getDataFromCht());
+		assertNotNull(mergedData.getDataFromIISI());
+	}
+	
+	/**
+	 * For testing protected method in MoqueryService Class
+	 *
+	 */
+	private class MoqueryServiceJUnit extends MoqueryService {
+		
+		public ComparedData mergeQuerysTesting(ComparedData comparedForCht, ComparedData comparedForIISI) {
+			return mergeQuerys(comparedForCht, comparedForIISI);
+		}
 	}
 
 }

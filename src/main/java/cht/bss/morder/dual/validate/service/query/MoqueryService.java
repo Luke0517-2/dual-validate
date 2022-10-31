@@ -85,7 +85,7 @@ public class MoqueryService extends QueryService {
 			TestCase testCase) {
 
 		List<CompletableFuture<ComparedData>> asyncRequest = new ArrayList<>();
-		List<CompletableFuture<ComparedData>> asyncQueryForModeinsrec = Stream.of(enumsQueryForOrderNo)
+		List<CompletableFuture<ComparedData>> asyncQueryForModelinsrec = Stream.of(enumsQueryForOrderNo)
 				.map(enumType -> {
 					return getAsyncTasksForOrderNo(enumType, MoqueryOrderNoType.Modelinsrec, contractMap, testCase);
 				}).collect(Collectors.toList());
@@ -96,7 +96,7 @@ public class MoqueryService extends QueryService {
 							testCase);
 				}).collect(Collectors.toList());
 
-		asyncRequest.addAll(asyncQueryForModeinsrec);
+		asyncRequest.addAll(asyncQueryForModelinsrec);
 		asyncRequest.addAll(asyncQueryForModeldeliverdetail);
 		return asyncRequest;
 	}
@@ -214,7 +214,7 @@ public class MoqueryService extends QueryService {
 		});
 	}
 
-	private ComparedData mergeQuerys(ComparedData comparedForCht, ComparedData comparedForIISI) {
+	protected ComparedData mergeQuerys(ComparedData comparedForCht, ComparedData comparedForIISI) {
 
 		ComparedData obj = comparedForCht.clone();
 		obj.setDataFromCht(comparedForCht.getDataFromCht());
