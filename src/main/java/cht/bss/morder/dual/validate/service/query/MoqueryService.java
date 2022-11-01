@@ -117,8 +117,7 @@ public class MoqueryService extends QueryService {
 			try {
 				return mergeQuerys(futureFromCht.get(), futureFromIISI.get());
 			} catch (InterruptedException | ExecutionException e) {
-				ComparedData comparedData = factory.getComparedData((MoqueryEnumInterface) MoquerySpsvcType.Mdsvc,
-						testCase);
+				ComparedData comparedData = factory.getComparedData((MoqueryEnumInterface)enumType,testCase);
 				comparedData.setError(e.getMessage());
 				return comparedData;
 			}
@@ -163,8 +162,17 @@ public class MoqueryService extends QueryService {
 			try {
 				return mergeQuerys(futureFromCht.get(), futureFromIISI.get());
 			} catch (InterruptedException | ExecutionException e) {
-				ComparedData comparedData = factory.getComparedData((MoqueryEnumInterface) MoquerySpsvcType.Mdsvc,
-						testCase);
+				ComparedData comparedData = null;
+				switch ((MoqueryContractType) enumContractType) {
+				case SpecsvcidMN:
+					comparedData = factory.getComparedData((MoqueryEnumInterface) MoquerySpsvcType.Mdsvc,
+							testCase);
+					break;
+				case SpecsvcidMV:
+					comparedData = factory.getComparedData((MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc,
+							testCase);
+					break;
+				}
 				comparedData.setError(e.getMessage());
 				return comparedData;
 			}
