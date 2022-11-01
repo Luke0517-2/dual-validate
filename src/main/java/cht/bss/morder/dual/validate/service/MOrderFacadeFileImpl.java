@@ -119,9 +119,9 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 				result = readFile("./jsonsample/modelinsrec_output.json");
 				break;
 			case "suspresumerec" :
-				if(input.getParam().getQueryitem().getQuerytype() == "1")
+				if("1".equals(input.getParam().getQueryitem().getQuerytype()))
 					result = readFile("./jsonsample/suspresumerec1_output.json");
-				else if(input.getParam().getQueryitem().getQuerytype() == "2")
+				else if("2".equals(input.getParam().getQueryitem().getQuerytype()))
 					result = readFile("./jsonsample/suspresumerec2_output.json");
 				break;
 			case "mdsvc" :
