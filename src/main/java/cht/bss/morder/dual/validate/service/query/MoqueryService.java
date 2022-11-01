@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.ls.LSOutput;
 
 import cht.bss.morder.dual.validate.enums.MoqueryContractType;
 import cht.bss.morder.dual.validate.enums.MoqueryContractWithTelnumType;
@@ -172,15 +173,47 @@ public class MoqueryService extends QueryService {
 
 	private CompletableFuture<ComparedData> runSpsvcQueryForIISI(MoqueryEnumInterface enumContractType,
 			TestCase testCase, Map<String, String> contractIdMap) {
-		TwoPhasedQueryToIISI queryCht = new TwoPhasedQueryToIISI(testCase, enumContractType,
-				(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
-		return queryCht.runTwoPhaseQuery(contractIdMap.get(VALUE_FROM_IISI));
+		TwoPhasedQueryToIISI queryIISI = null;
+		switch ((MoqueryContractType) enumContractType) {
+		case SpecsvcidMN:
+			queryIISI = new TwoPhasedQueryToIISI(testCase, enumContractType,
+					(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
+			break;
+		case SpecsvcidMV:
+			queryIISI = new TwoPhasedQueryToIISI(testCase, enumContractType,
+					(MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc, ResponseType.SpsvcId);
+			break;
+		}
+//		if (enumContractType == MoqueryContractType.SpecsvcidMN) {
+//			queryIISI = new TwoPhasedQueryToIISI(testCase, enumContractType,
+//					(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
+//		} else if (enumContractType == MoqueryContractType.SpecsvcidMV) {
+//			queryIISI = new TwoPhasedQueryToIISI(testCase, enumContractType,
+//					(MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc, ResponseType.SpsvcId);
+//		}
+		return queryIISI.runTwoPhaseQuery(contractIdMap.get(VALUE_FROM_IISI));
 	}
 
 	private CompletableFuture<ComparedData> runSpsvcQueryForCht(MoqueryEnumInterface enumContractType,
 			TestCase testCase, Map<String, String> contractIdMap) {
-		TwoPhasedQueryToCht queryCht = new TwoPhasedQueryToCht(testCase, enumContractType,
-				(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
+		TwoPhasedQueryToCht queryCht = null;
+		switch ((MoqueryContractType) enumContractType) {
+		case SpecsvcidMN:
+			queryCht = new TwoPhasedQueryToCht(testCase, enumContractType,
+					(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
+			break;
+		case SpecsvcidMV:
+			queryCht = new TwoPhasedQueryToCht(testCase, enumContractType,
+					(MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc, ResponseType.SpsvcId);
+			break;
+		}
+//		if (enumContractType == MoqueryContractType.SpecsvcidMN) {
+//			queryCht = new TwoPhasedQueryToCht(testCase, enumContractType,
+//					(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
+//		} else if (enumContractType == MoqueryContractType.SpecsvcidMV) {
+//			queryCht = new TwoPhasedQueryToCht(testCase, enumContractType,
+//					(MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc, ResponseType.SpsvcId);
+//		}
 		return queryCht.runTwoPhaseQuery(contractIdMap.get(VALUE_FROM_CHT));
 	}
 
