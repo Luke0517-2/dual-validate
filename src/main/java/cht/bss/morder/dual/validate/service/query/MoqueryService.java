@@ -46,6 +46,8 @@ public class MoqueryService extends QueryService {
 
 	public final String VALUE_FROM_IISI = "VALUE_FROM_IISI";
 	public final String VALUE_FROM_CHT = "VALUE_FROM_CHT";
+	
+	public final String ERRMSG_NO_NEED_TO_CHECK_WHEN_NO_DATA = "無聯單資料，不須查詢";
 
 	@Autowired
 	private MoqueryInputFactory factory;
@@ -117,7 +119,7 @@ public class MoqueryService extends QueryService {
 			try {
 				return mergeQuerys(futureFromCht.get(), futureFromIISI.get());
 			} catch (InterruptedException | ExecutionException e) {
-				ComparedData comparedData = factory.getComparedData((MoqueryEnumInterface)enumType,testCase);
+				ComparedData comparedData = factory.getComparedData((MoqueryEnumInterface) orderNoQueryEnum, testCase);
 				comparedData.setError(e.getMessage());
 				return comparedData;
 			}
@@ -260,8 +262,19 @@ public class MoqueryService extends QueryService {
 		ComparedData obj = comparedForCht.clone();
 		obj.setDataFromCht(comparedForCht.getDataFromCht());
 		obj.setDataFromIISI(comparedForIISI.getDataFromIISI());
+		
+		showErrorMsgWhenCheckMoquery(obj);
 
 		return obj;
+	}
+	
+	private ComparedData showErrorMsgWhenCheckMoquery (ComparedData mergedComparedData) {
+		if (StringUtils.isEmpty(mergedComparedData.getDataFromCht()) && StringUtils.isEmpty(mergedComparedData.getDataFromIISI())) {
+			mergedComparedData.setError(ERRMSG_NO_NEED_TO_CHECK_WHEN_NO_DATA);
+		} else {
+			return mergedComparedData;
+		}
+		return mergedComparedData;
 	}
 
 	private TestCase getNewTestCaseWithContractId(TestCase testcase, String value) {

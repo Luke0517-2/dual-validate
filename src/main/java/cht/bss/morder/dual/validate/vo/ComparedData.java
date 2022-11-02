@@ -39,9 +39,9 @@ public class ComparedData implements Cloneable {
 	 * @throws JsonMappingException 
 	 */
 	public CompareResultType getComparedResult(ObjectMapper mapper) throws JsonMappingException, JsonProcessingException {
-		if (StringUtils.equals(getDataFromCht(), getDataFromIISI())) {
-			return CompareResultType.EQUAL;
-		} else if (StringUtils.isEmpty(getDataFromCht()) && StringUtils.isEmpty(getDataFromIISI())) {
+		if (StringUtils.isEmpty(getDataFromCht()) && StringUtils.isEmpty(getDataFromIISI())) {
+			return CompareResultType.HAVENOTTOCOMPARE;
+		} else if (StringUtils.equals(getDataFromCht(), getDataFromIISI())) {
 			return CompareResultType.EQUAL;
 		} else if (StringUtils.isEmpty(getDataFromCht()) || StringUtils.isEmpty(getDataFromIISI())) {
 			return CompareResultType.NONEQUAL;
