@@ -1,5 +1,6 @@
 package cht.bss.morder.dual.validate.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -32,5 +33,7 @@ public class QueryInput {
 	@JsonProperty("param")
 	private Params param;
 	
+	@JsonIgnore
+	private String baseUrl;
 	
 }

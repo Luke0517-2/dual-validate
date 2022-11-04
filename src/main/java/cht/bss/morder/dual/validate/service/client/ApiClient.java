@@ -48,6 +48,7 @@ public class ApiClient {
 		final TransferUnitProperties transferUnitProperties = properties.getMOrder();
 		final OAuthProperties oauthProperties = transferUnitProperties.getOauthProperties();
 		final ApiGateWayProperties apigwProperties = transferUnitProperties.getApigwProperties();
+		apigwProperties.setBaseUrl(input.getBaseUrl());
 
 		final String xApiKey = apigwProperties.getXapikey();
 
@@ -56,23 +57,25 @@ public class ApiClient {
 		try {
 			String token = getToken(oauthProperties);
 
-			Mono<String> mono = apiGatewayClient.getApiDataByJson(getHttpHeaders(xApiKey, token), apigwProperties,
-					input);
+			Mono<String> mono = apiGatewayClient.getApiDataByJson(getHttpHeaders(xApiKey, token), apigwProperties, input);
 			content = mono.block();
 		} catch (UnauthorizedException e) {
 			log.error(e.getMessage(), e);
 			clean();
 			String token = getToken(oauthProperties);
 
-			Mono<String> mono = apiGatewayClient.getApiDataByJson(getHttpHeaders(xApiKey, token), apigwProperties,
-					input);
+			Mono<String> mono = apiGatewayClient.getApiDataByJson(getHttpHeaders(xApiKey, token), apigwProperties, input);
 			content = mono.block();
 		}
 		return content;
 	}
 
 	protected String getToken(final OAuthProperties oAuthProperties) {
-		return alternative(CACHE_NAME_TOKEN, oAuthProperties, () -> retrieveTokenV2(oAuthProperties));
+		if(oAuthProperties.isUseOauth()) {
+			return alternative(CACHE_NAME_TOKEN, oAuthProperties, () -> retrieveTokenV2(oAuthProperties));
+		}else {
+			return "";
+		}
 	}
 
 	/**

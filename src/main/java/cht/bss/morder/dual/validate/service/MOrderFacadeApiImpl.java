@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
+import cht.bss.morder.dual.validate.config.DualValidateProperties;
 import cht.bss.morder.dual.validate.service.client.ApiClient;
 import cht.bss.morder.dual.validate.vo.QueryInput;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,9 @@ public class MOrderFacadeApiImpl implements MOrderFacade {
 	
 	@Autowired
 	private ApiClient apiClient;
+	
+	@Autowired
+	private DualValidateProperties urlProperties;
 
 	@Override
 	public String queryIISI(QueryInput queryInput) {
@@ -36,6 +40,7 @@ public class MOrderFacadeApiImpl implements MOrderFacade {
 //		} catch (JsonProcessingException e) {
 //			return "系統發生錯誤";
 //		}
+		queryInput.setBaseUrl(urlProperties.getIisi());
 		return responseFromQuery(queryInput);
 	}
 
@@ -46,6 +51,7 @@ public class MOrderFacadeApiImpl implements MOrderFacade {
 //		} catch (JsonProcessingException e) {
 //			return "系統發生錯誤";
 //		}
+		queryInput.setBaseUrl(urlProperties.getCht());
 		return responseFromQuery(queryInput);
 	}
 
@@ -77,8 +83,8 @@ public class MOrderFacadeApiImpl implements MOrderFacade {
 	private String responseFromQueryCustInfo(QueryInput input) {
 		String result = StringUtils.EMPTY;
 		if(StringUtils.isNoneEmpty(input.getParam().getTelnum())) {
-			//TODO 需改成call api
-			result = readFile("./jsonsample/queryCustInfo_output.json");
+			
+//			result = readFile("./jsonsample/queryCustInfo_output.json");
 			result = apiClient.queryCustInfo(input);
 		}else if(StringUtils.isNoneEmpty(input.getParam().getCustid()) && StringUtils.equals("custbehavior;", input.getParam().getQuerydata())) {
 			//TODO 需改成call api

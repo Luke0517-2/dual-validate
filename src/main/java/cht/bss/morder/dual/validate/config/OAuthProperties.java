@@ -30,4 +30,9 @@ public class OAuthProperties {
 	 * time out second
 	 */
 	private int timeoutSec;
+	
+	/**
+	 * use oauth or not
+	 */
+	private boolean useOauth;
 }
