@@ -44,7 +44,7 @@ public class ApiClient {
 	@Autowired
 	private CacheManager ccm;
 
-	public String queryCustInfo(QueryInput input) {
+	public String queryApi(QueryInput input) {
 		final TransferUnitProperties transferUnitProperties = properties.getMOrder();
 		final OAuthProperties oauthProperties = transferUnitProperties.getOauthProperties();
 		final ApiGateWayProperties apigwProperties = transferUnitProperties.getApigwProperties();

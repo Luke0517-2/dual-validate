@@ -34,7 +34,6 @@ public class MOrderFacadeApiImpl implements MOrderFacade {
 
 	@Override
 	public String queryIISI(QueryInput queryInput) {
-		log.error("API++++++++");
 //		try {
 //			return mapper.writeValueAsString(queryInput);
 //		} catch (JsonProcessingException e) {
@@ -71,9 +70,10 @@ public class MOrderFacadeApiImpl implements MOrderFacade {
 
 	private String responseFromQrysalebehavior(QueryInput input){
 		String result = StringUtils.EMPTY;
+		log.trace("start query {}, telnum:{}",input.getCmd(),input.getParam().getTelnum());
 		if(StringUtils.isNoneBlank(input.getParam().getTelnum())) {
-			//TODO 需改成call api
-			result = readFile("./jsonsample/agentmobset_output.json");
+			
+			result = apiClient.queryApi(input);
 		}else {
 			throw new BusinessException("Input參數不正確");
 		}
@@ -82,13 +82,13 @@ public class MOrderFacadeApiImpl implements MOrderFacade {
 
 	private String responseFromQueryCustInfo(QueryInput input) {
 		String result = StringUtils.EMPTY;
+		log.trace("start query {}, telnum:{}, custid:{}",input.getCmd(),input.getParam().getTelnum(),input.getParam().getCustid());
+		log.trace("querydata:{}",input.getParam().getQuerydata());
+		
 		if(StringUtils.isNoneEmpty(input.getParam().getTelnum())) {
-			
-//			result = readFile("./jsonsample/queryCustInfo_output.json");
-			result = apiClient.queryCustInfo(input);
+			result = apiClient.queryApi(input);
 		}else if(StringUtils.isNoneEmpty(input.getParam().getCustid()) && StringUtils.equals("custbehavior;", input.getParam().getQuerydata())) {
-			//TODO 需改成call api
-			result = readFile("./jsonsample/custbehavior_output.json");
+			result = apiClient.queryApi(input);
 		}else {
 			throw new BusinessException("Input參數不正確");
 		}
@@ -98,84 +98,9 @@ public class MOrderFacadeApiImpl implements MOrderFacade {
 	private String responseFromMoquery(QueryInput input) {
 		String tablename = input.getParam().getQueryitem().getTablename();
 		String result = StringUtils.EMPTY;
-		switch(tablename) {
-			case "numberusage" : 
-				//TODO 需改成call api
-				result = readFile("./jsonsample/numberusage_output.json");
-				break;
-			case "agentmobset" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/agentmobset_output.json");
-				break;
-			case "specialsvc" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/specialsvc_output.json");
-				break;
-			case "agent5id" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/agent5id_output.json");
-				break;
-			case "delcustinfoapply" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/delcustinfoapply_output.json");
-				break;
-			case "eformapplyrec" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/eformapplyrec_output.json");
-				break;
-			case "contractret" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/contractret_output.json");
-				break;
-			case "pasuserec" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/pasuserec_output.json");
-				break;
-			case "projmember" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/projmember_output.json");
-				break;
-			case "agentmobsetpart" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/emptydatalist_output.json");
-				break;
-			case "modeldeliverdetail" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/modeldeliverdetail_output.json");
-				break;
-			case "modelinsrec" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/modelinsrec_output.json");
-				break;
-			case "suspresumerec" :
-				if(input.getParam().getQueryitem().getQuerytype() == "1")
-					//TODO 需改成call api
-					result = readFile("./jsonsample/suspresumerec1_output.json");
-				else if(input.getParam().getQueryitem().getQuerytype() == "2")
-					//TODO 需改成call api
-					result = readFile("./jsonsample/suspresumerec2_output.json");
-				break;
-			case "mdsvc" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/mdsvc_output.json");
-				break;
-			case "vpnsvc" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/vpnsvc_output.json");
-				break;
-			case "sponsorspsvc" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/sponsorspsvc_output.json");
-				break;
-			case "datashareinfo" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/datashareinfo_output.json");
-				break;
-			case "data_share_rec" :
-				//TODO 需改成call api
-				result = readFile("./jsonsample/data_share_rec_output.json");
-				break;
-		}
+		log.trace("start query {}, tablename:{}, telnum:{}",input.getCmd(),tablename,input.getParam().getTelnum());
+		result = apiClient.queryApi(input);
+		
 		if(StringUtils.isNotBlank(result))
 			return result;
 		else
