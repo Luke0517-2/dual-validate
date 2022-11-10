@@ -62,6 +62,7 @@ stages:
 
             echo 'input.csv添加變數名'
             sed -i -e '1i"telNum","custId"' wildflyVerify.csv
+            cat wildflyVerify.csv
             
             echo '透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對'
             newman run $(Build.SourcesDirectory)/$(dual-validate-postman-script) --env-var="baseUrl=$(baseUrl)" -d wildflyVerify.csv --global-var="uuid=$UUID" --folder 透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對
