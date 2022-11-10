@@ -59,6 +59,9 @@ stages:
             echo '開始進行驗證測試，會重新統計報表'
             UUID=$(curl -s '$(baseUrl)/cht/validate/startTest' | jq -r '.uuid')
             echo  $UUID
+
+            echo 'input.csv添加變數名'
+            sed -i -e '1i"telNum","custId"' input_test.csv
             
             echo '透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對'
             newman run $(Build.SourcesDirectory)/$(dual-validate-postman-script) --env-var="baseUrl=$(baseUrl)" -d input_test.csv --global-var="uuid=$UUID" --folder 透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對
