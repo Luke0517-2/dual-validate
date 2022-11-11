@@ -77,9 +77,8 @@ stages:
             else
               echo '添加header'
               sed -i -e '1i"telNum","custId"' $(Build.SourcesDirectory)/$(floderName)/${file1}.csv
-              head=$(sed -n '1,1p' $(Build.SourcesDirectory)/$(floderName)/${file1}.csv)
-              echo ${head}
             fi
+            echo "##vso[task.setvariable variable=fileName]${file1}"
         continueOnError: false
         displayName: 'add floder and check csv-header'
 
@@ -89,7 +88,7 @@ stages:
         inputs:
           targetType: 'inline'
           script: |
-
+            echo $(file1)
             echo '開始進行驗證測試，會重新統計報表'
             UUID=$(curl -s '$(baseUrl)/cht/validate/startTest' | jq -r '.uuid')
             echo  $UUID
