@@ -77,7 +77,8 @@ stages:
             else
               echo '添加header'
               sed -i -e '1i"telNum","custId"' $(Build.SourcesDirectory)/$(floderName)/${file1}.csv
-              echo sed -n '1,1p' $(Build.SourcesDirectory)/$(floderName)/${file1}.csv
+              head=$(sed -n '1,1p' $(Build.SourcesDirectory)/$(floderName)/${file1}.csv)
+              echo ${head}
             fi
         continueOnError: false
         displayName: 'add floder and check csv-header'
