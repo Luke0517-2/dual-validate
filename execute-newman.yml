@@ -7,6 +7,7 @@ pool:
 variables:
   dual-validate-postman-script: CHT_MOrder_Dual-validate.postman_collection.json
   baseUrl: http://dual-validate-d210641.apps.ocp.iisi.test
+  floderName: wildflyVerify
 
 stages:
 - stage: dual_validate_newman
@@ -51,6 +52,34 @@ stages:
           npm install -g newman
           npm install -g newman-reporter-html
         displayName: 'install newman'
+        
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |            
+            mkdir $(floderName)
+
+            date1=$(date +%Y%m%d)                      # 今天的日期
+            number=$(ls $(Build.SourcesDirectory)/$(floderName)/*.csv | wc -l)   # 目前資料內資料筆數
+            echo ${date1}
+            echo ${number}
+            
+            file1=$(floderName)_${date1}_${number}      # 設定檔名
+            str1='"telNum","custId"'
+            str2=$(sed -n '1,1p' ${file1}.csv)
+            echo 變數名 : ${str1}
+            echo 檔案表頭名 : ${str2}
+            if [ ${str1} = ${str2} ]
+            then
+              echo '不須修改檔案';
+            else
+              echo '添加header'
+              sed -i -e '1i"telNum","custId"' $(Build.SourcesDirectory)/$(floderName)/${file1}.csv
+            fi
+        continueOnError: false
+        displayName: 'add floder and check csv-header'
+
+
 
       - task: Bash@3
         inputs:
