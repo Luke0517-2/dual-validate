@@ -58,9 +58,8 @@ stages:
         inputs:
           targetType: 'inline'
           script: |            
-            echo $(fileName)
             mkdir $(floderName)
-            $(fileName)=change
+
             echo $(fileName)
             date1=$(date +%Y%m%d)                      # 今天的日期
             number=$(ls $(Build.SourcesDirectory)/$(floderName)/*.csv | wc -l)   # 目前資料內資料筆數
@@ -69,7 +68,7 @@ stages:
             
             file1=$(floderName)_${date1}_${number}      # 設定檔名
             str1='"telNum","custId"'
-            str2=$(sed -n '1,1p' ${file1}.csv)
+            str2=$(sed -n '1,1p' $(Build.SourcesDirectory)/$(floderName)/${file1}.csv)
             echo 變數名 : ${str1}
             echo 檔案表頭名 : ${str2}
             if [ ${str1} = ${str2} ]
@@ -88,7 +87,7 @@ stages:
         inputs:
           targetType: 'inline'
           script: |
-            echo $(fileName)
+
             echo '開始進行驗證測試，會重新統計報表'
             UUID=$(curl -s '$(baseUrl)/cht/validate/startTest' | jq -r '.uuid')
             echo  $UUID
