@@ -63,7 +63,7 @@ stages:
 
             echo $(fileName)
             date1=$(date +%Y%m%d)                      # 今天的日期
-            number=$(ls $(Build.SourcesDirectory)/$(floderName)/*.csv | wc -l)   # 目前資料內資料筆數
+            number=$(ls $(Build.SourcesDirectory)/$(floderName)/${date1}/*.csv | wc -l)   # 目前資料內資料筆數
             echo 產生${date1}資料夾
             mkdir ${date1}
             
