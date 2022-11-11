@@ -59,27 +59,26 @@ stages:
             filename=wildflyVerify
             mkdir ${filename}
 
-            date1=$(date +%Y%m%d)                      # 今天的日期
+            date1=$(date +%Y%m%d)  # today-date
             number=$(ls ./${filename}/*.csv | wc -l)   # 目前資料筆數
-
             echo ${date1}
             echo ${number}
-            number1=$(($number+1))
 
+            number1=$(($number+1))
             file1=${filename}_${date1}_${number}      # 設定檔名
             str1='"telNum","custId"'
-            str2=$(sed -n '1,1p' wildflyVerify.csv) 
+            str2=$(sed -n '1,1p' wildflyVerify.csv)
+
             echo 變數名 : ${str1}
             echo 檔案表頭名 : ${str2}
-
-            if [ ${str1} = ${str2} ] 
+            if [ ${str1} = ${str2} ]
             then
-	            echo '不須修改檔案';
+               echo '不須修改檔案'
             else
-	            echo '添加header'
-	            sed -i -e '1i"telNum","custId"' ${file1}.csv
-            fi
-        displayName: '產生資料夾及檢查檔案標頭'
+               echo '添加header'
+               sed -i -e '1i"telNum","custId"' ${file1}.csv
+            fi   
+        displayName: '執行雙軌驗證'
 
       - task: Bash@3
         inputs:
