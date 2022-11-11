@@ -8,6 +8,7 @@ variables:
   dual-validate-postman-script: CHT_MOrder_Dual-validate.postman_collection.json
   baseUrl: http://dual-validate-d210641.apps.ocp.iisi.test
   floderName: wildflyVerify
+  fileName: origin
 
 stages:
 - stage: dual_validate_newman
@@ -57,8 +58,10 @@ stages:
         inputs:
           targetType: 'inline'
           script: |            
+            echo $(fileName)
             mkdir $(floderName)
-
+            $(fileName)=change
+            echo $(fileName)
             date1=$(date +%Y%m%d)                      # 今天的日期
             number=$(ls $(Build.SourcesDirectory)/$(floderName)/*.csv | wc -l)   # 目前資料內資料筆數
             echo ${date1}
@@ -85,6 +88,7 @@ stages:
         inputs:
           targetType: 'inline'
           script: |
+            echo $(fileName)
             echo '開始進行驗證測試，會重新統計報表'
             UUID=$(curl -s '$(baseUrl)/cht/validate/startTest' | jq -r '.uuid')
             echo  $UUID
