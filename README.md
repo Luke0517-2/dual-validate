@@ -171,3 +171,26 @@ To investigate issues with the import of coverage information you can run Maven 
 ```bash
 mvn  --settings settings.xml  --global-settings C:/Users/1204003/.m2/settings.xml  -X clean verify sonar:sonar 
 ```
+
+# 中華環境雙軌驗證專案設定
+
+中華環境Azure的repo名稱:
+```bash
+mbms_dual_validate
+```
+
+repo檔案結構:
+>待規劃...。目前現況有截圖。
+
+作為input的csv檔名格式
+```bash
+wildflyVerifyUnLoadDateExe_yyyymmdd.csv
+```
+
+更新頻率：一天一次
+
+檔案內容，沒有title row：
+```
+telnum1,custId1,
+telnum2,custId2,
+```
