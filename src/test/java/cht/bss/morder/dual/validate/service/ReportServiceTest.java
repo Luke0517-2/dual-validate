@@ -123,8 +123,8 @@ public class ReportServiceTest {
 	void test_checkSingleComparedDataResult() throws IOException {
 
 		List<String[]> assertEqualsPair = new ArrayList<>();
-		assertEqualsPair.add(new String[] { null, null });
-		assertEqualsPair.add(new String[] { null, "" });
+//		assertEqualsPair.add(new String[] { null, null });
+//		assertEqualsPair.add(new String[] { null, "" });
 		assertEqualsPair.add(new String[] { jsonCase1, jsonCase1 });
 		assertEqualsPair.add(new String[] { jsonStructureError, jsonStructureError });
 
