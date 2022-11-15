@@ -179,7 +179,7 @@ public class ReportService {
 
 	private String showDataInReport(ComparedData comparedData) {
 		String dataInComparedData = comparedData.getData();
-		if (!(dataInComparedData.equals("null"))) {
+		if (dataInComparedData!= null &&  !(dataInComparedData.equals("null"))) {
 			return dataInComparedData;
 		} else {
 			return "無對應參數，不須進行後續查詢";

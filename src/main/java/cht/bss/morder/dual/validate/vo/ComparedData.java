@@ -40,7 +40,7 @@ public class ComparedData implements Cloneable {
 	 */
 	public CompareResultType getComparedResult(ObjectMapper mapper) throws JsonMappingException, JsonProcessingException {
 		if (StringUtils.isEmpty(getDataFromCht()) && StringUtils.isEmpty(getDataFromIISI())) {
-			return CompareResultType.HAVENOTTOCOMPARE;
+			return CompareResultType.EQUAL;
 		} else if (StringUtils.equals(getDataFromCht(), getDataFromIISI())) {
 			return CompareResultType.EQUAL;
 		} else if (StringUtils.isEmpty(getDataFromCht()) || StringUtils.isEmpty(getDataFromIISI())) {
