@@ -55,22 +55,16 @@ stages:
         displayName: 'install newman'
         
            
-
       - task: Bash@3
         inputs:
           targetType: 'inline'
           script: |
 
-            echo $(fileName)
-            date1=$(date +%Y%m%d)                      # 今天的日期
-            number=$(ls $(Build.SourcesDirectory)/$(floderName)/${date1}/*.csv | wc -l)   # 目前資料內資料筆數
-            echo 產生${date1}資料夾
-            mkdir ${date1}
-            
-            echo ${number}
-            file1=$(floderName)_${date1}_${number}      # 設定檔名
+            date1=$(date +%Y%m%d)                # 今天的日期
+            fileName=$(floderName)_${date1}      # 設定檔名
+
             str1='"telNum","custId"'
-            str2=$(sed -n '1,1p' $(Build.SourcesDirectory)/$(floderName)/${date1}/${file1}.csv)
+            str2=$(sed -n '1,1p' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv)
             echo 變數名 : ${str1}
             echo 檔案表頭名 : ${str2}
             if [ ${str1} = ${str2} ]
@@ -78,15 +72,34 @@ stages:
               echo '不須修改檔案';
             else
               echo '添加header'
-              sed -i -e '1i"telNum","custId"' $(Build.SourcesDirectory)/$(floderName)/${date1}/${file1}.csv
+              sed -i -e '1i"telNum","custId"' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv
             fi
+            
+            echo ----------$fileName---------------
+            echo "##vso[task.setvariable variable=FILE_NAME;issecret=false]$fileName"
+
+        displayName:  'check date&fileName'  
+
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            echo ----$(FILE_NAME)----------- 
+        displayName: 'inspect fileName'
+        continueOnError: true
+
+
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
 
             echo '開始進行驗證測試，會重新統計報表'
             UUID=$(curl -s '$(baseUrl)/cht/validate/startTest' | jq -r '.uuid')
             echo  $UUID
 
             echo '透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對'
-            newman run $(Build.SourcesDirectory)/$(dual-validate-postman-script) --env-var="baseUrl=$(baseUrl)" -d $(Build.SourcesDirectory)/$(floderName)/${date1}/${file1}.csv --global-var="uuid=$UUID" --folder 透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對
+            newman run $(Build.SourcesDirectory)/$(dual-validate-postman-script) --env-var="baseUrl=$(baseUrl)" -d $(Build.SourcesDirectory)/$(floderName)/$(FILE_NAME).csv --global-var="uuid=$UUID" --folder 透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對
             
             echo '取得現行統計報表，產出Zip檔案'
             curl -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
