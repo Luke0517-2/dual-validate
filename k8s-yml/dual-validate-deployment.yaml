@@ -77,6 +77,11 @@ spec:
                 -Delastic.apm.transaction_max_spans=1500
                 -Dlogging.level.root=WARN
                 -Dmbms.source.root-path=/app/testCases/DualTrackSample
+                -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
+                -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
+                -Dtransfer.property.m-order.oauth-properties.useOauth=false
+                -Ddual-validate.mode=API
+
         resources:
           requests: 
             memory: 1Gi
