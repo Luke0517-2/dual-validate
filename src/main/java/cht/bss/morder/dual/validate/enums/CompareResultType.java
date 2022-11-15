@@ -1,7 +1,7 @@
 package cht.bss.morder.dual.validate.enums;
 
 public enum CompareResultType {
-	EQUAL("一致"), NONEQUAL("不相同"), HAVENOTTOCOMPARE("無須比對");
+	EQUAL("一致"), NONEQUAL("不相同");
 
 	CompareResultType(final String value) {
 		this.value = value;
