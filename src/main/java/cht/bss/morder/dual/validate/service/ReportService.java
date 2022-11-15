@@ -72,9 +72,11 @@ public class ReportService {
 	 */
 	public TestCase addTestCaseToReport(final String uuid, final TestCase testCase) {
 		if (this.uuidReportMap.keySet().contains(uuid)) {
+			log.info("1_testCase in addTestCaseToReport():{}", testCase);
 			final Report report = this.uuidReportMap.get(uuid);
 			report.getTestCases().add(testCase);
 			final String dataPath = buildDataPath(report, testCase);
+			log.info("testCase this dataPath:{}", dataPath);
 			testCase.setDataPath(dataPath);
 			return testCase;
 		}
@@ -113,7 +115,7 @@ public class ReportService {
 
 		final XSSFSheet sheet = workbook.createSheet("TestCases");
 
-		final String[] columns = new String[] { "比對門號", "證號", "比對類別", "比對參數or表格", "參數欄位或資料", "比對CHT與IISI結果", "錯誤資訊",
+		final String[] columns = new String[] { "比對門號", "證號", "比對類別", "比對參數or表格", "參數欄位或資料", "比對CHT與IISI結果", "說明資訊",
 				"檔案路徑" };
 		insertTitleRows(sheet, columns);
 		insertData(sheet, report);
@@ -150,7 +152,7 @@ public class ReportService {
 				dataRow.createCell(1).setCellValue(testCase.getCustId());
 				dataRow.createCell(2).setCellValue(comparedData.getQueryService());
 				dataRow.createCell(3).setCellValue(comparedData.getTable());
-				dataRow.createCell(4).setCellValue(comparedData.getData());
+				dataRow.createCell(4).setCellValue(showDataInReport(comparedData));
 
 				String error = comparedData.getError();
 				if (StringUtils.isEmpty(error)) {
@@ -161,11 +163,26 @@ public class ReportService {
 						dataRow.createCell(6).setCellValue("文字資料不一致，轉成json結構比較時出錯");
 					}
 				} else {
-					dataRow.createCell(6).setCellValue(error);
+					try {
+						dataRow.createCell(5).setCellValue(comparedData.getComparedResult(mapper).getValue());
+						dataRow.createCell(6).setCellValue(error);
+					} catch (JsonProcessingException e) {
+						dataRow.createCell(5).setCellValue(CompareResultType.NONEQUAL.getValue());
+						dataRow.createCell(6).setCellValue("文字資料不一致，轉成json結構比較時出錯");
+					}
 				}
 
-				dataRow.createCell(7).setCellValue("/" + path[path.length - 1]+"/"+comparedData.getQueryService());
+				dataRow.createCell(7).setCellValue("/" + path[path.length - 1] + "/" + comparedData.getQueryService());
 			}
+		}
+	}
+
+	private String showDataInReport(ComparedData comparedData) {
+		String dataInComparedData = comparedData.getData();
+		if (!(dataInComparedData.equals("null"))) {
+			return dataInComparedData;
+		} else {
+			return "無參數";
 		}
 	}
 

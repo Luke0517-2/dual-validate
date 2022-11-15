@@ -35,7 +35,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}cht/validate/startTest",
+							"raw": "{{baseUrl}}/cht/validate/startTest",
 							"host": [
 								"{{baseUrl}}cht"
 							],
@@ -83,7 +83,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"telNum\": \"0912345678\",\n    \"custId\": \"A123456\"\n}"
+							"raw": "{\n    \"telNum\": \"{{telNum}}\",\n    \"custId\": \"{{custId}}\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/cht/validate/runTestCase",
@@ -315,7 +315,7 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "//localhost:8080/"
+			"value": "localhost:8080"
 		}
 	]
 }

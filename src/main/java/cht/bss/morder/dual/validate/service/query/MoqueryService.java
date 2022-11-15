@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.ls.LSOutput;
 
 import cht.bss.morder.dual.validate.enums.MoqueryContractType;
 import cht.bss.morder.dual.validate.enums.MoqueryContractWithTelnumType;
@@ -35,7 +36,7 @@ public class MoqueryService extends QueryService {
 
 	private static final MoqueryEnumInterface[] enumsQueryWithContractId = { MoqueryContractType.Projmember,
 			MoqueryContractType.Suspresumerec1, MoqueryContractType.Suspresumerec2, MoqueryContractType.Datashareinfo,
-			MoqueryContractType.Data_share_rec,MoqueryContractType.SponsorSpsvc };
+			MoqueryContractType.Data_share_rec, MoqueryContractType.SponsorSpsvc };
 	private static final MoqueryEnumInterface[] enumsQueryWithContractIdWithTelnum = {
 			MoqueryContractWithTelnumType.Contractret, MoqueryContractWithTelnumType.Pasuserec };
 	private static final MoqueryEnumInterface[] enumsQueryForSpsvc = { MoqueryContractType.SpecsvcidMN,
@@ -45,6 +46,8 @@ public class MoqueryService extends QueryService {
 
 	public final String VALUE_FROM_IISI = "VALUE_FROM_IISI";
 	public final String VALUE_FROM_CHT = "VALUE_FROM_CHT";
+	
+	public final String ERRMSG_NO_NEED_TO_CHECK_WHEN_NO_DATA = "無聯單資料，不須查詢";
 
 	@Autowired
 	private MoqueryInputFactory factory;
@@ -85,7 +88,7 @@ public class MoqueryService extends QueryService {
 			TestCase testCase) {
 
 		List<CompletableFuture<ComparedData>> asyncRequest = new ArrayList<>();
-		List<CompletableFuture<ComparedData>> asyncQueryForModeinsrec = Stream.of(enumsQueryForOrderNo)
+		List<CompletableFuture<ComparedData>> asyncQueryForModelinsrec = Stream.of(enumsQueryForOrderNo)
 				.map(enumType -> {
 					return getAsyncTasksForOrderNo(enumType, MoqueryOrderNoType.Modelinsrec, contractMap, testCase);
 				}).collect(Collectors.toList());
@@ -96,7 +99,7 @@ public class MoqueryService extends QueryService {
 							testCase);
 				}).collect(Collectors.toList());
 
-		asyncRequest.addAll(asyncQueryForModeinsrec);
+		asyncRequest.addAll(asyncQueryForModelinsrec);
 		asyncRequest.addAll(asyncQueryForModeldeliverdetail);
 		return asyncRequest;
 	}
@@ -116,8 +119,7 @@ public class MoqueryService extends QueryService {
 			try {
 				return mergeQuerys(futureFromCht.get(), futureFromIISI.get());
 			} catch (InterruptedException | ExecutionException e) {
-				ComparedData comparedData = factory.getComparedData((MoqueryEnumInterface) MoquerySpsvcType.Mdsvc,
-						testCase);
+				ComparedData comparedData = factory.getComparedData((MoqueryEnumInterface) orderNoQueryEnum, testCase);
 				comparedData.setError(e.getMessage());
 				return comparedData;
 			}
@@ -162,8 +164,17 @@ public class MoqueryService extends QueryService {
 			try {
 				return mergeQuerys(futureFromCht.get(), futureFromIISI.get());
 			} catch (InterruptedException | ExecutionException e) {
-				ComparedData comparedData = factory.getComparedData((MoqueryEnumInterface) MoquerySpsvcType.Mdsvc,
-						testCase);
+				ComparedData comparedData = null;
+				switch ((MoqueryContractType) enumContractType) {
+				case SpecsvcidMN:
+					comparedData = factory.getComparedData((MoqueryEnumInterface) MoquerySpsvcType.Mdsvc,
+							testCase);
+					break;
+				case SpecsvcidMV:
+					comparedData = factory.getComparedData((MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc,
+							testCase);
+					break;
+				}
 				comparedData.setError(e.getMessage());
 				return comparedData;
 			}
@@ -172,15 +183,47 @@ public class MoqueryService extends QueryService {
 
 	private CompletableFuture<ComparedData> runSpsvcQueryForIISI(MoqueryEnumInterface enumContractType,
 			TestCase testCase, Map<String, String> contractIdMap) {
-		TwoPhasedQueryToIISI queryCht = new TwoPhasedQueryToIISI(testCase, enumContractType,
-				(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
-		return queryCht.runTwoPhaseQuery(contractIdMap.get(VALUE_FROM_IISI));
+		TwoPhasedQueryToIISI queryIISI = null;
+		switch ((MoqueryContractType) enumContractType) {
+		case SpecsvcidMN:
+			queryIISI = new TwoPhasedQueryToIISI(testCase, enumContractType,
+					(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
+			break;
+		case SpecsvcidMV:
+			queryIISI = new TwoPhasedQueryToIISI(testCase, enumContractType,
+					(MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc, ResponseType.SpsvcId);
+			break;
+		}
+//		if (enumContractType == MoqueryContractType.SpecsvcidMN) {
+//			queryIISI = new TwoPhasedQueryToIISI(testCase, enumContractType,
+//					(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
+//		} else if (enumContractType == MoqueryContractType.SpecsvcidMV) {
+//			queryIISI = new TwoPhasedQueryToIISI(testCase, enumContractType,
+//					(MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc, ResponseType.SpsvcId);
+//		}
+		return queryIISI.runTwoPhaseQuery(contractIdMap.get(VALUE_FROM_IISI));
 	}
 
 	private CompletableFuture<ComparedData> runSpsvcQueryForCht(MoqueryEnumInterface enumContractType,
 			TestCase testCase, Map<String, String> contractIdMap) {
-		TwoPhasedQueryToCht queryCht = new TwoPhasedQueryToCht(testCase, enumContractType,
-				(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
+		TwoPhasedQueryToCht queryCht = null;
+		switch ((MoqueryContractType) enumContractType) {
+		case SpecsvcidMN:
+			queryCht = new TwoPhasedQueryToCht(testCase, enumContractType,
+					(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
+			break;
+		case SpecsvcidMV:
+			queryCht = new TwoPhasedQueryToCht(testCase, enumContractType,
+					(MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc, ResponseType.SpsvcId);
+			break;
+		}
+//		if (enumContractType == MoqueryContractType.SpecsvcidMN) {
+//			queryCht = new TwoPhasedQueryToCht(testCase, enumContractType,
+//					(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
+//		} else if (enumContractType == MoqueryContractType.SpecsvcidMV) {
+//			queryCht = new TwoPhasedQueryToCht(testCase, enumContractType,
+//					(MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc, ResponseType.SpsvcId);
+//		}
 		return queryCht.runTwoPhaseQuery(contractIdMap.get(VALUE_FROM_CHT));
 	}
 
@@ -214,13 +257,24 @@ public class MoqueryService extends QueryService {
 		});
 	}
 
-	private ComparedData mergeQuerys(ComparedData comparedForCht, ComparedData comparedForIISI) {
+	protected ComparedData mergeQuerys(ComparedData comparedForCht, ComparedData comparedForIISI) {
 
 		ComparedData obj = comparedForCht.clone();
 		obj.setDataFromCht(comparedForCht.getDataFromCht());
-		obj.setDataFromIISI(comparedForCht.getDataFromIISI());
+		obj.setDataFromIISI(comparedForIISI.getDataFromIISI());
+		
+		showErrorMsgWhenCheckMoquery(obj);
 
 		return obj;
+	}
+	
+	private ComparedData showErrorMsgWhenCheckMoquery (ComparedData mergedComparedData) {
+		if (StringUtils.isEmpty(mergedComparedData.getDataFromCht()) && StringUtils.isEmpty(mergedComparedData.getDataFromIISI())) {
+			mergedComparedData.setError(ERRMSG_NO_NEED_TO_CHECK_WHEN_NO_DATA);
+		} else {
+			return mergedComparedData;
+		}
+		return mergedComparedData;
 	}
 
 	private TestCase getNewTestCaseWithContractId(TestCase testcase, String value) {
