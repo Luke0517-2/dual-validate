@@ -182,7 +182,7 @@ public class ReportService {
 		if (!(dataInComparedData.equals("null"))) {
 			return dataInComparedData;
 		} else {
-			return "無參數";
+			return "無對應參數，不須進行後續查詢";
 		}
 	}
 
