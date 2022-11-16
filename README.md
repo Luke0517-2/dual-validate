@@ -1,3 +1,14 @@
+# 檔案說明
+
+1. jsonsample/：測試用各api json範例檔
+2. k8s-yml/：k8s 部屬檔
+3. src/：原始碼
+4. wildflyVerify/：單元測試用的來源檔
+5. wildflyVerifyUnLoadDateExe/：雙軌驗證時實際來源檔放置的位置
+6. azure-pipelines.yml： CI/CD的Azure devops pipeline
+7. CHT_MOrder_Dual-validate.postman_collection.json：Postman collection 給執行的pipeline使用
+8. execute-newman.yml：實際執行用的pipeline
+
 # 查核驗證 RESTful API server
 
 ## Overview  
