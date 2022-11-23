@@ -1,0 +1,99 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dualvalidateservice
+  namespace: mbms-morder-ol
+  labels:
+    app: dualvalidateservice
+    version: m5
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dualvalidateservice
+  template:
+    metadata:
+      labels:
+        app: dualvalidateservice
+        version: m5
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: '8080'
+        prometheus.io/scheme: http
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/inject: 'true'
+    spec:
+      #取得對應 harbor 的secret資訊
+      imagePullSecrets:
+      - name: secret-harbor-morder-ol
+      containers:
+      - name: dualvalidateservice
+        image: >-
+          harbor.cht.com.tw:30725/mbms-morder-prod/dual-validate:latest
+        imagePullPolicy: Always
+        livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: compares-data
+          mountPath: /app/comparelogs
+        env:
+        - name: MEMORY_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: dualvalidateservice
+              resource: requests.memory
+        - name: MEMORY_LIMIT
+          valueFrom:
+            resourceFieldRef:
+              containerName: dualvalidateservice
+              resource: limits.memory
+        - name: JAVA_OPTS
+          value: >-
+                -Xms1G -Xmx1536m -Dgit.branch=main
+                -javaagent:/app/elastic-apm-agent-1.28.3.jar 
+                -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
+                -Delastic.apm.service_name=dualvalidateservice
+                -Delastic.apm.application_packages=cht.bss
+                -Delastic.apm.trace_methods=cht.bss.*
+                -Delastic.apm.trace_methods_duration_threshold=40ms
+                -Delastic.apm.stack_trace_limit=80
+                -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
+                -Delastic.apm.transaction_max_spans=1500
+                -Dlogging.level.root=WARN
+                -Dmbms.source.root-path=/app/testCases/DualTrackSample
+                -Ddual-validate.baseurl.iisi=https://mbms-order-ol-tpe.cht.com.tw
+                -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
+                -Dtransfer.property.m-order.oauth-properties.useOauth=false
+                -Ddual-validate.mode=API
+
+        resources:
+          requests: 
+            memory: 1Gi
+            cpu: 500m
+          limits: 
+            memory: 1536Mi
+            cpu: "1"
+      volumes:
+      - name: compares-data
+        persistentVolumeClaim:
+          claimName: mbms-webor

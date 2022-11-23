@@ -1,0 +1,26 @@
+# 設定原則 {申請專案名稱}-{對應服務}
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: morder-ol-gateway
+  namespace: istio-morder-ol
+spec:
+  selector:
+    istio: morder-ol-ingressgateway # use istio default ingress gateway
+  servers:
+  - port:
+      number: 8050
+      name: http
+      protocol: HTTP
+    hosts:
+    - morder-ol/* #  host可帶入 ${GKE_namespace}/${domain_name}  
+  - port:
+      #httpsRedirect: true # sends 301 redirect for http requests  - port:
+      number: 8051
+      name: https
+      protocol: HTTPS
+    hosts:
+    - morder-ol/* #  host可帶入 ${GKE_namespace}/${domain_name}
+    tls:
+      mode: SIMPLE
+      credentialName: morder-ol-credential # 對應secret name，可參考Secure Gateways: https://istio.io/latest/docs/tasks/traffic-management/ingress/secure-ingress/#configure-a-tls-ingress-gateway-for-multiple-hosts 先建立 private cert進行檢驗
