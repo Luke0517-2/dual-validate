@@ -1,0 +1,32 @@
+# 設定原則 {申請專案名稱}-{對應服務}
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: dualvalidateservice-gateway
+  namespace: mbms-morder-feature
+spec:
+  selector:
+    istio: ingressgateway # use istio default ingress gateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - dualvalidateservice-istio-system.apps.ocp.iisi.test #  host可帶入 ${GKE_namespace}/${domain_name}  
+  # - port:
+  #     #httpsRedirect: true # sends 301 redirect for http requests  - port:
+  #     number: 443
+  #     name: https
+  #     protocol: HTTPS
+  #   hosts:
+  #   - wsapear-rw-istio-system.apps.ocp.iisi.test #  host可帶入 ${GKE_namespace}/${domain_name}
+  #   tls:
+  #     mode: SIMPLE
+  #     credentialName: morder-qa-credential # 對應secret name，可參考Secure Gateways: https://istio.io/latest/docs/tasks/traffic-management/ingress/secure-ingress/#configure-a-tls-ingress-gateway-for-multiple-hosts 先建立 private cert進行檢驗
+  - port:
+      number: 8080
+      name: http-8080
+      protocol: HTTP
+    hosts:
+    - dualvalidateservice-istio-system.apps.ocp.iisi.test #  host可帶入 ${GKE_namespace}/${domain_name}
