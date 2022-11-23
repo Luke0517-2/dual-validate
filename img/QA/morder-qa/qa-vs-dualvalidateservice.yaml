@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: dualvalidateservice-vs
+  namespace: morder-qa
+spec:
+  hosts: 
+  - '*' # invalid: domain name "morder-qa/*" invalid (label "morder-qa/*" invalid)
+  gateways:
+  - istio-morder-qa/morder-qa-gateway
+  #- mesh #applies to all the sidecars in the mesh
+  http:
+  - match:
+    - uri:
+        prefix: /cht/validate
+    route:
+    - destination:    
+        host: dualvalidateservice #對應 Anthos GKE sevice name
+        port:
+          number: 8050
+    timeout: 180s

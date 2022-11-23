@@ -1,0 +1,35 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: morder-qa-istio-ingressgateway
+    istio: morder-qa-gateway
+  name: morder-qa-istio-service
+  namespace: istio-morder-qa
+spec:
+  allocateLoadBalancerNodePorts: true
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  loadBalancerIP: 10.183.2.53
+  ports:
+# port要對應到gw的設定，但name可以自己取
+  - name: dualvalidateservice
+    port: 8050
+    protocol: HTTP
+    targetPort: 8050
+  - name: dualvalidateservice-https
+    port: 8051
+    protocol: HTTP
+    targetPort: 8051
+  selector:
+    app: morder-qa-istio-ingressgateway
+    istio: morder-qa-ingressgateway
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - ip: 10.183.2.53
