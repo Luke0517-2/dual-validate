@@ -6,7 +6,7 @@ pool:
 
 variables:
   dual-validate-postman-script: CHT_MOrder_Dual-validate.postman_collection.json
-  baseUrl: http://dual-validate-d210641.apps.ocp.iisi.test
+  baseUrl: http://dualvalidateservice-istio-system.apps.ocp.iisi.test
   floderName: wildflyVerifyUnLoadDataExe
 
 
@@ -25,6 +25,7 @@ stages:
           script: |
             
             sudo -- sh -c "echo '60.250.171.28    dual-validate-d210641.apps.ocp.iisi.test' >> /etc/hosts"
+            sudo -- sh -c "echo '60.250.171.28    dualvalidateservice-istio-system.apps.ocp.iisi.test' >> /etc/hosts"
             
             echo 'hosts檔案內容'
             cat /etc/hosts
