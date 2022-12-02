@@ -65,7 +65,8 @@ stages:
             fileName=$(floderName)_${date1}      # 設定檔名
             
             # 在電話前後加入雙引號
-            sed -e 's/^0/"0/g' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv | sed -i -e 's/,/",/g'
+            sed -i -e 's/^0/"0/g' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv
+            sed -i -e 's/,/",/g' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv
 
             str1='"telNum","custId"'
             str2=$(sed -n '1,1p' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv)
