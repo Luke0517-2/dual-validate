@@ -73,7 +73,9 @@ public class ApiGatewayClient {
 		int timeoutSec = apigwProperties.getTimeoutSec();
 		
 		final Class<?> requsetBodyclassType = body.getClass();
-		final String queryURL = this.parseToURI(apigwProperties ); 
+		final String queryURL = this.parseToURI(apigwProperties );
+		
+		log.trace("queryURL:{}, body:{}",queryURL, body);
 		
 		final Mono<String> result = webClient.post().uri(queryURL).contentType(MediaType.APPLICATION_JSON).headers(httpHeaders)
 				.body(Mono.just(body), requsetBodyclassType).retrieve().bodyToMono(String.class).log()
