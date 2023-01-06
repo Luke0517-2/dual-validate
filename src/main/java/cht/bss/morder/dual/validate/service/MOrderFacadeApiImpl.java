@@ -75,7 +75,8 @@ public class MOrderFacadeApiImpl implements MOrderFacade {
 			
 			result = apiClient.queryApi(input);
 		}else {
-			throw new BusinessException("Input參數不正確");
+			log.error("input:{}", input);
+			throw new BusinessException("Qrysalebehavior查詢失敗");
 		}
 		return result;
 	}
@@ -90,7 +91,8 @@ public class MOrderFacadeApiImpl implements MOrderFacade {
 		}else if(StringUtils.isNoneEmpty(input.getParam().getCustid()) && StringUtils.equals("custbehavior;", input.getParam().getQuerydata())) {
 			result = apiClient.queryApi(input);
 		}else {
-			throw new BusinessException("Input參數不正確");
+			log.error("input:{}",input);
+			throw new BusinessException("QueryCustInfo查詢失敗");
 		}
 		return result;
 	}
@@ -98,13 +100,14 @@ public class MOrderFacadeApiImpl implements MOrderFacade {
 	private String responseFromMoquery(QueryInput input) {
 		String tablename = input.getParam().getQueryitem().getTablename();
 		String result = StringUtils.EMPTY;
-		log.trace("start query {}, tablename:{}, telnum:{}",input.getCmd(),tablename,input.getParam().getTelnum());
+		log.trace("start query {}, tablename:{}, param:{}",input.getCmd(),tablename,input.getParam());
 		result = apiClient.queryApi(input);
 		
 		if(StringUtils.isNotBlank(result))
 			return result;
 		else
-			throw new BusinessException("Input有誤");
+			log.error("input:{}", input);
+			throw new BusinessException("Moquery "+tablename+"查詢失敗");
 	}	
 	
 	String readFile(String path) {
