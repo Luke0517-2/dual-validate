@@ -82,7 +82,9 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=API
-
+                -Dtransfer.property.m-order.apigw-properties.emp-no=123456
+                -Dtransfer.property.m-order.apigw-properties.from-site=EAI
+                -Dtransfer.property.m-order.apigw-properties.client-ip=10.144.94.120
         resources:
           requests: 
             memory: 1Gi

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
+import cht.bss.morder.dual.validate.config.TransferProperties;
 import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
 import cht.bss.morder.dual.validate.enums.QrySalebehaviorType;
 import cht.bss.morder.dual.validate.enums.QueryCustinfoType;
@@ -23,6 +24,9 @@ public class QueryInputFactory {
 
 	@Autowired
 	private MoqueryInputFactory moqueryInputFactory;
+	
+	@Autowired
+	private TransferProperties properties;
 
 	public ComparedData getComparedData(Enum type, TestCase testCase) {
 		Class clazz = type.getDeclaringClass();
@@ -38,7 +42,11 @@ public class QueryInputFactory {
 	}
 
 	protected QueryInput buildBasicInput() {
-		return QueryInput.builder().empno("123456").fromSite("EAI").clientip("10.144.1.1").build();
+		return QueryInput.builder()
+				.empno(properties.getMOrder().getApigwProperties().getEmpNo())
+				.fromSite(properties.getMOrder().getApigwProperties().getFromSite())
+				.clientip(properties.getMOrder().getApigwProperties().getClientIp())
+				.build();
 	}
 
 	protected ComparedDataBuilder builder(final String queryService) {
