@@ -46,8 +46,8 @@ public class QueryInputVerifyTest {
 			
 			assertEquals("QueryCustInfo", queryInput.getCmd());
 			assertEquals("123456", queryInput.getEmpno());
-			assertEquals("EAI", queryInput.getFromSite());
-			assertEquals("10.144.1.1", queryInput.getClientip());
+			assertEquals("IISIGROUP", queryInput.getFromSite());
+			assertEquals("10.144.94.120", queryInput.getClientip());
 			assertEquals("0912345678", queryInput.getParam().getTelnum());
 			assertNull(queryInput.getParam().getCustid());
 			assertEquals("telinfo;contractinfo;accountinfo;renter;user;simcard;package_all;spsvc_current;wap_current;promo_current;grouppromo_current;AWInfo;spsvcitem;sernum;vipdata;deposit;mcpsstore;basecontract;taxexempt;empdata;npinfo;CMPInfo;", 
@@ -65,8 +65,8 @@ public class QueryInputVerifyTest {
 			
 			assertEquals("QueryCustInfo", queryInput.getCmd());
 			assertEquals("123456", queryInput.getEmpno());
-			assertEquals("EAI", queryInput.getFromSite());
-			assertEquals("10.144.1.1", queryInput.getClientip());
+			assertEquals("IISIGROUP", queryInput.getFromSite());
+			assertEquals("10.144.94.120", queryInput.getClientip());
 			assertNull(queryInput.getParam().getTelnum());
 			assertEquals("Helloworld",queryInput.getParam().getCustid());
 			assertEquals("custbehavior;",queryInput.getParam().getQuerydata());
@@ -83,8 +83,8 @@ public class QueryInputVerifyTest {
 		
 		assertEquals("qrysalebehavior", queryInput.getCmd());
 		assertEquals("123456", queryInput.getEmpno());
-		assertEquals("EAI", queryInput.getFromSite());
-		assertEquals("10.144.1.1", queryInput.getClientip());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
 		assertEquals("0912345678", queryInput.getParam().getTelnum());
 		assertNull(queryInput.getParam().getQuerydata());
 		assertNull(queryInput.getParam().getCustid());
@@ -102,8 +102,8 @@ public class QueryInputVerifyTest {
 		
 		assertEquals("moquery", queryInput.getCmd());
 		assertEquals("123456", queryInput.getEmpno());
-		assertEquals("EAI", queryInput.getFromSite());
-		assertEquals("10.144.1.1", queryInput.getClientip());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
 		assertEquals("contractret", queryInput.getParam().getQueryitem().getTablename());
 		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
 		assertNull(queryInput.getParam().getTelnum());
@@ -123,8 +123,8 @@ public class QueryInputVerifyTest {
 
 		assertEquals("moquery", queryInput.getCmd());
 		assertEquals("123456", queryInput.getEmpno());
-		assertEquals("EAI", queryInput.getFromSite());
-		assertEquals("10.144.1.1", queryInput.getClientip());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
 		assertEquals("modelinsrec", queryInput.getParam().getQueryitem().getTablename());
 		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
 		assertNull(queryInput.getParam().getTelnum());
@@ -145,8 +145,8 @@ public class QueryInputVerifyTest {
 
 		assertEquals("moquery", queryInput.getCmd());
 		assertEquals("123456", queryInput.getEmpno());
-		assertEquals("EAI", queryInput.getFromSite());
-		assertEquals("10.144.1.1", queryInput.getClientip());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
 		assertEquals("agentmobset", queryInput.getParam().getQueryitem().getTablename());
 		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
 		assertNull(queryInput.getParam().getTelnum());
@@ -169,8 +169,8 @@ public class QueryInputVerifyTest {
 
 		assertEquals("moquery", queryInput.getCmd());
 		assertEquals("123456", queryInput.getEmpno());
-		assertEquals("EAI", queryInput.getFromSite());
-		assertEquals("10.144.1.1", queryInput.getClientip());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
 		assertEquals("mdsvc", queryInput.getParam().getQueryitem().getTablename());
 		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
 		assertNull(queryInput.getParam().getTelnum());
@@ -190,8 +190,8 @@ public class QueryInputVerifyTest {
 		
 		assertEquals("moquery", queryInput.getCmd());
 		assertEquals("123456", queryInput.getEmpno());
-		assertEquals("EAI", queryInput.getFromSite());
-		assertEquals("10.144.1.1", queryInput.getClientip());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
 		assertEquals("agent5id", queryInput.getParam().getQueryitem().getTablename());
 		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
 		assertNull(queryInput.getParam().getTelnum());
