@@ -1,0 +1,15 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "effectdate": "2022-12-27",
+                "contractid": "106859372",
+                "applytype": "5",
+                "termdate": ""
+            }
+        ],
+        "tablename": "applytypechgrec",
+        "querytype": "1"
+    }
+}

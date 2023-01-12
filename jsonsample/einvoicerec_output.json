@@ -1,0 +1,21 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "product": "G",
+                "contractid": "106859371",
+                "type": "C",
+                "content": ""
+            },
+            {
+                "product": "G",
+                "contractid": "106859371",
+                "type": "C",
+                "content": ""
+            }
+        ],
+        "tablename": "einvoicerec",
+        "querytype": "1"
+    }
+}

@@ -1,0 +1,18 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "specsvcname": "MV",
+                "password": "",
+                "incid": "28944",
+                "endrent": "2020-09-09",
+                "contractid": "1072104",
+                "startrent": "2020-09-09",
+                "idx": "0"
+            }
+        ],
+        "tablename": "vspecialsvc",
+        "querytype": "1"
+    }
+}

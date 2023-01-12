@@ -1,0 +1,17 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "printguno": "4160",
+                "mobacctno": "0",
+                "officecode": "287",
+                "oprcode": "800455",
+                "refpaiddate": "2022-12-29",
+                "telnum": "0905798980"
+            }
+        ],
+        "tablename": "rfpaidlist",
+        "querytype": "1"
+    }
+}

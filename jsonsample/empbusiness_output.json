@@ -1,0 +1,13 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "applydate": "2020-10-06",
+                "contractid": "11907320"
+            }
+        ],
+        "tablename": "empbusiness",
+        "querytype": "1"
+    }
+}

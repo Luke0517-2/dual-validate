@@ -1,0 +1,28 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "intime": "031606",
+                "kind": "A2",
+                "downdate": "2009-08-20",
+                "telstatus": "欠拆",
+                "transdate": "2009-08-20",
+                "upoffice": "295",
+                "bloffice": "",
+                "billym": "9807",
+                "procdate": "2009-08-20",
+                "status1": "1",
+                "newtelnum": "",
+                "contractid": "8314479",
+                "billcode": "G8",
+                "indate": "2009-08-20",
+                "errorreason": "非使用中電話,無法停話",
+                "telnum": "0988387822",
+                "status": "N"
+            }
+        ],
+        "tablename": "susptemp",
+        "querytype": "1"
+    }
+}

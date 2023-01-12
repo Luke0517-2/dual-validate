@@ -1,0 +1,23 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "reason1": "1",
+                "reason2": "1",
+                "agent": "",
+                "occupation": "01",
+                "appretplace": "",
+                "reason3": "",
+                "nationality": "",
+                "purpose": "1",
+                "appretflag": "",
+                "sex": "",
+                "batchbuyer": "機器人預設A",
+                "buylocation": "1"
+            }
+        ],
+        "tablename": "pascustomer",
+        "querytype": "1"
+    }
+}

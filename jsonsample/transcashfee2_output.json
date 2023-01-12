@@ -1,0 +1,47 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "feecode": "D0",
+                "zratefee": "0",
+                "agentpaytype": "",
+                "mobacctno": "200170419",
+                "mobtelbillid": "0",
+                "producedate": "2023-01-03",
+                "tax": "824",
+                "feeamt": "17300",
+                "taxtype": "0",
+                "notpaidamt": "17300",
+                "servicetype": "O",
+                "contractid": "106859376",
+                "expcode": "代售話機費",
+                "compdate": "2023-01-03",
+                "paytype": "1",
+                "checkcode": "H8",
+                "status": "3"
+            },
+            {
+                "feecode": "37",
+                "zratefee": "0",
+                "agentpaytype": "",
+                "mobacctno": "200170419",
+                "mobtelbillid": "0",
+                "producedate": "2023-01-03",
+                "tax": "981",
+                "feeamt": "20600",
+                "taxtype": "0",
+                "notpaidamt": "20600",
+                "servicetype": "O",
+                "contractid": "106859376",
+                "expcode": "申裝繳費",
+                "compdate": "2023-01-03",
+                "paytype": "1",
+                "checkcode": "8P",
+                "status": "3"
+            }
+        ],
+        "tablename": "transcashfee",
+        "querytype": "2"
+    }
+}

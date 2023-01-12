@@ -1,0 +1,31 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "(expression)": "",
+                "ocsg_quota": "1",
+                "receiver_number": "0905816189",
+                "share_type": "2",
+                "contractid": "106859371",
+                "oprcode": "SYSTEM",
+                "ocsg_action": "ADD",
+                "ocsg_ut": "1",
+                "share_quota": "1"
+            },
+            {
+                "(expression)": "",
+                "ocsg_quota": "0",
+                "receiver_number": "0905816189",
+                "share_type": "2",
+                "contractid": "106859371",
+                "oprcode": "835312",
+                "ocsg_action": "DEL",
+                "ocsg_ut": "0",
+                "share_quota": "1"
+            }
+        ],
+        "tablename": "data_share_rec_log",
+        "querytype": "1"
+    }
+}

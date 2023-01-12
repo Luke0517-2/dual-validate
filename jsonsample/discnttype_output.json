@@ -1,0 +1,21 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "canceldate": "",
+                "enddate": "",
+                "applydate": "2007-08-28",
+                "discnttype": "5",
+                "mobapplydate": "",
+                "mobgetdate": "",
+                "contractid": "9140745",
+                "discntno": "",
+                "startdate": "",
+                "choice": ""
+            }
+        ],
+        "tablename": "discnttype",
+        "querytype": "1"
+    }
+}

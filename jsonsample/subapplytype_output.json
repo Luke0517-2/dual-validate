@@ -1,0 +1,14 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "contractid": "24836959",
+                "subapplytype": "1",
+                "applytype": "B"
+            }
+        ],
+        "tablename": "subapplytype",
+        "querytype": "1"
+    }
+}

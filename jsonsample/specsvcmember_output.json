@@ -1,0 +1,21 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "(expression)": "",
+                "specsvcid": "226228914",
+                "billcoid": "9465714",
+                "groupid": "6315948",
+                "ip": "",
+                "type": "1",
+                "extrainfo": "",
+                "ocs": "",
+                "ipmark": "",
+                "telnum": "0988666330"
+            }
+        ],
+        "tablename": "specsvcmember",
+        "querytype": "1"
+    }
+}

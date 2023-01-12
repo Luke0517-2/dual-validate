@@ -1,0 +1,18 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "servcode": "LT",
+                "(expression)": "",
+                "deleteflag": "",
+                "contractid": "21016948",
+                "servtype": "SPSVC",
+                "type": "2",
+                "status": "3"
+            }
+        ],
+        "tablename": "packageservice",
+        "querytype": "2"
+    }
+}

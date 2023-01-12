@@ -1,0 +1,15 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "(expression)": "",
+                "contractid": "106856000",
+                "sms": "N",
+                "email": "Y"
+            }
+        ],
+        "tablename": "qosalert",
+        "querytype": "1"
+    }
+}

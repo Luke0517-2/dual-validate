@@ -1,0 +1,75 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "(expression)": "",
+                "productid": "318060",
+                "reserverule": "",
+                "deductfeetype": "",
+                "mobcount": "0",
+                "endreason": "",
+                "promoprojid": "33724",
+                "reserveflag": "N",
+                "refundflag": ""
+            },
+            {
+                "(expression)": "",
+                "productid": "318058",
+                "reserverule": "",
+                "deductfeetype": "",
+                "mobcount": "0",
+                "endreason": "",
+                "promoprojid": "33724",
+                "reserveflag": "N",
+                "refundflag": ""
+            },
+            {
+                "(expression)": "",
+                "productid": "317777",
+                "reserverule": "",
+                "deductfeetype": "",
+                "mobcount": "0",
+                "endreason": "",
+                "promoprojid": "33724",
+                "reserveflag": "N",
+                "refundflag": ""
+            },
+            {
+                "(expression)": "",
+                "productid": "313786",
+                "reserverule": "",
+                "deductfeetype": "",
+                "mobcount": "1",
+                "endreason": "",
+                "promoprojid": "33724",
+                "reserveflag": "N",
+                "refundflag": ""
+            },
+            {
+                "(expression)": "",
+                "productid": "318046",
+                "reserverule": "",
+                "deductfeetype": "",
+                "mobcount": "0",
+                "endreason": "",
+                "promoprojid": "33724",
+                "reserveflag": "N",
+                "refundflag": ""
+            },
+            {
+                "(expression)": "",
+                "productid": "318086",
+                "reserverule": "",
+                "deductfeetype": "",
+                "mobcount": "0",
+                "endreason": "",
+                "promoprojid": "33725",
+                "reserveflag": "N",
+                "refundflag": ""
+            }
+        ],
+        "tablename": "promoprodrecold",
+        "querytype": "1"
+    }
+}

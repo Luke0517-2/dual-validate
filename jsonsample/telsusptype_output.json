@@ -1,0 +1,17 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "(expression)": "2022-05-13",
+                "contractid": "106857086",
+                "cause": "O",
+                "description": "",
+                "other_reason": "",
+                "type": "C"
+            }
+        ],
+        "tablename": "telsusptype",
+        "querytype": "1"
+    }
+}

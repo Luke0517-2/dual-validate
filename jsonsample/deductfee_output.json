@@ -1,0 +1,33 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "newdiscntcode": "",
+                "productid": "317992",
+                "debtamt": "1000",
+                "contractid": "106859371",
+                "deducttype": "U",
+                "feeamt": "1000"
+            },
+            {
+                "newdiscntcode": "",
+                "productid": "317988",
+                "debtamt": "5000",
+                "contractid": "106859371",
+                "deducttype": "U",
+                "feeamt": "5000"
+            },
+            {
+                "newdiscntcode": "",
+                "productid": "314311",
+                "debtamt": "11910",
+                "contractid": "106859371",
+                "deducttype": "U",
+                "feeamt": "11910"
+            }
+        ],
+        "tablename": "deductfee",
+        "querytype": "1"
+    }
+}

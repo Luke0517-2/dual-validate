@@ -1,0 +1,17 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "commendcoid": "0",
+                "empid": "831879",
+                "canceldate": "",
+                "emppackid": "PROM36",
+                "applydate": "2022-12-29",
+                "telnum": "0988927740"
+            }
+        ],
+        "tablename": "empdiscntrec",
+        "querytype": "2"
+    }
+}

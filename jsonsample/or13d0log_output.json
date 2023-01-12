@@ -1,0 +1,17 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "canceldate": "2022-03-10",
+                "orderno": "M84TP1N000251",
+                "receiptno": "D2272",
+                "oprcode": "672397",
+                "memo": "333",
+                "telnum": "0932000270"
+            }
+        ],
+        "tablename": "or13d0log",
+        "querytype": "1"
+    }
+}

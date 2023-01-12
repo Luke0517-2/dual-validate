@@ -1,0 +1,21 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "applyitem": "550",
+                "applydate": "2022-12-22",
+                "enddate": "2022-12-22",
+                "newcustid": "132739493",
+                "oldcustid": "117847180",
+                "contractid": "2136950",
+                "newmobileacct": "200170368",
+                "newusecuid": "132739492",
+                "oldusecuid": "117847179",
+                "oldmobileacct": "21426756"
+            }
+        ],
+        "tablename": "chgcustrec",
+        "querytype": "1"
+    }
+}
