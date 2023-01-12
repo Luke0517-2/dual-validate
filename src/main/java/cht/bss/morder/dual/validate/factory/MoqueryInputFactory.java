@@ -1,14 +1,9 @@
 package cht.bss.morder.dual.validate.factory;
 
+import cht.bss.morder.dual.validate.enums.*;
 import org.springframework.stereotype.Service;
 
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
-import cht.bss.morder.dual.validate.enums.MoqueryContractType;
-import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
-import cht.bss.morder.dual.validate.enums.MoqueryOrderNoType;
-import cht.bss.morder.dual.validate.enums.MoquerySpsvcType;
-import cht.bss.morder.dual.validate.enums.MoqueryTelnumType;
-import cht.bss.morder.dual.validate.enums.MoqueryContractWithTelnumType;
 import cht.bss.morder.dual.validate.vo.ComparedData;
 import cht.bss.morder.dual.validate.vo.Params;
 import cht.bss.morder.dual.validate.vo.QueryInput;
@@ -29,12 +24,11 @@ public class MoqueryInputFactory extends QueryInputFactory {
 	}
 
 	private QueryInput buildQueryInput(MoqueryEnumInterface moqueryEnum, TestCase testCase) {
-		QueryInput queryInput = buildInput();
+		QueryInput queryInput = buildInput(); //將除了param以外放進去
 
 		QueryItemBuilder queryItemBuilder = QueryItem.builder().tablename(moqueryEnum.getTableName())
 				.querytype(moqueryEnum.getType());
 		String template = moqueryEnum.getContentTemplate();
-		
 		if (moqueryEnum instanceof MoqueryContractType) {
 			queryItemBuilder.content(String.format(template, testCase.getContract()));
 		} else if (moqueryEnum instanceof MoqueryTelnumType) {
@@ -45,6 +39,23 @@ public class MoqueryInputFactory extends QueryInputFactory {
 			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getTelNum()));
 		} else if (moqueryEnum instanceof MoquerySpsvcType) {
 			queryItemBuilder.content(String.format(template, testCase.getSpsvc()));
+
+		} else if (moqueryEnum instanceof MoqueryRentCustNoType) {
+			queryItemBuilder.content(String.format(template, testCase.getRentcustno()));
+		} else if (moqueryEnum instanceof MoqueryTranscashIdType) {
+			queryItemBuilder.content(String.format(template, testCase.getTranscashId()));
+
+		} else if (moqueryEnum instanceof MoqueryContractWithDateType){
+			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getOneDate()));
+		} else if (moqueryEnum instanceof MoqueryContractWithTwoDateType){
+			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getFirstDate(), testCase.getSecondDate()) );
+		} else if (moqueryEnum instanceof MoqueryTelnumWithDateType){
+			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getOneDate()));
+		} else if (moqueryEnum instanceof MoqueryTelnumWithTwoDateType){
+			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getFirstDate(), testCase.getSecondDate()) );
+
+
+
 		} else {
 			throw new BusinessException("未設定類型");
 		}

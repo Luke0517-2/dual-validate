@@ -5,10 +5,10 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum MoquerySpsvcType implements MoqueryEnumInterface {
+public enum MoqueryRentCustNoType implements MoqueryEnumInterface {
 
-	Mdsvc("mdsvc", "1", "%s"), Vpnsvc("vpnsvc", "1", "%s"),
-	F3svc("f3svc","1","%s");
+	Pascustomer("pascustomer", "1", "%s"),
+	;
 
 
 	private final String tableName;
