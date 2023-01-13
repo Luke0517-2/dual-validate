@@ -55,9 +55,9 @@ public class MoqueryService extends QueryService {
             MoqueryTelnumWithTwoDateType.Empdiscntrec, MoqueryTelnumWithTwoDateType.F4svc, MoqueryTelnumWithTwoDateType.Familysvc,
             MoqueryTelnumWithTwoDateType.Specsvcmember, MoqueryTelnumWithTwoDateType.Sharegroupmem};
 
-    private static final MoqueryEnumForSecondQuery[] enumsQueryHasSecondPhase = {MoqueryEnumForSecondQuery.MoqueryRentCustNo, MoqueryEnumForSecondQuery.MoqueryTranscashId,
-            MoqueryEnumForSecondQuery.MoqueryOrderno1, MoqueryEnumForSecondQuery.MoqueryOrderno2,
-            MoqueryEnumForSecondQuery.MoquerySpsvcMN, MoqueryEnumForSecondQuery.MoquerySpsvcMV, MoqueryEnumForSecondQuery.MoquerySpsvcF3,
+    private static final MoqueryEnumForTwiceQuery[] enumsQueryTwicePhase = {MoqueryEnumForTwiceQuery.MoqueryRentCustNo, MoqueryEnumForTwiceQuery.MoqueryTranscashId,
+    		MoqueryEnumForTwiceQuery.MoqueryOrderno1, MoqueryEnumForTwiceQuery.MoqueryOrderno2,
+            MoqueryEnumForTwiceQuery.MoquerySpsvcMN, MoqueryEnumForTwiceQuery.MoquerySpsvcMV, MoqueryEnumForTwiceQuery.MoquerySpsvcF3,
     };
 
 
@@ -105,7 +105,7 @@ public class MoqueryService extends QueryService {
 
         ArrayList<CompletableFuture<ComparedData>> list = new ArrayList<>();
 
-        for (MoqueryEnumForSecondQuery moqueryForSecondQuery : enumsQueryHasSecondPhase) {
+        for (MoqueryEnumForTwiceQuery moqueryForSecondQuery : enumsQueryTwicePhase) {
             List<CompletableFuture<ComparedData>> completableFuture
                     = Stream.of(moqueryForSecondQuery.getMoqueryEnumForFirstPhases()).map(
                     moqueryFirstPhase -> getAsyncTasksForWithTwoPhases(moqueryFirstPhase, moqueryForSecondQuery.getMoqueryEnumSecondPhase(), moqueryForSecondQuery.getResponse(), contractMap, testCase)

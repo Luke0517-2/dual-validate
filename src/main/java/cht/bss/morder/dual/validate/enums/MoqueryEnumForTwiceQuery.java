@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum MoqueryEnumForSecondQuery {
+public enum MoqueryEnumForTwiceQuery {
 
     MoqueryRentCustNo(new MoqueryEnumInterface[]{MoqueryContractType.Contract}, MoqueryRentCustNoType.Pascustomer, ResponseVOFactory.ResponseType.RentcustNo),
     MoqueryTranscashId(new MoqueryEnumInterface[]{MoqueryContractWithDateType.Transcashfee1}, MoqueryTranscashIdType.Chargeitem, ResponseVOFactory.ResponseType.TranscashId),
