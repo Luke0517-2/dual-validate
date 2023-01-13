@@ -329,19 +329,15 @@ public class MoqueryService extends QueryService {
 	private List<CompletableFuture<ComparedData>> asyncQueryMocontractType(Map<String, String> contractMap,
 			TestCase testCase) {
 		List<CompletableFuture<ComparedData>> asyncQuerys = new ArrayList<>();
-
-		for (MoqueryEnumInterface contractType : enumsQueryWithContractId) {
-			asyncQuerys.add(getAsyncQueryForContract(testCase, contractMap, contractType));
+		MoqueryEnumInterface[][] totalOfQueryMocontractType = {enumsQueryWithContractId, enumsQueryWithContractIdWithTelnum, 
+										  enumsQueryWithContractIdWithOneDate, enumsQueryWithContractIdWithTwoDate};
+		
+		for(MoqueryEnumInterface[] targetContractTypeArray : totalOfQueryMocontractType) {
+			for(MoqueryEnumInterface contractType : targetContractTypeArray) {
+				asyncQuerys.add(getAsyncQueryForContract(testCase, contractMap, contractType));
+			}
 		}
-		for (MoqueryEnumInterface contractType : enumsQueryWithContractIdWithTelnum) {
-			asyncQuerys.add(getAsyncQueryForContract(testCase, contractMap, contractType));
-		}
-		for (MoqueryEnumInterface contractType : enumsQueryWithContractIdWithOneDate) {
-			asyncQuerys.add(getAsyncQueryForContract(testCase, contractMap, contractType));
-		}
-		for (MoqueryEnumInterface contractType : enumsQueryWithContractIdWithTwoDate) {
-			asyncQuerys.add(getAsyncQueryForContract(testCase, contractMap, contractType));
-		}
+		
 		return asyncQuerys;
 	}
 

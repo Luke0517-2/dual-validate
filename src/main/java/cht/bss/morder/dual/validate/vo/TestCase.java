@@ -43,9 +43,6 @@ public class TestCase implements Cloneable {
 	private String rentcustno;
 	private String transcashId;
 
-	private Date oneDate;
-	private Date firstDate;
-	private Date secondDate;
 
 
 	/**
