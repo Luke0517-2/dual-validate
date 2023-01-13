@@ -13,7 +13,7 @@ import cht.bss.morder.dual.validate.vo.TestCase;
 
 @Service
 public class MoqueryInputFactory extends QueryInputFactory {
-	
+
 	public ComparedData getComparedData(MoqueryEnumInterface moqueryEnum, TestCase testCase) {
 		QueryInput queryInput = buildQueryInput(moqueryEnum, testCase);
 		Params param = queryInput.getParam();
@@ -38,23 +38,28 @@ public class MoqueryInputFactory extends QueryInputFactory {
 		} else if (moqueryEnum instanceof MoqueryContractWithTelnumType) {
 			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getTelNum()));
 		} else if (moqueryEnum instanceof MoquerySpsvcType) {
-			queryItemBuilder.content(String.format(template, testCase.getSpsvc()));
-
+			switch ((MoquerySpsvcType) moqueryEnum) {
+				case Mdsvc:
+				case Vpnsvc:
+					queryItemBuilder.content(String.format(template, testCase.getSpsvc()));
+					break;
+				case F3svc:
+					queryItemBuilder.content(String.format(template, testCase.getSpsvc(), testCase.getFirstDate(), testCase.getSecondDate()));
+					break;
+			}
 		} else if (moqueryEnum instanceof MoqueryRentCustNoType) {
 			queryItemBuilder.content(String.format(template, testCase.getRentcustno()));
 		} else if (moqueryEnum instanceof MoqueryTranscashIdType) {
 			queryItemBuilder.content(String.format(template, testCase.getTranscashId()));
 
-		} else if (moqueryEnum instanceof MoqueryContractWithDateType){
+		} else if (moqueryEnum instanceof MoqueryContractWithDateType) {
 			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getOneDate()));
-		} else if (moqueryEnum instanceof MoqueryContractWithTwoDateType){
-			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getFirstDate(), testCase.getSecondDate()) );
-		} else if (moqueryEnum instanceof MoqueryTelnumWithDateType){
+		} else if (moqueryEnum instanceof MoqueryContractWithTwoDateType) {
+			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getFirstDate(), testCase.getSecondDate()));
+		} else if (moqueryEnum instanceof MoqueryTelnumWithDateType) {
 			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getOneDate()));
-		} else if (moqueryEnum instanceof MoqueryTelnumWithTwoDateType){
-			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getFirstDate(), testCase.getSecondDate()) );
-
-
+		} else if (moqueryEnum instanceof MoqueryTelnumWithTwoDateType) {
+			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getFirstDate(), testCase.getSecondDate()));
 
 		} else {
 			throw new BusinessException("未設定類型");
