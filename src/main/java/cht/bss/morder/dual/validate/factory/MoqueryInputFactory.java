@@ -1,9 +1,20 @@
 package cht.bss.morder.dual.validate.factory;
 
-import cht.bss.morder.dual.validate.enums.*;
 import org.springframework.stereotype.Service;
 
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
+import cht.bss.morder.dual.validate.enums.MoqueryContractType;
+import cht.bss.morder.dual.validate.enums.MoqueryContractWithDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryContractWithTelnumType;
+import cht.bss.morder.dual.validate.enums.MoqueryContractWithTwoDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
+import cht.bss.morder.dual.validate.enums.MoqueryOrderNoType;
+import cht.bss.morder.dual.validate.enums.MoqueryRentCustNoType;
+import cht.bss.morder.dual.validate.enums.MoquerySpsvcType;
+import cht.bss.morder.dual.validate.enums.MoqueryTelnumType;
+import cht.bss.morder.dual.validate.enums.MoqueryTelnumWithDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryTelnumWithTwoDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryTranscashIdType;
 import cht.bss.morder.dual.validate.vo.ComparedData;
 import cht.bss.morder.dual.validate.vo.Params;
 import cht.bss.morder.dual.validate.vo.QueryInput;
@@ -44,7 +55,7 @@ public class MoqueryInputFactory extends QueryInputFactory {
 					queryItemBuilder.content(String.format(template, testCase.getSpsvc()));
 					break;
 				case F3svc:
-//					queryItemBuilder.content(String.format(template, testCase.getSpsvc(), testCase.getFirstDate(), testCase.getSecondDate()));
+					queryItemBuilder.content(String.format(template, testCase.getSpsvc(), getADDate(), getADDate()));
 					break;
 			}
 		} else if (moqueryEnum instanceof MoqueryRentCustNoType) {
@@ -70,6 +81,7 @@ public class MoqueryInputFactory extends QueryInputFactory {
 		return queryInput;
 	}
 
+	
 	private QueryInput buildInput() {
 		QueryInput input = buildBasicInput();
 		input.setCmd("moquery");

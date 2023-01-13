@@ -105,10 +105,10 @@ public class MoqueryService extends QueryService {
 
         ArrayList<CompletableFuture<ComparedData>> list = new ArrayList<>();
 
-        for (MoqueryEnumForTwiceQuery moqueryForSecondQuery : enumsQueryTwicePhase) {
+        for (MoqueryEnumForTwiceQuery moqueryForTwiceQuery : enumsQueryTwicePhase) {
             List<CompletableFuture<ComparedData>> completableFuture
-                    = Stream.of(moqueryForSecondQuery.getMoqueryEnumForFirstPhases()).map(
-                    moqueryFirstPhase -> getAsyncTasksForWithTwoPhases(moqueryFirstPhase, moqueryForSecondQuery.getMoqueryEnumSecondPhase(), moqueryForSecondQuery.getResponse(), contractMap, testCase)
+                    = Stream.of(moqueryForTwiceQuery.getMoqueryEnumForFirstPhases()).map(
+                    moqueryFirstPhase -> getAsyncTasksForWithTwoPhases(moqueryFirstPhase, moqueryForTwiceQuery.getMoqueryEnumSecondPhase(), moqueryForTwiceQuery.getResponse(), contractMap, testCase)
             ).collect(Collectors.toList());
             list.addAll(completableFuture);
         }
@@ -405,15 +405,12 @@ public class MoqueryService extends QueryService {
     private List<ComparedData> getQueryListByTelnum(TestCase testCase) {
 
         ArrayList<ComparedData> queryTelnumList = new ArrayList<>();
-
-        for (MoqueryEnumInterface telnumType : enumsQueryWithTelnum) {
-            queryTelnumList.add(factory.getComparedData(telnumType, testCase));
-        }
-        for (MoqueryEnumInterface telnumWithOneDateType : enumsQueryWithTelnumWithOneDate) {
-            queryTelnumList.add(factory.getComparedData(telnumWithOneDateType, testCase));
-        }
-        for (MoqueryEnumInterface telnumWithTwoDateType : enumsQueryWithTelnumWithTwoDate) {
-            queryTelnumList.add(factory.getComparedData(telnumWithTwoDateType, testCase));
+        MoqueryEnumInterface[][] totalOfQueryTelnumType = {enumsQueryWithTelnum, enumsQueryWithTelnumWithOneDate, enumsQueryWithTelnumWithTwoDate};
+        
+        for(MoqueryEnumInterface[] targetTelnumTypeArray : totalOfQueryTelnumType) {
+        	for(MoqueryEnumInterface telnumType : targetTelnumTypeArray) {
+        		queryTelnumList.add(factory.getComparedData(telnumType, testCase));
+        	}
         }
 
         return queryTelnumList;

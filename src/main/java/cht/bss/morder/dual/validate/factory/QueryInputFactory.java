@@ -8,6 +8,7 @@ import cht.bss.morder.dual.validate.config.TransferProperties;
 import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
 import cht.bss.morder.dual.validate.enums.QrySalebehaviorType;
 import cht.bss.morder.dual.validate.enums.QueryCustinfoType;
+import cht.bss.morder.dual.validate.time.YesterdayConvert;
 import cht.bss.morder.dual.validate.vo.ComparedData;
 import cht.bss.morder.dual.validate.vo.ComparedData.ComparedDataBuilder;
 import cht.bss.morder.dual.validate.vo.QueryInput;
@@ -27,6 +28,9 @@ public class QueryInputFactory {
 	
 	@Autowired
 	private TransferProperties properties;
+	
+	@Autowired
+	private YesterdayConvert yesterdayConvert;
 
 	public ComparedData getComparedData(Enum type, TestCase testCase) {
 		Class clazz = type.getDeclaringClass();
@@ -52,5 +56,13 @@ public class QueryInputFactory {
 	protected ComparedDataBuilder builder(final String queryService) {
 		ComparedDataBuilder builder = ComparedData.builder().queryService(queryService);
 		return builder;
+	}
+	
+	protected String getADDate() {
+		return yesterdayConvert.getYesterdayADDateString();
+	}
+	
+	protected String getMinguoDate() {
+		return yesterdayConvert.getYesterdayMinguoDat();
 	}
 }
