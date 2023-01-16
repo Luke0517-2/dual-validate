@@ -54,7 +54,7 @@ public class MoqueryService extends QueryService {
     private static final MoqueryEnumInterface[] enumsQueryWithTelnumWithTwoDate = {MoqueryTelnumWithTwoDateType.Custdatainfo,
             MoqueryTelnumWithTwoDateType.Empdiscntrec, MoqueryTelnumWithTwoDateType.F4svc, MoqueryTelnumWithTwoDateType.Familysvc,
             MoqueryTelnumWithTwoDateType.Specsvcmember, MoqueryTelnumWithTwoDateType.Sharegroupmem, MoqueryTelnumWithTwoDateType.Prepaidsvc, MoqueryTelnumWithTwoDateType.Sernumusage};
-
+    private static final MoqueryTelnumsWithDateType[] enumsQueryTelnumsWithDate = {MoqueryTelnumsWithDateType.Workingrecord};
     private static final MoqueryEnumForTwiceQuery[] enumsQueryTwicePhase = {MoqueryEnumForTwiceQuery.MoqueryRentCustNo, MoqueryEnumForTwiceQuery.MoqueryTranscashId,
             MoqueryEnumForTwiceQuery.MoqueryOrderno1, MoqueryEnumForTwiceQuery.MoqueryOrderno2,
             MoqueryEnumForTwiceQuery.MoquerySpsvcMN, MoqueryEnumForTwiceQuery.MoquerySpsvcMV, MoqueryEnumForTwiceQuery.MoquerySpsvcF3,
@@ -407,7 +407,7 @@ public class MoqueryService extends QueryService {
     private List<ComparedData> getQueryListByTelnum(TestCase testCase) {
 
         ArrayList<ComparedData> queryTelnumList = new ArrayList<>();
-        MoqueryEnumInterface[][] totalOfQueryTelnumType = {enumsQueryWithTelnum, enumsQueryWithTelnumWithOneDate, enumsQueryWithTelnumWithTwoDate};
+        MoqueryEnumInterface[][] totalOfQueryTelnumType = {enumsQueryWithTelnum, enumsQueryWithTelnumWithOneDate, enumsQueryWithTelnumWithTwoDate, enumsQueryTelnumsWithDate};
 
         for (MoqueryEnumInterface[] targetTelnumTypeArray : totalOfQueryTelnumType) {
             for (MoqueryEnumInterface telnumType : targetTelnumTypeArray) {

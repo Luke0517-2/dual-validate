@@ -63,7 +63,8 @@ public class MoqueryInputFactory extends QueryInputFactory {
             queryItemBuilder.content(String.format(template, testCase.getContract(), getMinguoDate()));
         } else if (moqueryEnum instanceof MoqueryTelnumWithMingGuoDateType) {
             queryItemBuilder.content(String.format(template, testCase.getTelNum(), getMinguoDate()));
-
+        } else if (moqueryEnum instanceof MoqueryTelnumsWithDateType) {
+            queryItemBuilder.content(String.format(template, getADDate(), testCase.getTelNum(), testCase.getTelNum()));
         } else {
             throw new BusinessException("未設定類型");
         }
