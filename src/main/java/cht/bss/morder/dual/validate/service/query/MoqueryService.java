@@ -43,23 +43,25 @@ public class MoqueryService extends QueryService {
             MoqueryContractWithDateType.Transcashfee1, MoqueryContractWithDateType.Transcashfee2};
     private static final MoqueryEnumInterface[] enumsQueryWithContractIdWithTwoDate = {MoqueryContractWithTwoDateType.Applytypechgrec,
             MoqueryContractWithTwoDateType.Delaydisc, MoqueryContractWithTwoDateType.Discnttype, MoqueryContractWithTwoDateType.Packageservice,
-            MoqueryContractWithTwoDateType.Promoprodrecold, MoqueryContractWithTwoDateType.Promoprodreserve, MoqueryContractWithTwoDateType.Vspecialsvc};
+            MoqueryContractWithTwoDateType.Promoprodrecold, MoqueryContractWithTwoDateType.Promoprodreserve, MoqueryContractWithTwoDateType.Vspecialsvc, MoqueryContractWithTwoDateType.Recashmark};
 
     private static final MoqueryEnumInterface[] enumsQueryWithTelnum = {MoqueryTelnumType.Agent5id,
             MoqueryTelnumType.Delcustinfoapply, MoqueryTelnumType.Eformapplyrec};
 
     private static final MoqueryEnumInterface[] enumsQueryWithTelnumWithOneDate = {MoqueryTelnumWithDateType.Adjustbill,
             MoqueryTelnumWithDateType.ModelinsrecShop, MoqueryTelnumWithDateType.Or13d0log,
-            MoqueryTelnumWithDateType.Refund, MoqueryTelnumWithDateType.Rfpaidlist, MoqueryTelnumWithDateType.Susptemp};
+            MoqueryTelnumWithDateType.Refund, MoqueryTelnumWithDateType.Rfpaidlist, MoqueryTelnumWithDateType.Susptemp, MoqueryTelnumWithDateType.Querylog};
     private static final MoqueryEnumInterface[] enumsQueryWithTelnumWithTwoDate = {MoqueryTelnumWithTwoDateType.Custdatainfo,
             MoqueryTelnumWithTwoDateType.Empdiscntrec, MoqueryTelnumWithTwoDateType.F4svc, MoqueryTelnumWithTwoDateType.Familysvc,
-            MoqueryTelnumWithTwoDateType.Specsvcmember, MoqueryTelnumWithTwoDateType.Sharegroupmem};
+            MoqueryTelnumWithTwoDateType.Specsvcmember, MoqueryTelnumWithTwoDateType.Sharegroupmem, MoqueryTelnumWithTwoDateType.Prepaidsvc, MoqueryTelnumWithTwoDateType.Sernumusage};
 
     private static final MoqueryEnumForTwiceQuery[] enumsQueryTwicePhase = {MoqueryEnumForTwiceQuery.MoqueryRentCustNo, MoqueryEnumForTwiceQuery.MoqueryTranscashId,
-    		MoqueryEnumForTwiceQuery.MoqueryOrderno1, MoqueryEnumForTwiceQuery.MoqueryOrderno2,
+            MoqueryEnumForTwiceQuery.MoqueryOrderno1, MoqueryEnumForTwiceQuery.MoqueryOrderno2,
             MoqueryEnumForTwiceQuery.MoquerySpsvcMN, MoqueryEnumForTwiceQuery.MoquerySpsvcMV, MoqueryEnumForTwiceQuery.MoquerySpsvcF3,
     };
 
+    private static final MoqueryTelnumWithMingGuoDateType[] enumsQueryWithTelnumWithMingGuoDate = {MoqueryTelnumWithMingGuoDateType.Recotemp};
+    private static final MoqueryContractWithMingGuoDateType[] enumsQueryWithContractWithMingGuoDate = {MoqueryContractWithMingGuoDateType.Officialfee};
 
     public final String VALUE_FROM_IISI = "VALUE_FROM_IISI";
     public final String VALUE_FROM_CHT = "VALUE_FROM_CHT";
@@ -314,21 +316,21 @@ public class MoqueryService extends QueryService {
         return queryCht.runTwoPhaseQuery(contractIdMap.get(VALUE_FROM_CHT));
     }
 
+    private List<CompletableFuture<ComparedData>> asyncQueryMocontractType(Map<String, String> contractMap,
+                                                                           TestCase testCase) {
+        List<CompletableFuture<ComparedData>> asyncQuerys = new ArrayList<>();
+        MoqueryEnumInterface[][] totalOfQueryMocontractType = {enumsQueryWithContractId, enumsQueryWithContractIdWithTelnum,
+                enumsQueryWithContractIdWithOneDate, enumsQueryWithContractIdWithTwoDate,
+                enumsQueryWithTelnumWithMingGuoDate, enumsQueryWithContractWithMingGuoDate};
 
-	private List<CompletableFuture<ComparedData>> asyncQueryMocontractType(Map<String, String> contractMap,
-			TestCase testCase) {
-		List<CompletableFuture<ComparedData>> asyncQuerys = new ArrayList<>();
-		MoqueryEnumInterface[][] totalOfQueryMocontractType = {enumsQueryWithContractId, enumsQueryWithContractIdWithTelnum, 
-										  enumsQueryWithContractIdWithOneDate, enumsQueryWithContractIdWithTwoDate};
-		
-		for(MoqueryEnumInterface[] targetContractTypeArray : totalOfQueryMocontractType) {
-			for(MoqueryEnumInterface contractType : targetContractTypeArray) {
-				asyncQuerys.add(getAsyncQueryForContract(testCase, contractMap, contractType));
-			}
-		}
-		
-		return asyncQuerys;
-	}
+        for (MoqueryEnumInterface[] targetContractTypeArray : totalOfQueryMocontractType) {
+            for (MoqueryEnumInterface contractType : targetContractTypeArray) {
+                asyncQuerys.add(getAsyncQueryForContract(testCase, contractMap, contractType));
+            }
+        }
+
+        return asyncQuerys;
+    }
 
 
     private CompletableFuture<ComparedData> getAsyncQueryForContract(TestCase testCase, Map<String, String> contractMap,
@@ -406,11 +408,11 @@ public class MoqueryService extends QueryService {
 
         ArrayList<ComparedData> queryTelnumList = new ArrayList<>();
         MoqueryEnumInterface[][] totalOfQueryTelnumType = {enumsQueryWithTelnum, enumsQueryWithTelnumWithOneDate, enumsQueryWithTelnumWithTwoDate};
-        
-        for(MoqueryEnumInterface[] targetTelnumTypeArray : totalOfQueryTelnumType) {
-        	for(MoqueryEnumInterface telnumType : targetTelnumTypeArray) {
-        		queryTelnumList.add(factory.getComparedData(telnumType, testCase));
-        	}
+
+        for (MoqueryEnumInterface[] targetTelnumTypeArray : totalOfQueryTelnumType) {
+            for (MoqueryEnumInterface telnumType : targetTelnumTypeArray) {
+                queryTelnumList.add(factory.getComparedData(telnumType, testCase));
+            }
         }
 
         return queryTelnumList;
@@ -464,6 +466,10 @@ public class MoqueryService extends QueryService {
             testCase.setSpsvc(value);
         } else if (secondQueryEnum instanceof MoqueryOrderNoType) {
             testCase.setOrderno(value);
+        } else if (secondQueryEnum instanceof MoqueryTranscashIdType) {
+            testCase.setTranscashId(value);
+        } else if (secondQueryEnum instanceof MoqueryRentCustNoType) {
+            testCase.setRentcustno(value);
         } else {
             testCase.setErrorReason(value);
         }
