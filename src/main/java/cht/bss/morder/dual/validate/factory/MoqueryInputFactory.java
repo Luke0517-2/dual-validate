@@ -51,15 +51,14 @@ public class MoqueryInputFactory extends QueryInputFactory {
             queryItemBuilder.content(String.format(template, testCase.getRentcustno()));
         } else if (moqueryEnum instanceof MoqueryTranscashIdType) {
             queryItemBuilder.content(String.format(template, testCase.getTranscashId()));
-
         } else if (moqueryEnum instanceof MoqueryContractWithDateType) {
-//			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getOneDate()));
+            queryItemBuilder.content(String.format(template, testCase.getContract(), getADDate()));
         } else if (moqueryEnum instanceof MoqueryContractWithTwoDateType) {
-//			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getFirstDate(), testCase.getSecondDate()));
+            queryItemBuilder.content(String.format(template, testCase.getContract(), getADDate(), getADDate()));
         } else if (moqueryEnum instanceof MoqueryTelnumWithDateType) {
-//			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getOneDate()));
+            queryItemBuilder.content(String.format(template, testCase.getContract(), getADDate()));
         } else if (moqueryEnum instanceof MoqueryTelnumWithTwoDateType) {
-//			queryItemBuilder.content(String.format(template, testCase.getContract(), testCase.getFirstDate(), testCase.getSecondDate()));
+            queryItemBuilder.content(String.format(template, testCase.getContract(), getADDate(), getADDate()));
         } else if (moqueryEnum instanceof MoqueryContractWithMingGuoDateType) {
             queryItemBuilder.content(String.format(template, testCase.getContract(), getMinguoDate()));
         } else if (moqueryEnum instanceof MoqueryTelnumWithMingGuoDateType) {
