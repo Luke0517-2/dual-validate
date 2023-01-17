@@ -24,7 +24,7 @@ public class MoqueryInputFactory extends QueryInputFactory {
     }
 
     private QueryInput buildQueryInput(MoqueryEnumInterface moqueryEnum, TestCase testCase) {
-        QueryInput queryInput = buildInput(); //將除了param以外放進去
+        QueryInput queryInput = buildInput();
 
         QueryItemBuilder queryItemBuilder = QueryItem.builder().tablename(moqueryEnum.getTableName())
                 .querytype(moqueryEnum.getType());
@@ -56,9 +56,9 @@ public class MoqueryInputFactory extends QueryInputFactory {
         } else if (moqueryEnum instanceof MoqueryContractWithTwoDateType) {
             queryItemBuilder.content(String.format(template, testCase.getContract(), getADDate(), getADDate()));
         } else if (moqueryEnum instanceof MoqueryTelnumWithDateType) {
-            queryItemBuilder.content(String.format(template, testCase.getContract(), getADDate()));
+            queryItemBuilder.content(String.format(template, testCase.getTelNum(), getADDate()));
         } else if (moqueryEnum instanceof MoqueryTelnumWithTwoDateType) {
-            queryItemBuilder.content(String.format(template, testCase.getContract(), getADDate(), getADDate()));
+            queryItemBuilder.content(String.format(template, testCase.getTelNum(), getADDate(), getADDate()));
         } else if (moqueryEnum instanceof MoqueryContractWithMingGuoDateType) {
             queryItemBuilder.content(String.format(template, testCase.getContract(), getMinguoDate()));
         } else if (moqueryEnum instanceof MoqueryTelnumWithMingGuoDateType) {
