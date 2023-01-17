@@ -24,14 +24,14 @@ public class YesterdayConvert {
 		return dateFormat.format(yesterday());
 	}
 	
-	public String getYesterdayMinguoDat() {
+	public String getYesterdayMinguoDate() {
 		return transferADDateToMinguoDate(getYesterdayADDateString());
 	}
 	
 	private String transferADDateToMinguoDate(String dateString) {
 		
 		LocalDate localDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		String format = MinguoDate.from(localDate).format(DateTimeFormatter.ofPattern("yyyMMdd"));
+		String format = MinguoDate.from(localDate).format(DateTimeFormatter.ofPattern("yyyMM"));
 		
 		if(format.charAt(0) == '0')
 			return format.substring(1);

@@ -63,6 +63,6 @@ public class QueryInputFactory {
 	}
 	
 	protected String getMinguoDate() {
-		return yesterdayConvert.getYesterdayMinguoDat();
+		return yesterdayConvert.getYesterdayMinguoDate();
 	}
 }
