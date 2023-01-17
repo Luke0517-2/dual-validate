@@ -3,6 +3,7 @@ package cht.bss.morder.dual.validate.factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cht.bss.morder.dual.validate.common.CheckQueryTable;
 import cht.bss.morder.dual.validate.common.YesterdayConvert;
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
 import cht.bss.morder.dual.validate.config.TransferProperties;
@@ -31,6 +32,9 @@ public class QueryInputFactory {
 	
 	@Autowired
 	private YesterdayConvert yesterdayConvert;
+	
+	@Autowired
+	private CheckQueryTable checkQueryTable;
 
 	public ComparedData getComparedData(Enum type, TestCase testCase) {
 		Class clazz = type.getDeclaringClass();
@@ -64,5 +68,9 @@ public class QueryInputFactory {
 	
 	protected String getMinguoDate() {
 		return yesterdayConvert.getYesterdayMinguoDate();
+	}
+	
+	protected boolean filterQueryTable(String targetTableName) {
+		return checkQueryTable.filterQueryTable(targetTableName);
 	}
 }

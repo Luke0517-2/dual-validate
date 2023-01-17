@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +25,10 @@ public class ValidateService {
 
 	public TestCase validateCheck(TestCase testCase) {
 
-		List<ComparedData> comparedData = queryResult(testCase);
-		testCase.setComparedData(comparedData);
+		List<ComparedData> comparedDataList = queryResult(testCase);
+		comparedDataList = comparedDataList.stream()
+				.filter(comparedData -> ObjectUtils.isNotEmpty(comparedData)).collect(Collectors.toList());
+		testCase.setComparedData(comparedDataList);
 		writeToString(testCase);
 		return testCase;
 	}
