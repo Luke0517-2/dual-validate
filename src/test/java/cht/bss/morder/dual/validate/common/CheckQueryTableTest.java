@@ -2,6 +2,7 @@ package cht.bss.morder.dual.validate.common;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -21,7 +22,7 @@ public class CheckQueryTableTest {
 	@Value("#{${dual-validate-query-table-list}}")
 	private List<String> listOfQueryTableV2;
 	
-	@Autowired
+	@Autowired(required = false)
 	private CheckQueryTable checkQueryTable;
 	
 	@Test
@@ -41,5 +42,10 @@ public class CheckQueryTableTest {
 		assertTrue(resultForTrue);
 		boolean resultForFalse = checkQueryTable.filterQueryTable("refund");
 		assertFalse(resultForFalse);
+	}
+	
+	@Test
+	void test_conditionCreateInstance() {
+		assertNull(checkQueryTable);
 	}
 }

@@ -1,5 +1,6 @@
 package cht.bss.morder.dual.validate.factory;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class QueryInputFactory {
 	@Autowired
 	private YesterdayConvert yesterdayConvert;
 	
-	@Autowired
+	@Autowired(required = false)
 	private CheckQueryTable checkQueryTable;
 
 	public ComparedData getComparedData(Enum type, TestCase testCase) {
@@ -71,6 +72,9 @@ public class QueryInputFactory {
 	}
 	
 	protected boolean filterQueryTable(String targetTableName) {
-		return checkQueryTable.filterQueryTable(targetTableName);
+		if(ObjectUtils.isNotEmpty(checkQueryTable))
+			return checkQueryTable.filterQueryTable(targetTableName);
+		else
+			return false;
 	}
 }
