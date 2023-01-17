@@ -1,4 +1,4 @@
-package cht.bss.morder.dual.validate.vo.time;
+package cht.bss.morder.dual.validate.common;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
