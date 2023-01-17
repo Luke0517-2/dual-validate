@@ -3,12 +3,12 @@ package cht.bss.morder.dual.validate.factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cht.bss.morder.dual.validate.common.YesterdayConvert;
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
 import cht.bss.morder.dual.validate.config.TransferProperties;
 import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
 import cht.bss.morder.dual.validate.enums.QrySalebehaviorType;
 import cht.bss.morder.dual.validate.enums.QueryCustinfoType;
-import cht.bss.morder.dual.validate.time.YesterdayConvert;
 import cht.bss.morder.dual.validate.vo.ComparedData;
 import cht.bss.morder.dual.validate.vo.ComparedData.ComparedDataBuilder;
 import cht.bss.morder.dual.validate.vo.QueryInput;

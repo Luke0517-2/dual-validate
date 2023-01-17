@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import cht.bss.morder.dual.validate.time.YesterdayConvert;
+import cht.bss.morder.dual.validate.common.YesterdayConvert;
 
 @SpringBootTest
 public class YesterdayConvertTest {
