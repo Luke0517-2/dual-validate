@@ -30,11 +30,9 @@ public class MoqueryServiceTest {
 		assertNotNull(result);
 		assertNotEquals(0, result);
 
-		// 17 (一開始)
-		// + 4 (新增的contract) + 1 (新增spsvc) + 2 (新增twoPhase)
-		// + 9 (contract+date) + 7 (contract+2date)
-		// + 6 (tel+date) + 6(tel+2date)
-		assertEquals(52, result.size());
+		// 17 (2022-11 雙軌階段一)
+		// +42 (2023-01 雙軌階段二)
+		assertEquals(59, result.size());
 	}
 
 
