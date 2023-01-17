@@ -1,7 +1,6 @@
 package cht.bss.morder.dual.validate.factory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
@@ -9,22 +8,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cht.bss.morder.dual.validate.enums.MoqueryContractType;
+import cht.bss.morder.dual.validate.enums.MoqueryContractWithDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryContractWithMingGuoDateType;
 import cht.bss.morder.dual.validate.enums.MoqueryContractWithTelnumType;
-import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
+import cht.bss.morder.dual.validate.enums.MoqueryContractWithTwoDateType;
 import cht.bss.morder.dual.validate.enums.MoqueryOrderNoType;
+import cht.bss.morder.dual.validate.enums.MoqueryRentCustNoType;
 import cht.bss.morder.dual.validate.enums.MoquerySpsvcType;
 import cht.bss.morder.dual.validate.enums.MoqueryTelnumType;
+import cht.bss.morder.dual.validate.enums.MoqueryTelnumWithDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryTelnumWithMingGuoDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryTelnumWithTwoDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryTelnumsWithDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryTranscashIdType;
 import cht.bss.morder.dual.validate.enums.QrySalebehaviorType;
 import cht.bss.morder.dual.validate.enums.QueryCustinfoType;
 import cht.bss.morder.dual.validate.vo.ComparedData;
-import cht.bss.morder.dual.validate.vo.Params;
 import cht.bss.morder.dual.validate.vo.QueryInput;
-import cht.bss.morder.dual.validate.vo.QueryItem;
 import cht.bss.morder.dual.validate.vo.TestCase;
 
 @SpringBootTest
@@ -196,6 +200,186 @@ public class QueryInputVerifyTest {
 		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
 		assertNull(queryInput.getParam().getTelnum());
 		assertEquals("0912345678", queryInput.getParam().getQueryitem().getContent());
+		assertNull(queryInput.getParam().getQuerydata());
+		assertNull(queryInput.getParam().getCustid());
+	}
+	
+	@Test
+	public void testGetComparedData_In_MoqueryInputFactory_MoqueryContractWithDateType() throws JsonProcessingException {
+		TestCase case1 = getTestCase();
+
+		MoqueryContractWithDateType type = MoqueryContractWithDateType.Chgcustrec;
+		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
+		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
+		
+		assertEquals("moquery", queryInput.getCmd());
+		assertEquals("123456", queryInput.getEmpno());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
+		assertEquals("chgcustrec", queryInput.getParam().getQueryitem().getTablename());
+		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
+		assertNull(queryInput.getParam().getTelnum());
+		assertNull(queryInput.getParam().getQuerydata());
+		assertNull(queryInput.getParam().getCustid());
+	}
+	
+	@Test
+	public void testGetComparedData_In_MoqueryInputFactory_MoqueryContractWithMingGuoDateType() throws JsonProcessingException {
+		TestCase case1 = getTestCase();
+
+		MoqueryContractWithMingGuoDateType type = MoqueryContractWithMingGuoDateType.Officialfee;
+		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
+		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
+		
+		assertEquals("moquery", queryInput.getCmd());
+		assertEquals("123456", queryInput.getEmpno());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
+		assertEquals("officialfee", queryInput.getParam().getQueryitem().getTablename());
+		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
+		assertNull(queryInput.getParam().getTelnum());
+		assertNull(queryInput.getParam().getQuerydata());
+		assertNull(queryInput.getParam().getCustid());
+	}
+	
+	@Test
+	public void testGetComparedData_In_MoqueryInputFactory_MoqueryContractWithTwoDateType() throws JsonProcessingException {
+		TestCase case1 = getTestCase();
+
+		MoqueryContractWithTwoDateType type = MoqueryContractWithTwoDateType.Applytypechgrec;
+		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
+		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
+		
+		assertEquals("moquery", queryInput.getCmd());
+		assertEquals("123456", queryInput.getEmpno());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
+		assertEquals("applytypechgrec", queryInput.getParam().getQueryitem().getTablename());
+		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
+		assertNull(queryInput.getParam().getTelnum());
+		assertNull(queryInput.getParam().getQuerydata());
+		assertNull(queryInput.getParam().getCustid());
+	}
+	
+	@Test
+	public void testGetComparedData_In_MoqueryInputFactory_MoqueryRentCustNoType() throws JsonProcessingException {
+		TestCase case1 = getTestCase();
+
+		MoqueryRentCustNoType type = MoqueryRentCustNoType.Pascustomer;
+		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
+		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
+		
+		assertEquals("moquery", queryInput.getCmd());
+		assertEquals("123456", queryInput.getEmpno());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
+		assertEquals("pascustomer", queryInput.getParam().getQueryitem().getTablename());
+		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
+		assertNull(queryInput.getParam().getTelnum());
+		assertNull(queryInput.getParam().getQuerydata());
+		assertNull(queryInput.getParam().getCustid());
+	}
+	
+	@Test
+	public void testGetComparedData_In_MoqueryInputFactory_MoqueryTelnumsWithDateType() throws JsonProcessingException {
+		TestCase case1 = getTestCase();
+
+		MoqueryTelnumsWithDateType type = MoqueryTelnumsWithDateType.Workingrecord;
+		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
+		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
+		
+		assertEquals("moquery", queryInput.getCmd());
+		assertEquals("123456", queryInput.getEmpno());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
+		assertEquals("workingrecord", queryInput.getParam().getQueryitem().getTablename());
+		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
+		assertNull(queryInput.getParam().getTelnum());
+		assertNull(queryInput.getParam().getQuerydata());
+		assertNull(queryInput.getParam().getCustid());
+	}
+	
+	@Test
+	public void testGetComparedData_In_MoqueryInputFactory_MoqueryTelnumWithDateType() throws JsonProcessingException {
+		TestCase case1 = getTestCase();
+
+		MoqueryTelnumWithDateType type = MoqueryTelnumWithDateType.Adjustbill;
+		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
+		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
+		
+		assertEquals("moquery", queryInput.getCmd());
+		assertEquals("123456", queryInput.getEmpno());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
+		assertEquals("adjustbill", queryInput.getParam().getQueryitem().getTablename());
+		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
+		assertNull(queryInput.getParam().getTelnum());
+		assertNull(queryInput.getParam().getQuerydata());
+		assertNull(queryInput.getParam().getCustid());
+	}
+	
+	@Test
+	public void testGetComparedData_In_MoqueryInputFactory_MoqueryTelnumWithMingGuoDateType() throws JsonProcessingException {
+		TestCase case1 = getTestCase();
+
+		MoqueryTelnumWithMingGuoDateType type = MoqueryTelnumWithMingGuoDateType.Recotemp;
+		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
+		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
+		
+		assertEquals("moquery", queryInput.getCmd());
+		assertEquals("123456", queryInput.getEmpno());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
+		assertEquals("recotemp", queryInput.getParam().getQueryitem().getTablename());
+		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
+		assertNull(queryInput.getParam().getTelnum());
+		assertNull(queryInput.getParam().getQuerydata());
+		assertNull(queryInput.getParam().getCustid());
+	}
+	
+	@Test
+	public void testGetComparedData_In_MoqueryInputFactory_MoqueryTelnumWithTwoDateType() throws JsonProcessingException {
+		TestCase case1 = getTestCase();
+
+		MoqueryTelnumWithTwoDateType type = MoqueryTelnumWithTwoDateType.Empdiscntrec;
+		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
+		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
+		
+		assertEquals("moquery", queryInput.getCmd());
+		assertEquals("123456", queryInput.getEmpno());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
+		assertEquals("empdiscntrec", queryInput.getParam().getQueryitem().getTablename());
+		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
+		assertNull(queryInput.getParam().getTelnum());
+		assertNull(queryInput.getParam().getQuerydata());
+		assertNull(queryInput.getParam().getCustid());
+	}
+	
+	@Test
+	public void testGetComparedData_In_MoqueryInputFactory_MoqueryTranscashIdType() throws JsonProcessingException {
+		TestCase case1 = getTestCase();
+
+		MoqueryTranscashIdType type = MoqueryTranscashIdType.Chargeitem;
+		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
+		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
+		
+		assertEquals("moquery", queryInput.getCmd());
+		assertEquals("123456", queryInput.getEmpno());
+		assertEquals("IISIGROUP", queryInput.getFromSite());
+		assertEquals("10.144.94.120", queryInput.getClientip());
+		assertEquals("chargeitem", queryInput.getParam().getQueryitem().getTablename());
+		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
+		assertNull(queryInput.getParam().getTelnum());
 		assertNull(queryInput.getParam().getQuerydata());
 		assertNull(queryInput.getParam().getCustid());
 	}
