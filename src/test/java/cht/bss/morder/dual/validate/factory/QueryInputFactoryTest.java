@@ -41,77 +41,77 @@ public class QueryInputFactoryTest {
         final String custid = "Helloworld";
         TestCase case1 = TestCase.builder().telNum(telnum).custId(custid).build();
 
-        ComparedData data = queryInputFactory.getComparedData(QueryCustinfoType.telnum, case1);
+        ComparedData comparedDataForTelnum = queryInputFactory.getComparedData(QueryCustinfoType.telnum, case1);
 
-        validataComparedData(data);
-        assertEquals(data.getData(), telnum);
-        assertEquals(data.getTable(), "telnum");
-        assertEquals("querycustinfo", data.getQueryService());
+        validataComparedData(comparedDataForTelnum);
+        assertEquals(comparedDataForTelnum.getData(), telnum);
+        assertEquals(comparedDataForTelnum.getTable(), "telnum");
+        assertEquals("querycustinfo", comparedDataForTelnum.getQueryService());
 
-        ComparedData data2 = queryInputFactory.getComparedData(QueryCustinfoType.custbehavior, case1);
+        ComparedData comparedDataForCustbehavior = queryInputFactory.getComparedData(QueryCustinfoType.custbehavior, case1);
 
-        validataComparedData(data2);
-        assertEquals(data2.getData(), custid);
-        assertEquals(data2.getTable(), "custbehavior");
-        assertEquals("querycustinfo", data.getQueryService());
+        validataComparedData(comparedDataForCustbehavior);
+        assertEquals(comparedDataForCustbehavior.getData(), custid);
+        assertEquals(comparedDataForCustbehavior.getTable(), "custbehavior");
+        assertEquals("querycustinfo", comparedDataForTelnum.getQueryService());
     }
 
 	@Test
 	public void testGetComparedData_In_QrySaleBehavior() {
-		final String telnum = "0912345678";
-		final String custid = "Helloworld";
-		TestCase case1 = TestCase.builder().telNum(telnum).custId(custid).build();
+        final String telnum = "0912345678";
+        final String custid = "Helloworld";
+        TestCase case1 = TestCase.builder().telNum(telnum).custId(custid).build();
 
-		ComparedData data = queryInputFactory.getComparedData(QrySalebehaviorType.qrySalebehavior, case1);
-		String telnumFromComparedData = getTelnumFromComparedData(data);
-		assertFalse(StringUtils.isEmpty(telnumFromComparedData));
-		assertEquals(telnum,telnumFromComparedData);
-		
-		validataComparedData(data);
-		assertEquals(telnum, data.getData());
-		assertEquals("qrysalebehavior", data.getTable());
-		assertEquals("qrysalebehavior", data.getQueryService());
-	}
+        ComparedData comparedData = queryInputFactory.getComparedData(QrySalebehaviorType.qrySalebehavior, case1);
+        String telnumFromComparedData = getTelnumFromComparedData(comparedData);
+        assertFalse(StringUtils.isEmpty(telnumFromComparedData));
+        assertEquals(telnum, telnumFromComparedData);
+
+        validataComparedData(comparedData);
+        assertEquals(telnum, comparedData.getData());
+        assertEquals("qrysalebehavior", comparedData.getTable());
+        assertEquals("qrysalebehavior", comparedData.getQueryService());
+    }
 
 	@Test
 	public void testGetComparedData_In_MoqueryInputFactory_MoqueryContractWithTelnumType() {
-		final String contractId = "Helloworld";
-		final String telnum = "0912345678";
-		TestCase case1 = TestCase.builder().telNum(telnum).contract(contractId).build();
+        final String contractId = "Helloworld";
+        final String telnum = "0912345678";
+        TestCase case1 = TestCase.builder().telNum(telnum).contract(contractId).build();
 
-		MoqueryContractWithTelnumType type = MoqueryContractWithTelnumType.Contractret;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
-		validataComparedData(data);
-		validataComparedDataInMoquery(data, type);
-		assertEquals(contractId + "&" + telnum, data.getData());
-		assertEquals("moquery", data.getQueryService());
-	}
+        MoqueryContractWithTelnumType type = MoqueryContractWithTelnumType.Contractret;
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(contractId + "&" + telnum, comparedData.getData());
+        assertEquals("moquery", comparedData.getQueryService());
+    }
 
 	@Test
 	public void testGetComparedData_In_MoqueryInputFactory_MoqueryOrderNoType() {
-		final String orderNo = "Helloworld";
-		TestCase case1 = TestCase.builder().orderno(orderNo).build();
+        final String orderNo = "Helloworld";
+        TestCase case1 = TestCase.builder().orderno(orderNo).build();
 
-		MoqueryOrderNoType type = MoqueryOrderNoType.Modelinsrec;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
-		validataComparedData(data);
-		validataComparedDataInMoquery(data, type);
-		assertEquals(orderNo, data.getData());
-		assertEquals("moquery", data.getQueryService());
-	}
+        MoqueryOrderNoType type = MoqueryOrderNoType.Modelinsrec;
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(orderNo, comparedData.getData());
+        assertEquals("moquery", comparedData.getQueryService());
+    }
 
 	@Test
 	public void testGetComparedData_In_MoqueryInputFactory_MoqueryContractType() {
-		final String contractId = "Helloworld";
-		TestCase case1 = TestCase.builder().contract(contractId).build();
+        final String contractId = "Helloworld";
+        TestCase case1 = TestCase.builder().contract(contractId).build();
 
-		MoqueryContractType type = MoqueryContractType.AgentMobileSet;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
-		validataComparedData(data);
-		validataComparedDataInMoquery(data, type);
-		assertEquals(contractId, data.getData());
-		assertEquals("moquery", data.getQueryService());
-	}
+        MoqueryContractType type = MoqueryContractType.AgentMobileSet;
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(contractId, comparedData.getData());
+        assertEquals("moquery", comparedData.getQueryService());
+    }
 
 	@Test
 	public void testGetComparedData_In_MoqueryInputFactory_MoquerySpsvcType() {
@@ -119,11 +119,11 @@ public class QueryInputFactoryTest {
         TestCase case1 = TestCase.builder().spsvc(spsvc).build();
 
         MoquerySpsvcType type = MoquerySpsvcType.Mdsvc;
-        ComparedData data = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(data);
-        validataComparedDataInMoquery(data, type);
-        assertEquals(spsvc, data.getData());
-        assertEquals("moquery", data.getQueryService());
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(spsvc, comparedData.getData());
+        assertEquals("moquery", comparedData.getQueryService());
     }
 
     @Test
@@ -132,11 +132,11 @@ public class QueryInputFactoryTest {
         TestCase case1 = TestCase.builder().spsvc(spsvc).build();
 
         MoquerySpsvcType type = MoquerySpsvcType.F3svc;
-        ComparedData data = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(data);
-        validataComparedDataInMoquery(data, type);
-        assertEquals(spsvc + "&" + yesterday + "&" + yesterday, data.getData());
-        assertEquals("f3svc", data.getQueryInput().getParam().getQueryitem().getTablename());
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(spsvc + "&" + yesterday + "&" + yesterday, comparedData.getData());
+        assertEquals("f3svc", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
     }
 
     @Test
@@ -145,11 +145,11 @@ public class QueryInputFactoryTest {
         TestCase case1 = TestCase.builder().telNum(telnum).build();
 
         MoqueryTelnumType type = MoqueryTelnumType.Agent5id;
-        ComparedData data = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(data);
-        validataComparedDataInMoquery(data, type);
-        assertEquals(telnum, data.getData());
-        assertEquals("moquery", data.getQueryService());
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(telnum, comparedData.getData());
+        assertEquals("moquery", comparedData.getQueryService());
     }
 
     @Test
@@ -158,12 +158,12 @@ public class QueryInputFactoryTest {
         TestCase case1 = TestCase.builder().contract(contractId).build();
 
         MoqueryContractWithDateType type = MoqueryContractWithDateType.Telsusptype;
-        ComparedData data = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(data);
-        validataComparedDataInMoquery(data, type);
-        assertEquals(contractId + "&" + yesterday, data.getData());
-        assertEquals("moquery", data.getQueryService());
-        assertEquals("telsusptype", data.getQueryInput().getParam().getQueryitem().getTablename());
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(contractId + "&" + yesterday, comparedData.getData());
+        assertEquals("moquery", comparedData.getQueryService());
+        assertEquals("telsusptype", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
     }
 
     @Test
@@ -172,12 +172,12 @@ public class QueryInputFactoryTest {
         TestCase case1 = TestCase.builder().contract(contractId).build();
 
         MoqueryContractWithMingGuoDateType type = MoqueryContractWithMingGuoDateType.Officialfee;
-        ComparedData data = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(data);
-        validataComparedDataInMoquery(data, type);
-        assertEquals(contractId + "&" + getMingGouString(), data.getData());
-        assertEquals("moquery", data.getQueryService());
-        assertEquals("officialfee", data.getQueryInput().getParam().getQueryitem().getTablename());
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(contractId + "&" + getMingGouString(), comparedData.getData());
+        assertEquals("moquery", comparedData.getQueryService());
+        assertEquals("officialfee", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
     }
 
     @Test
@@ -186,12 +186,12 @@ public class QueryInputFactoryTest {
         TestCase case1 = TestCase.builder().contract(contractId).build();
 
         MoqueryContractWithTwoDateType type = MoqueryContractWithTwoDateType.Discnttype;
-        ComparedData data = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(data);
-        validataComparedDataInMoquery(data, type);
-        assertEquals(contractId + "&" + yesterday + "&" + yesterday, data.getData());
-        assertEquals("moquery", data.getQueryService());
-        assertEquals("discnttype", data.getQueryInput().getParam().getQueryitem().getTablename());
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(contractId + "&" + yesterday + "&" + yesterday, comparedData.getData());
+        assertEquals("moquery", comparedData.getQueryService());
+        assertEquals("discnttype", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
     }
 
     @Test
@@ -200,12 +200,12 @@ public class QueryInputFactoryTest {
         TestCase case1 = TestCase.builder().telNum(telnum).build();
 
         MoqueryTelnumWithDateType type = MoqueryTelnumWithDateType.ModelinsrecShop;
-        ComparedData data = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(data);
-        validataComparedDataInMoquery(data, type);
-        assertEquals(telnum + "&" + yesterday, data.getData());
-        assertEquals("moquery", data.getQueryService());
-        assertEquals("modelinsrec_shop", data.getQueryInput().getParam().getQueryitem().getTablename());
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(telnum + "&" + yesterday, comparedData.getData());
+        assertEquals("moquery", comparedData.getQueryService());
+        assertEquals("modelinsrec_shop", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
     }
 
     @Test
@@ -214,12 +214,12 @@ public class QueryInputFactoryTest {
         TestCase case1 = TestCase.builder().telNum(telnum).build();
 
         MoqueryTelnumWithMingGuoDateType type = MoqueryTelnumWithMingGuoDateType.Recotemp;
-        ComparedData data = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(data);
-        validataComparedDataInMoquery(data, type);
-        assertEquals(telnum + "&" + getMingGouString(), data.getData());
-        assertEquals("moquery", data.getQueryService());
-        assertEquals("recotemp", data.getQueryInput().getParam().getQueryitem().getTablename());
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(telnum + "&" + getMingGouString(), comparedData.getData());
+        assertEquals("moquery", comparedData.getQueryService());
+        assertEquals("recotemp", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
     }
 
     @Test
@@ -228,12 +228,12 @@ public class QueryInputFactoryTest {
         TestCase case1 = TestCase.builder().telNum(telnum).build();
 
         MoqueryTelnumWithTwoDateType type = MoqueryTelnumWithTwoDateType.Empdiscntrec;
-        ComparedData data = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(data);
-        validataComparedDataInMoquery(data, type);
-        assertEquals(telnum + "&" + yesterday + "&" + yesterday, data.getData());
-        assertEquals("moquery", data.getQueryService());
-        assertEquals("empdiscntrec", data.getQueryInput().getParam().getQueryitem().getTablename());
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(telnum + "&" + yesterday + "&" + yesterday, comparedData.getData());
+        assertEquals("moquery", comparedData.getQueryService());
+        assertEquals("empdiscntrec", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
     }
 
     @Test
@@ -242,12 +242,12 @@ public class QueryInputFactoryTest {
         TestCase case1 = TestCase.builder().telNum(telnum).build();
 
         MoqueryTelnumsWithDateType type = MoqueryTelnumsWithDateType.Workingrecord;
-        ComparedData data = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(data);
-        validataComparedDataInMoquery(data, type);
-        assertEquals(yesterday + "&" + telnum + "&" + telnum, data.getData());
-        assertEquals("moquery", data.getQueryService());
-        assertEquals("workingrecord", data.getQueryInput().getParam().getQueryitem().getTablename());
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(yesterday + "&" + telnum + "&" + telnum, comparedData.getData());
+        assertEquals("moquery", comparedData.getQueryService());
+        assertEquals("workingrecord", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
     }
 
     @Test
@@ -256,12 +256,12 @@ public class QueryInputFactoryTest {
         TestCase case1 = TestCase.builder().rentcustno(rentcustno).build();
 
         MoqueryRentCustNoType type = MoqueryRentCustNoType.Pascustomer;
-        ComparedData data = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(data);
-        validataComparedDataInMoquery(data, type);
-        assertEquals(rentcustno, data.getData());
-        assertEquals("moquery", data.getQueryService());
-        assertEquals("pascustomer", data.getQueryInput().getParam().getQueryitem().getTablename());
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(rentcustno, comparedData.getData());
+        assertEquals("moquery", comparedData.getQueryService());
+        assertEquals("pascustomer", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
     }
 
     @Test
@@ -270,12 +270,12 @@ public class QueryInputFactoryTest {
         TestCase case1 = TestCase.builder().transcashId(transcashId).build();
 
         MoqueryTranscashIdType type = MoqueryTranscashIdType.Chargeitem;
-        ComparedData data = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(data);
-        validataComparedDataInMoquery(data, type);
-        assertEquals(transcashId, data.getData());
-        assertEquals("moquery", data.getQueryService());
-        assertEquals("chargeitem", data.getQueryInput().getParam().getQueryitem().getTablename());
+        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
+        validataComparedData(comparedData);
+        validataComparedDataInMoquery(comparedData, type);
+        assertEquals(transcashId, comparedData.getData());
+        assertEquals("moquery", comparedData.getQueryService());
+        assertEquals("chargeitem", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
     }
 
     private void validataComparedDataInMoquery(ComparedData data, MoqueryEnumInterface type) {
