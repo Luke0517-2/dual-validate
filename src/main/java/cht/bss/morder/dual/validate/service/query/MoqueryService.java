@@ -45,14 +45,13 @@ public class MoqueryService extends QueryService {
 			MoqueryContractWithDateType.Chgcustrec, MoqueryContractWithDateType.DataShareRecLog,
 			MoqueryContractWithDateType.Empbusiness, MoqueryContractWithDateType.Promofinereserve,
 			MoqueryContractWithDateType.Qosalert, MoqueryContractWithDateType.Refundpaid,
-			MoqueryContractWithDateType.Telsusptype, MoqueryContractWithDateType.Transcashfee1,
-			MoqueryContractWithDateType.Transcashfee2 };
+			MoqueryContractWithDateType.Telsusptype, MoqueryContractWithDateType.Transcashfee2 };
 	private static final MoqueryEnumInterface[] enumsQueryWithContractIdWithTwoDate = {
 			MoqueryContractWithTwoDateType.Applytypechgrec, MoqueryContractWithTwoDateType.Delaydisc,
 			MoqueryContractWithTwoDateType.Discnttype, MoqueryContractWithTwoDateType.Packageservice,
 			MoqueryContractWithTwoDateType.Promoprodrecold, MoqueryContractWithTwoDateType.Promoprodreserve,
-			MoqueryContractWithTwoDateType.Sharegroupdevice, MoqueryContractWithTwoDateType.Vspecialsvc,
-			MoqueryContractWithTwoDateType.Recashmark };
+			MoqueryContractWithTwoDateType.Sharegroupdevice, MoqueryContractWithTwoDateType.Sharegroupmem,
+			MoqueryContractWithTwoDateType.Vspecialsvc, MoqueryContractWithTwoDateType.Recashmark };
 
 	private static final MoqueryEnumInterface[] enumsQueryWithTelnum = { MoqueryTelnumType.Agent5id,
 			MoqueryTelnumType.Delcustinfoapply, MoqueryTelnumType.Eformapplyrec };
