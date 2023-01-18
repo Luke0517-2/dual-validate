@@ -6,7 +6,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import cht.bss.morder.dual.validate.common.CheckQueryTable;
 import cht.bss.morder.dual.validate.enums.*;
+
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -84,6 +87,10 @@ public class MoqueryService extends QueryService {
 
     @Autowired
     private MoqueryInputFactory factory;
+    
+	@Autowired(required = false)
+	private CheckQueryTable checkQueryTable;
+
 
     @Override
     public List<ComparedData> queryData(TestCase testCase) {
@@ -100,7 +107,12 @@ public class MoqueryService extends QueryService {
                 log.debug(e.getMessage());
             }
         }
-
+        
+    	if (ObjectUtils.isNotEmpty(checkQueryTable)) {
+    		totalQuerys = totalQuerys.stream()
+    				.filter(comparedData -> checkQueryTable.filterQueryTable(comparedData.getTable()))
+    				.collect(Collectors.toList());
+    	}
         return totalQuerys;
     }
 

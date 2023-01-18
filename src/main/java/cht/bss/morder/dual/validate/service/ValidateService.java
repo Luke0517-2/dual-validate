@@ -24,17 +24,9 @@ public class ValidateService {
 	@Autowired
 	private QueryServiceFactory serviceFactory;
 
-	@Autowired(required = false)
-	private CheckQueryTable checkQueryTable;
-
 	public TestCase validateCheck(TestCase testCase) {
 
 		List<ComparedData> comparedDataList = queryResult(testCase);
-		if (ObjectUtils.isNotEmpty(checkQueryTable)) {
-			comparedDataList = comparedDataList.stream()
-					.filter(comparedData -> checkQueryTable.filterQueryTable(comparedData.getTable()))
-					.collect(Collectors.toList());
-		}
 		testCase.setComparedData(comparedDataList);
 		writeToString(testCase);
 		return testCase;
