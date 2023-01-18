@@ -16,7 +16,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(properties = {"dual-validate.checkTable=false"})
 public class QueryInputFactoryTest {
 
     @Autowired

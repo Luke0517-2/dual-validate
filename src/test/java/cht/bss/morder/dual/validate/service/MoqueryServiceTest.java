@@ -16,7 +16,7 @@ import cht.bss.morder.dual.validate.vo.ComparedData;
 import cht.bss.morder.dual.validate.vo.QueryInput;
 import cht.bss.morder.dual.validate.vo.TestCase;
 
-@SpringBootTest
+@SpringBootTest(properties = {"dual-validate.checkTable=false"})
 public class MoqueryServiceTest {
 
 	@Autowired
