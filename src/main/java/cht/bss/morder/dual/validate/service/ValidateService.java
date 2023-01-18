@@ -13,6 +13,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cht.bss.morder.dual.validate.common.CheckQueryTable;
 import cht.bss.morder.dual.validate.factory.QueryServiceFactory;
 import cht.bss.morder.dual.validate.vo.ComparedData;
 import cht.bss.morder.dual.validate.vo.TestCase;
@@ -23,11 +24,17 @@ public class ValidateService {
 	@Autowired
 	private QueryServiceFactory serviceFactory;
 
+	@Autowired(required = false)
+	private CheckQueryTable checkQueryTable;
+
 	public TestCase validateCheck(TestCase testCase) {
 
 		List<ComparedData> comparedDataList = queryResult(testCase);
-		comparedDataList = comparedDataList.stream()
-				.filter(comparedData -> ObjectUtils.isNotEmpty(comparedData)).collect(Collectors.toList());
+		if (ObjectUtils.isNotEmpty(checkQueryTable)) {
+			comparedDataList = comparedDataList.stream()
+					.filter(comparedData -> checkQueryTable.filterQueryTable(comparedData.getTable()))
+					.collect(Collectors.toList());
+		}
 		testCase.setComparedData(comparedDataList);
 		writeToString(testCase);
 		return testCase;

@@ -34,8 +34,6 @@ public class QueryInputFactory {
 	@Autowired
 	private YesterdayConvert yesterdayConvert;
 	
-	@Autowired(required = false)
-	private CheckQueryTable checkQueryTable;
 
 	public ComparedData getComparedData(Enum type, TestCase testCase) {
 		Class clazz = type.getDeclaringClass();
@@ -71,10 +69,4 @@ public class QueryInputFactory {
 		return yesterdayConvert.getYesterdayMinguoDate();
 	}
 	
-	protected boolean filterQueryTable(String targetTableName) {
-		if(ObjectUtils.isNotEmpty(checkQueryTable))
-			return checkQueryTable.filterQueryTable(targetTableName);
-		else
-			return false;
-	}
 }

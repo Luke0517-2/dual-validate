@@ -19,7 +19,7 @@ public class CheckQueryTable {
 		List<String> checkList = listOfQueryTable.stream()
 				.filter(checkTableName -> checkTableName.equals(targetTableName)).collect(Collectors.toList());
 
-		if (checkList.isEmpty())
+		if (!checkList.isEmpty())
 			return true;
 		else
 			return false;

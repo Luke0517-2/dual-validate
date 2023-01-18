@@ -20,11 +20,7 @@ public class MoqueryInputFactory extends QueryInputFactory {
         QueryItem item = param.getQueryitem();
         String table = item.getTablename();
         String content = item.getContent();
-        
-        if(filterQueryTable(table))
-        	return null;
-        else
-        	return builder("moquery").data(content).table(table).queryInput(queryInput).build();
+        return builder("moquery").data(content).table(table).queryInput(queryInput).build();
     }
 
     private QueryInput buildQueryInput(MoqueryEnumInterface moqueryEnum, TestCase testCase) {
