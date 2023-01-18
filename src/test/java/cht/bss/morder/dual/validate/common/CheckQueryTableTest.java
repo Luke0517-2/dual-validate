@@ -2,6 +2,8 @@ package cht.bss.morder.dual.validate.common;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,14 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(properties="dual-validate.checkTable=True")
 public class CheckQueryTableTest {
 
-	@Value("#{'${dual-validate-query-table}'.split(',')}")
-	private List<String> listOfQueryTable;
 	
 	@Value("#{${dual-validate-query-table-list}}")
-	private List<String> listOfQueryTableV2;
+	private List<String> listOfQueryTable;
 	
 	@Autowired(required = false)
 	private CheckQueryTable checkQueryTable;
@@ -30,22 +30,17 @@ public class CheckQueryTableTest {
 		assertEquals(Arrays.asList("adjustbill", "recotemp"), listOfQueryTable);
 	}
 	
-	@Test
-	void test_getValueFromPropertiesV2() {
-		assertEquals(Arrays.asList("adjustbill", "recotemp"), listOfQueryTable);
-		
-	}
 	
 	@Test
 	void test_filterQueryTable() {
 		boolean resultForTrue = checkQueryTable.filterQueryTable("adjustbill");
-		assertTrue(resultForTrue);
+		assertFalse(resultForTrue);
 		boolean resultForFalse = checkQueryTable.filterQueryTable("refund");
-		assertFalse(resultForFalse);
+		assertTrue(resultForFalse);
 	}
 	
 	@Test
 	void test_conditionCreateInstance() {
-		assertNull(checkQueryTable);
+		assertNotNull(checkQueryTable);
 	}
 }

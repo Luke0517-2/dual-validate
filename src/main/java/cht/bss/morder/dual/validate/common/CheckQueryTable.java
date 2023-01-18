@@ -20,8 +20,8 @@ public class CheckQueryTable {
 				.filter(checkTableName -> checkTableName.equals(targetTableName)).collect(Collectors.toList());
 
 		if (checkList.isEmpty())
-			return false;
-		else
 			return true;
+		else
+			return false;
 	}
 }
