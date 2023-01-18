@@ -34,9 +34,9 @@ public class CheckQueryTableTest {
 	@Test
 	void test_filterQueryTable() {
 		boolean resultForTrue = checkQueryTable.filterQueryTable("adjustbill");
-		assertFalse(resultForTrue);
+		assertTrue(resultForTrue);
 		boolean resultForFalse = checkQueryTable.filterQueryTable("refund");
-		assertTrue(resultForFalse);
+		assertFalse(resultForFalse);
 	}
 	
 	@Test
