@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConditionalOnProperty(prefix = "dual-validate", name = "checkTable", havingValue = "True" ,matchIfMissing = true)
+@ConditionalOnProperty(prefix = "dual-validate", name = "checkTable", havingValue = "True")
 public class CheckQueryTable {
 
 	@Value("#{${dual-validate-query-table-list}}")
