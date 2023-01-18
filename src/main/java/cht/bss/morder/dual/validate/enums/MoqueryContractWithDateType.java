@@ -12,7 +12,6 @@ public enum MoqueryContractWithDateType implements MoqueryEnumInterface{
     DataShareRecLog("data_share_rec_log","1","%s&%s"),
     Empbusiness("empbusiness","1","%s&%s"),
     Promofinereserve("promofinereserve","1","%s&%s"),
-    Qosalert("qosalert","1","%s&%s"),
     Refundpaid("refundpaid","1","%s&%s"),
     Telsusptype("telsusptype","1","%s&%s"),
     Transcashfee1("transcashfee","1","%s&%s"),

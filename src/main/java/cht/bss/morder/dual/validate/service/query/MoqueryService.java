@@ -44,14 +44,15 @@ public class MoqueryService extends QueryService {
 	private static final MoqueryEnumInterface[] enumsQueryWithContractIdWithOneDate = {
 			MoqueryContractWithDateType.Chgcustrec, MoqueryContractWithDateType.DataShareRecLog,
 			MoqueryContractWithDateType.Empbusiness, MoqueryContractWithDateType.Promofinereserve,
-			MoqueryContractWithDateType.Qosalert, MoqueryContractWithDateType.Refundpaid,
-			MoqueryContractWithDateType.Telsusptype, MoqueryContractWithDateType.Transcashfee2 };
+			MoqueryContractWithDateType.Refundpaid, MoqueryContractWithDateType.Telsusptype,
+			MoqueryContractWithDateType.Transcashfee2 };
 	private static final MoqueryEnumInterface[] enumsQueryWithContractIdWithTwoDate = {
 			MoqueryContractWithTwoDateType.Applytypechgrec, MoqueryContractWithTwoDateType.Delaydisc,
-			MoqueryContractWithTwoDateType.Discnttype, MoqueryContractWithTwoDateType.Packageservice,
-			MoqueryContractWithTwoDateType.Promoprodrecold, MoqueryContractWithTwoDateType.Promoprodreserve,
-			MoqueryContractWithTwoDateType.Sharegroupdevice, MoqueryContractWithTwoDateType.Sharegroupmem,
-			MoqueryContractWithTwoDateType.Vspecialsvc, MoqueryContractWithTwoDateType.Recashmark };
+			MoqueryContractWithTwoDateType.Discnttype, MoqueryContractWithTwoDateType.Qosalert,
+			MoqueryContractWithTwoDateType.Packageservice, MoqueryContractWithTwoDateType.Promoprodrecold,
+			MoqueryContractWithTwoDateType.Promoprodreserve, MoqueryContractWithTwoDateType.Sharegroupdevice,
+			MoqueryContractWithTwoDateType.Sharegroupmem, MoqueryContractWithTwoDateType.Vspecialsvc,
+			MoqueryContractWithTwoDateType.Recashmark };
 
 	private static final MoqueryEnumInterface[] enumsQueryWithTelnum = { MoqueryTelnumType.Agent5id,
 			MoqueryTelnumType.Delcustinfoapply, MoqueryTelnumType.Eformapplyrec };
