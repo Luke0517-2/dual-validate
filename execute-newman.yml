@@ -1,5 +1,5 @@
 trigger:
-  - 602_moquery_interface_with0104doc
+  - newman-test
 
 pool:
   vmImage: 'ubuntu-latest'
