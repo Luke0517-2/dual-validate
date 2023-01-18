@@ -14,6 +14,7 @@ public enum MoqueryContractWithTwoDateType implements MoqueryEnumInterface {
     Packageservice("packageservice", "2", "%s&%s&%s"),
     Promoprodrecold("promoprodrecold", "1", "%s&%s&%s"),
     Promoprodreserve("promoprodreserve", "1", "%s&%s&%s"),
+    Sharegroupdevice("sharegroupdevice","1","%s&%s&%s"),
     Vspecialsvc("vspecialsvc", "1", "%s&%s&%s"),
     Recashmark("recashmark", "1", "%s&%s&%s"),  // 根據中華回應 此處contract為contractid
 
