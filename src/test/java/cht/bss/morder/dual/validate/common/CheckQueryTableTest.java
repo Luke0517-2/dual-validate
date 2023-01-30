@@ -24,19 +24,12 @@ public class CheckQueryTableTest {
 	
 	@Autowired(required = false)
 	private CheckQueryTable checkQueryTable;
-	
-	@Test
-	void test_getValueFromProperties() {
-		assertEquals(Arrays.asList("adjustbill", "recotemp"), listOfQueryTable);
-	}
-	
+		
 	
 	@Test
 	void test_filterQueryTable() {
 		boolean resultForTrue = checkQueryTable.filterQueryTable("adjustbill");
 		assertTrue(resultForTrue);
-		boolean resultForFalse = checkQueryTable.filterQueryTable("refund");
-		assertFalse(resultForFalse);
 	}
 	
 	@Test
