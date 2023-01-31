@@ -24,12 +24,15 @@ public class CheckQueryTableTest {
 	
 	@Autowired(required = false)
 	private CheckQueryTable checkQueryTable;
-		
+	
+
 	
 	@Test
 	void test_filterQueryTable() {
-		boolean resultForTrue = checkQueryTable.filterQueryTable("adjustbill");
+		boolean resultForTrue = checkQueryTable.filterQueryTable("numberusage");
 		assertTrue(resultForTrue);
+		boolean resultForFalse = checkQueryTable.filterQueryTable("testFalse");
+		assertFalse(resultForFalse);
 	}
 	
 	@Test
