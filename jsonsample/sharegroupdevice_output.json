@@ -1,0 +1,15 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "(expression)": "2022-05-17",
+                "devicecode": "1",
+                "groupid": "5755",
+                "contractid": "106857090"
+            }
+        ],
+        "tablename": "sharegroupdevice",
+        "querytype": "1"
+    }
+}

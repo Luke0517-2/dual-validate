@@ -7,9 +7,11 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum MoquerySpsvcType implements MoqueryEnumInterface {
 
-	Mdsvc("mdsvc", "1", "%s"), Vpnsvc("vpnsvc", "1", "%s");
+    Mdsvc("mdsvc", "1", "%s"), Vpnsvc("vpnsvc", "1", "%s"),
+    F3svc("f3svc", "1", "%s&%s&%s");
 
-	private final String tableName;
-	private final String type;
-	private final String contentTemplate;
+
+    private final String tableName;
+    private final String type;
+    private final String contentTemplate;
 }

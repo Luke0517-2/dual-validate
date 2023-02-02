@@ -1,8 +1,11 @@
 package cht.bss.morder.dual.validate.factory;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cht.bss.morder.dual.validate.common.CheckQueryTable;
+import cht.bss.morder.dual.validate.common.YesterdayConvert;
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
 import cht.bss.morder.dual.validate.config.TransferProperties;
 import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
@@ -27,6 +30,10 @@ public class QueryInputFactory {
 	
 	@Autowired
 	private TransferProperties properties;
+	
+	@Autowired
+	private YesterdayConvert yesterdayConvert;
+	
 
 	public ComparedData getComparedData(Enum type, TestCase testCase) {
 		Class clazz = type.getDeclaringClass();
@@ -53,4 +60,13 @@ public class QueryInputFactory {
 		ComparedDataBuilder builder = ComparedData.builder().queryService(queryService);
 		return builder;
 	}
+	
+	protected String getADDate() {
+		return yesterdayConvert.getYesterdayADDateString();
+	}
+	
+	protected String getMinguoDate() {
+		return yesterdayConvert.getYesterdayMinguoDate();
+	}
+	
 }

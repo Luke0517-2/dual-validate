@@ -1,0 +1,27 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "(expression)": "",
+                "leadertelnum": "0910126662",
+                "remark": "",
+                "type": "1",
+                "rateid": "0",
+                "ocs": "Y",
+                "telnum": "0910126662"
+            },
+            {
+                "(expression)": "",
+                "leadertelnum": "0910126662",
+                "remark": "",
+                "type": "2",
+                "rateid": "1",
+                "ocs": "Y",
+                "telnum": "0928209657"
+            }
+        ],
+        "tablename": "prepaidsvc",
+        "querytype": "1"
+    }
+}

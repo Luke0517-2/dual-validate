@@ -1,0 +1,27 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "feecode": "1A",
+                "(expression)": "2022-09-01",
+                "contractid": "106856371",
+                "fineamt": "192"
+            },
+            {
+                "feecode": "1A",
+                "(expression)": "2022-09-01",
+                "contractid": "106856371",
+                "fineamt": "192"
+            },
+            {
+                "feecode": "1A",
+                "(expression)": "2022-09-01",
+                "contractid": "106856371",
+                "fineamt": "192"
+            }
+        ],
+        "tablename": "promofinereserve",
+        "querytype": "1"
+    }
+}

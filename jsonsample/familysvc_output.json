@@ -1,0 +1,18 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "(expression)": "",
+                "itemid": "",
+                "billcoid": "0",
+                "groupid": "482161",
+                "type": "2",
+                "leaderdiscnt": "",
+                "telnum": "0910061411"
+            }
+        ],
+        "tablename": "familysvc",
+        "querytype": "1"
+    }
+}

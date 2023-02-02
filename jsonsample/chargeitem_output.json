@@ -1,0 +1,15 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "itemtype": "",
+                "chargeamt": "17300",
+                "itemname": "D0",
+                "tax": "824"
+            }
+        ],
+        "tablename": "chargeitem",
+        "querytype": "1"
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "feecode": "96",
+                "overpayid": "0",
+                "mobacctno": "200169792",
+                "mobtelbillid": "0",
+                "notrefundamt": "0",
+                "refundpaidid": "0",
+                "description": "",
+                "feeamt": "-10990",
+                "procdate": "2022-12-29",
+                "receiptno": "GP47373734",
+                "contractid": "106858763",
+                "expcode": "退預付費用",
+                "transym": "",
+                "status": "5",
+                "telnum": "0905798980"
+            }
+        ],
+        "tablename": "refund",
+        "querytype": "1"
+    }
+}

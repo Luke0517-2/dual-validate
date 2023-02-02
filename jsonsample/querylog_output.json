@@ -1,0 +1,17 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "massqryid": "0",
+                "areaid": "223",
+                "telrentnum": "0952585887",
+                "operationid": "1999",
+                "employeeno": "818342",
+                "terminalid": "144.31.68"
+            }
+        ],
+        "tablename": "querylog",
+        "querytype": "1"
+    }
+}

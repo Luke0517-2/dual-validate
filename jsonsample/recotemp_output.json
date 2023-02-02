@@ -1,0 +1,29 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "kind": "D1",
+                "downdate": "2009-08-14",
+                "discneedrec": "",
+                "telstatus": "使用",
+                "transdate": "2009-08-14",
+                "upoffice": "297",
+                "bloffice": "41",
+                "billym": "9809",
+                "procdate": "2009-08-14",
+                "transhour": "12",
+                "status1": "B",
+                "newtelnum": "0921865038",
+                "contractid": "7699534",
+                "billcode": "K1",
+                "indate": "2009-08-14",
+                "errorreason": "使用中/非停話電話,不必欠復",
+                "telnum": "0921865038",
+                "status": "N"
+            }
+        ],
+        "tablename": "recotemp",
+        "querytype": "1"
+    }
+}

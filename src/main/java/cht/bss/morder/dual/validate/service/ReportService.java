@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentMap;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
@@ -144,36 +145,38 @@ public class ReportService {
 		List<TestCase> testCases = report.getTestCases();
 		int rowNum = 0;
 		for (final TestCase testCase : testCases) {
-			for (ComparedData comparedData : testCase.getComparedData()) {
-				final Row dataRow = sheet.createRow(++rowNum);
-				final String[] path = testCase.getDataPath().split("/");
+			if(ObjectUtils.isNotEmpty(testCase.getComparedData())) {
+				for (ComparedData comparedData : testCase.getComparedData()) {
+					final Row dataRow = sheet.createRow(++rowNum);
+					final String[] path = testCase.getDataPath().split("/");
 
-				dataRow.createCell(0).setCellValue(testCase.getTelNum());
-				dataRow.createCell(1).setCellValue(testCase.getCustId());
-				dataRow.createCell(2).setCellValue(comparedData.getQueryService());
-				dataRow.createCell(3).setCellValue(comparedData.getTable());
-				dataRow.createCell(4).setCellValue(showDataInReport(comparedData));
+					dataRow.createCell(0).setCellValue(testCase.getTelNum());
+					dataRow.createCell(1).setCellValue(testCase.getCustId());
+					dataRow.createCell(2).setCellValue(comparedData.getQueryService());
+					dataRow.createCell(3).setCellValue(comparedData.getTable());
+					dataRow.createCell(4).setCellValue(showDataInReport(comparedData));
 
-				String error = comparedData.getError();
-				if (StringUtils.isEmpty(error)) {
-					try {
-						dataRow.createCell(5).setCellValue(comparedData.getComparedResult(mapper).getValue());
-					} catch (JsonProcessingException e) {
-						dataRow.createCell(5).setCellValue(CompareResultType.NONEQUAL.getValue());
-						dataRow.createCell(6).setCellValue("文字資料不一致，轉成json結構比較時出錯");
+					String error = comparedData.getError();
+					if (StringUtils.isEmpty(error)) {
+						try {
+							dataRow.createCell(5).setCellValue(comparedData.getComparedResult(mapper).getValue());
+						} catch (JsonProcessingException e) {
+							dataRow.createCell(5).setCellValue(CompareResultType.NONEQUAL.getValue());
+							dataRow.createCell(6).setCellValue("文字資料不一致，轉成json結構比較時出錯");
+						}
+					} else {
+						try {
+							dataRow.createCell(5).setCellValue(comparedData.getComparedResult(mapper).getValue());
+							dataRow.createCell(6).setCellValue(error);
+						} catch (JsonProcessingException e) {
+							dataRow.createCell(5).setCellValue(CompareResultType.NONEQUAL.getValue());
+							dataRow.createCell(6).setCellValue("文字資料不一致，轉成json結構比較時出錯");
+						}
 					}
-				} else {
-					try {
-						dataRow.createCell(5).setCellValue(comparedData.getComparedResult(mapper).getValue());
-						dataRow.createCell(6).setCellValue(error);
-					} catch (JsonProcessingException e) {
-						dataRow.createCell(5).setCellValue(CompareResultType.NONEQUAL.getValue());
-						dataRow.createCell(6).setCellValue("文字資料不一致，轉成json結構比較時出錯");
-					}
+
+					dataRow.createCell(7).setCellValue("/" + path[path.length - 1] + "/" + comparedData.getQueryService());
 				}
-
-				dataRow.createCell(7).setCellValue("/" + path[path.length - 1] + "/" + comparedData.getQueryService());
-			}
+			}			
 		}
 	}
 

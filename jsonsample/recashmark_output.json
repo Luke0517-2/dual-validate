@@ -1,0 +1,17 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "(expression)": "2020-08-28",
+                "bankid": "",
+                "contractid": "24700855",
+                "oprcode": "ZA1866",
+                "type": "3",
+                "bankacctno": ""
+            }
+        ],
+        "tablename": "recashmark",
+        "querytype": "1"
+    }
+}

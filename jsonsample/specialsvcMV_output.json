@@ -1,0 +1,24 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "billcoid": "0",
+                "sorderno": "M09T29Z08HRV3",
+                "specialsvcsno": "2568423",
+                "endtime": "",
+                "eorderno": "",
+                "starttime": "2020-09-29 12:17:29",
+                "specsvcname": "MV",
+                "specsvcid": "140448893",
+                "password": "",
+                "endrent": "",
+                "contractid": "24035131",
+                "startrent": "2020-09-29",
+                "idx": "0"
+            }
+        ],
+        "tablename": "specialsvc",
+        "querytype": "1"
+    }
+}

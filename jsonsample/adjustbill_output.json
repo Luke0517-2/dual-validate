@@ -1,0 +1,60 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "feecode": "zy",
+                "reason": "147719131",
+                "billcoid": "0",
+                "mobtelbillid": "0",
+                "adjbillamt": "11910",
+                "daterate": "0.0",
+                "adjbilldate": "2022-12-27",
+                "packagecode": "E016",
+                "adjoffice": "227",
+                "billym": "11201",
+                "servicetype": "O",
+                "contractid": "106859371",
+                "expcode": "申裝繳費",
+                "oprcode": "835312",
+                "telnum": "0905816208"
+            },
+            {
+                "feecode": "zy",
+                "reason": "147719136",
+                "billcoid": "0",
+                "mobtelbillid": "0",
+                "adjbillamt": "1000",
+                "daterate": "0.0",
+                "adjbilldate": "2022-12-27",
+                "packagecode": "E016",
+                "adjoffice": "227",
+                "billym": "11201",
+                "servicetype": "O",
+                "contractid": "106859371",
+                "expcode": "申裝繳費",
+                "oprcode": "835312",
+                "telnum": "0905816208"
+            },
+            {
+                "feecode": "zy",
+                "reason": "147719135",
+                "billcoid": "0",
+                "mobtelbillid": "0",
+                "adjbillamt": "5000",
+                "daterate": "0.0",
+                "adjbilldate": "2022-12-27",
+                "packagecode": "E016",
+                "adjoffice": "227",
+                "billym": "11201",
+                "servicetype": "O",
+                "contractid": "106859371",
+                "expcode": "申裝繳費",
+                "oprcode": "835312",
+                "telnum": "0905816208"
+            }
+        ],
+        "tablename": "adjustbill",
+        "querytype": "1"
+    }
+}

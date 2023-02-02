@@ -89,7 +89,13 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 				result = readFile("./jsonsample/agentmobset_output.json");
 				break;
 			case "specialsvc" :
-				result = readFile("./jsonsample/specialsvc_output.json");
+				System.out.println();
+				if("MN".equals(input.getParam().getQueryitem().getContent().split("&")[1]))
+					result = readFile("./jsonsample/specialsvcMN_output.json");
+				else if("MV".equals(input.getParam().getQueryitem().getContent().split("&")[1]))
+					result = readFile("./jsonsample/specialsvcMV_output.json");
+				else if("F3".equals(input.getParam().getQueryitem().getContent().split("&")[1]))
+					result = readFile("./jsonsample/specialsvcF3_output.json");
 				break;
 			case "agent5id" :
 				result = readFile("./jsonsample/agent5id_output.json");
@@ -138,6 +144,138 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 				break;
 			case "data_share_rec" :
 				result = readFile("./jsonsample/data_share_rec_output.json");
+				break;
+			case "adjustbill":
+				result = readFile("./jsonsample/adjustbill_output.json");
+				break;
+			case "applytypechgrec":
+				result = readFile("./jsonsample/applytypechgrec_output.json");
+				break;
+			case "chargeitem":
+				result = readFile("./jsonsample/chargeitem_output.json");
+				break;
+			case "chgcustrec":
+				result = readFile("./jsonsample/chgcustrec_output.json");
+				break;
+			case "custdatainfo":
+				result = readFile("./jsonsample/custdatainfo_output.json");
+				break;
+			case "data_share_rec_log":
+				result = readFile("./jsonsample/data_share_rec_log_output.json");
+				break;
+			case "deductfee":
+				result = readFile("./jsonsample/deductfee_output.json");
+				break;
+			case "delaydisc":
+				result = readFile("./jsonsample/delaydisc_output.json");
+				break;
+			case "discnttype":
+				result = readFile("./jsonsample/discnttype_output.json");
+				break;
+			case "einvoicerec":
+				result = readFile("./jsonsample/einvoicerec_output.json");
+				break;
+			case "empbusiness":
+				result = readFile("./jsonsample/empbusiness_output.json");
+				break;
+			case "empdiscntrec":
+				result = readFile("./jsonsample/empdiscntrec_output.json");
+				break;
+			case "f3svc":
+				result = readFile("./jsonsample/f3svc_output.json");
+				break;
+			case "f4svc":
+				result = readFile("./jsonsample/f4svc_output.json");
+				break;
+			case "familysvc":
+				result = readFile("./jsonsample/familysvc_output.json");
+				break;
+			case "modelinsrec_shop":
+				result = readFile("./jsonsample/modelinsrec_shop_output.json");
+				break;
+			case "newdiscntreserve":
+				result = readFile("./jsonsample/newdiscntreserve_output.json");
+				break;
+			case "officialfee":
+				result = readFile("./jsonsample/officialfee_output.json");
+				break;
+			case "or13d0log":
+				result = readFile("./jsonsample/or13d0log_output.json");
+				break;
+			case "packageservice":
+				result = readFile("./jsonsample/packageservice_output.json");
+				break;
+			case "pascustomer":
+				result = readFile("./jsonsample/pascustomer_output.json");
+				break;
+			case "prepaidsvc":
+				result = readFile("./jsonsample/prepaidsvc_output.json");
+				break;
+			case "promofinereserve":
+				result = readFile("./jsonsample/promofinereserve_output.json");
+				break;
+			case "promoprodrecold":
+				result = readFile("./jsonsample/promoprodrecold_output.json");
+				break;
+			case "promoprodreserve":
+				result = readFile("./jsonsample/promoprodreserve_output.json");
+				break;
+			case "qosalert":
+				result = readFile("./jsonsample/qosalert_output.json");
+				break;
+			case "querylog":
+				result = readFile("./jsonsample/querylog_output.json");
+				break;
+			case "recashmark":
+				result = readFile("./jsonsample/recashmark_output.json");
+				break;
+			case "recotemp":
+				result = readFile("./jsonsample/recotemp_output.json");
+				break;
+			case "refund":
+				result = readFile("./jsonsample/refund_output.json");
+				break;
+			case "refundpaid":
+				result = readFile("./jsonsample/refundpaid_output.json");
+				break;
+			case "rfpaidlist":
+				result = readFile("./jsonsample/rfpaidlist_output.json");
+				break;
+			case "sernumusage":
+				result = readFile("./jsonsample/sernumusage_output.json");
+				break;
+			case "sharegroupdevice":
+				result = readFile("./jsonsample/sharegroupdevice_output.json");
+				break;
+			case "sharegroupmem":
+				result = readFile("./jsonsample/sharegroupmem_output.json");
+				break;
+			case "specsvcmember":
+				result = readFile("./jsonsample/specsvcmember_output.json");
+				break;
+			case "subapplytype":
+				result = readFile("./jsonsample/subapplytype_output.json");
+				break;
+			case "susptemp":
+				result = readFile("./jsonsample/susptemp_output.json");
+				break;
+			case "telsusptype":
+				result = readFile("./jsonsample/telsusptype_output.json");
+				break;
+			case "transcashfee":
+				if("1".equals(input.getParam().getQueryitem().getQuerytype()))
+					result = readFile("./jsonsample/transcashfee1_output.json");
+				else if("2".equals(input.getParam().getQueryitem().getQuerytype()))
+					result = readFile("./jsonsample/transcashfee2_output.json");
+				break;
+			case "vspecialsvc":
+				result = readFile("./jsonsample/vspecialsvc_output.json");
+				break;
+			case "workingrecord":
+				result = readFile("./jsonsample/workingrecord_output.json");
+				break;
+			case "contract":
+				result = readFile("./jsonsample/contract_output.json");
 				break;
 		}
 		if(StringUtils.isNotBlank(result))

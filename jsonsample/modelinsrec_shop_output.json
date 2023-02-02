@@ -1,0 +1,17 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "(expression)": "2021-06-21",
+                "pono": "SYEMA5000002300",
+                "contractid": "106854625",
+                "channel": "CHT",
+                "imei": "05EFDI999999",
+                "telnum": "0937717086"
+            }
+        ],
+        "tablename": "modelinsrec_shop",
+        "querytype": "1"
+    }
+}

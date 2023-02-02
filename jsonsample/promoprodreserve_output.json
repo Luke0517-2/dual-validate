@@ -1,0 +1,57 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "enddate": "",
+                "contractid": "106859204",
+                "endreason": "",
+                "deeffectdate": "2024-11-28",
+                "reservetype": "N",
+                "startdate": "2024-11-28"
+            },
+            {
+                "enddate": "",
+                "contractid": "106859204",
+                "endreason": "",
+                "deeffectdate": "2026-11-29",
+                "reservetype": "N",
+                "startdate": "2024-11-28"
+            },
+            {
+                "enddate": "",
+                "contractid": "106859204",
+                "endreason": "",
+                "deeffectdate": "2025-02-28",
+                "reservetype": "N",
+                "startdate": "2024-11-28"
+            },
+            {
+                "enddate": "",
+                "contractid": "106859204",
+                "endreason": "",
+                "deeffectdate": "2026-11-29",
+                "reservetype": "Y",
+                "startdate": "2024-11-28"
+            },
+            {
+                "enddate": "",
+                "contractid": "106859204",
+                "endreason": "",
+                "deeffectdate": "2026-11-29",
+                "reservetype": "N",
+                "startdate": "2024-11-28"
+            },
+            {
+                "enddate": "",
+                "contractid": "106859204",
+                "endreason": "",
+                "deeffectdate": "2026-11-29",
+                "reservetype": "Y",
+                "startdate": "2024-11-28"
+            }
+        ],
+        "tablename": "promoprodreserve",
+        "querytype": "1"
+    }
+}

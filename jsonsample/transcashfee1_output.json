@@ -1,0 +1,12 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "transcashid": "437247804"
+            }
+        ],
+        "tablename": "transcashfee",
+        "querytype": "1"
+    }
+}

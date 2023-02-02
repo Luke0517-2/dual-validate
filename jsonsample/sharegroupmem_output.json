@@ -1,0 +1,17 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "(expression)": "2022-05-17",
+                "npflag": "",
+                "groupid": "5755",
+                "contractid": "106857090",
+                "membertype": "1",
+                "telnum": "0905560501"
+            }
+        ],
+        "tablename": "sharegroupmem",
+        "querytype": "1"
+    }
+}

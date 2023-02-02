@@ -1,0 +1,25 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "feecode": "96",
+                "refpaidtype": "1",
+                "mobtelbillid": "0",
+                "mobacctno": "200169792",
+                "processdate": "",
+                "feeamt": "-10990",
+                "billym": "0",
+                "notbalancefee": "0",
+                "contractid": "106858763",
+                "oprcode": "800455",
+                "expcode": "退預付費用",
+                "officecode": "227",
+                "status": "4",
+                "refpaiddate": "2022-12-29"
+            }
+        ],
+        "tablename": "refundpaid",
+        "querytype": "1"
+    }
+}

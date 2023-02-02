@@ -1,0 +1,30 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "effectdate": "2022-12-15",
+                "sernum": "0974006113",
+                "contractid": "106859276",
+                "termdate": "2022-12-15",
+                "status": "2"
+            },
+            {
+                "effectdate": "2022-12-15",
+                "sernum": "0974006113",
+                "contractid": "106859276",
+                "termdate": "2022-12-15",
+                "status": "3"
+            },
+            {
+                "effectdate": "2022-12-15",
+                "sernum": "0974006113",
+                "contractid": "106859276",
+                "termdate": "",
+                "status": "4"
+            }
+        ],
+        "tablename": "sernumusage",
+        "querytype": "1"
+    }
+}

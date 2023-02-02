@@ -1,0 +1,14 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "restfineamt": "1930",
+                "contractid": "17105479",
+                "restcoday": "197"
+            }
+        ],
+        "tablename": "newdiscntreserve",
+        "querytype": "1"
+    }
+}

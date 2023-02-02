@@ -1,5 +1,6 @@
 package cht.bss.morder.dual.validate.vo;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,9 +37,13 @@ public class TestCase implements Cloneable {
 	@JsonIgnore
 	private List<ComparedData> comparedData;
 
-	private String contract;
+	private String contract;   //透過電話號碼查出來的contractId
 	private String orderno;
 	private String spsvc;
+	private String rentcustno;
+	private String transcashId;
+
+
 
 	/**
 	 * 顯示錯誤原因

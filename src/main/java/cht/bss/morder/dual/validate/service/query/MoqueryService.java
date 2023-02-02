@@ -1,25 +1,19 @@
 package cht.bss.morder.dual.validate.service.query;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import cht.bss.morder.dual.validate.common.CheckQueryTable;
+import cht.bss.morder.dual.validate.enums.*;
+
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.ls.LSOutput;
 
-import cht.bss.morder.dual.validate.enums.MoqueryContractType;
-import cht.bss.morder.dual.validate.enums.MoqueryContractWithTelnumType;
-import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
-import cht.bss.morder.dual.validate.enums.MoqueryOrderNoType;
-import cht.bss.morder.dual.validate.enums.MoquerySpsvcType;
-import cht.bss.morder.dual.validate.enums.MoqueryTelnumType;
 import cht.bss.morder.dual.validate.factory.MoqueryInputFactory;
 import cht.bss.morder.dual.validate.factory.ResponseVOFactory;
 import cht.bss.morder.dual.validate.factory.ResponseVOFactory.ResponseType;
@@ -36,21 +30,64 @@ public class MoqueryService extends QueryService {
 
 	private static final MoqueryEnumInterface[] enumsQueryWithContractId = { MoqueryContractType.Projmember,
 			MoqueryContractType.Suspresumerec1, MoqueryContractType.Suspresumerec2, MoqueryContractType.Datashareinfo,
-			MoqueryContractType.Data_share_rec, MoqueryContractType.SponsorSpsvc };
+			MoqueryContractType.Data_share_rec, MoqueryContractType.SponsorSpsvc, MoqueryContractType.Deductfee,
+			MoqueryContractType.Einvoicerec, MoqueryContractType.Newdiscntreserve, MoqueryContractType.Subapplytype };
 	private static final MoqueryEnumInterface[] enumsQueryWithContractIdWithTelnum = {
 			MoqueryContractWithTelnumType.Contractret, MoqueryContractWithTelnumType.Pasuserec };
+
+	// 目前將 enumsQueryForSpsvc 和 enumsQueryForOrderNo 移到 enumsQueryTwicePhase 內。
 	private static final MoqueryEnumInterface[] enumsQueryForSpsvc = { MoqueryContractType.SpecsvcidMN,
-			MoqueryContractType.SpecsvcidMV };
+			MoqueryContractType.SpecsvcidMV, MoqueryContractType.SpecsvcidF3 };
 	private static final MoqueryEnumInterface[] enumsQueryForOrderNo = { MoqueryContractType.AgentMobileSet,
 			MoqueryContractType.AgentMobileSetPart };
 
+	private static final MoqueryEnumInterface[] enumsQueryWithContractIdWithOneDate = {
+			MoqueryContractWithDateType.Chgcustrec, MoqueryContractWithDateType.DataShareRecLog,
+			MoqueryContractWithDateType.Empbusiness, MoqueryContractWithDateType.Promofinereserve,
+			MoqueryContractWithDateType.Refundpaid, MoqueryContractWithDateType.Telsusptype,
+			MoqueryContractWithDateType.Transcashfee2 };
+	private static final MoqueryEnumInterface[] enumsQueryWithContractIdWithTwoDate = {
+			MoqueryContractWithTwoDateType.Applytypechgrec, MoqueryContractWithTwoDateType.Delaydisc,
+			MoqueryContractWithTwoDateType.Discnttype, MoqueryContractWithTwoDateType.Qosalert,
+			MoqueryContractWithTwoDateType.Packageservice, MoqueryContractWithTwoDateType.Promoprodrecold,
+			MoqueryContractWithTwoDateType.Promoprodreserve, MoqueryContractWithTwoDateType.Sharegroupdevice,
+			MoqueryContractWithTwoDateType.Sharegroupmem, MoqueryContractWithTwoDateType.Vspecialsvc,
+			MoqueryContractWithTwoDateType.Recashmark };
+
+	private static final MoqueryEnumInterface[] enumsQueryWithTelnum = { MoqueryTelnumType.Agent5id,
+			MoqueryTelnumType.Delcustinfoapply, MoqueryTelnumType.Eformapplyrec };
+
+	private static final MoqueryEnumInterface[] enumsQueryWithTelnumWithOneDate = {
+			MoqueryTelnumWithDateType.Adjustbill, MoqueryTelnumWithDateType.ModelinsrecShop,
+			MoqueryTelnumWithDateType.Or13d0log, MoqueryTelnumWithDateType.Refund, MoqueryTelnumWithDateType.Rfpaidlist,
+			MoqueryTelnumWithDateType.Susptemp, MoqueryTelnumWithDateType.Querylog };
+	private static final MoqueryEnumInterface[] enumsQueryWithTelnumWithTwoDate = {
+			MoqueryTelnumWithTwoDateType.Custdatainfo, MoqueryTelnumWithTwoDateType.Empdiscntrec,
+			MoqueryTelnumWithTwoDateType.F4svc, MoqueryTelnumWithTwoDateType.Familysvc,
+			MoqueryTelnumWithTwoDateType.Specsvcmember, MoqueryTelnumWithTwoDateType.Prepaidsvc,
+			MoqueryTelnumWithTwoDateType.Sernumusage };
+	private static final MoqueryTelnumsWithDateType[] enumsQueryTelnumsWithDate = {
+			MoqueryTelnumsWithDateType.Workingrecord };
+	private static final MoqueryEnumForTwiceQuery[] enumsQueryTwicePhase = { MoqueryEnumForTwiceQuery.MoqueryRentCustNo,
+			MoqueryEnumForTwiceQuery.MoqueryTranscashId, MoqueryEnumForTwiceQuery.MoqueryOrderno1,
+			MoqueryEnumForTwiceQuery.MoqueryOrderno2, MoqueryEnumForTwiceQuery.MoquerySpsvcMN,
+			MoqueryEnumForTwiceQuery.MoquerySpsvcMV, MoqueryEnumForTwiceQuery.MoquerySpsvcF3 };
+
+	private static final MoqueryTelnumWithMingGuoDateType[] enumsQueryWithTelnumWithMingGuoDate = {
+			MoqueryTelnumWithMingGuoDateType.Recotemp };
+	private static final MoqueryContractWithMingGuoDateType[] enumsQueryWithContractWithMingGuoDate = {
+			MoqueryContractWithMingGuoDateType.Officialfee };
+
 	public final String VALUE_FROM_IISI = "VALUE_FROM_IISI";
 	public final String VALUE_FROM_CHT = "VALUE_FROM_CHT";
-	
+
 	public final String ERRMSG_NO_NEED_TO_CHECK_WHEN_NO_DATA = "無聯單資料，不須查詢";
 
 	@Autowired
 	private MoqueryInputFactory factory;
+
+	@Autowired(required = false)
+	private CheckQueryTable checkQueryTable;
 
 	@Override
 	public List<ComparedData> queryData(TestCase testCase) {
@@ -68,175 +105,92 @@ public class MoqueryService extends QueryService {
 			}
 		}
 
+		if (ObjectUtils.isNotEmpty(checkQueryTable)) {
+			totalQuerys = totalQuerys.stream()
+					.filter(comparedData -> checkQueryTable.filterQueryTable(comparedData.getTable()))
+					.collect(Collectors.toList());
+		}
 		return totalQuerys;
 	}
 
 	private List<CompletableFuture<ComparedData>> queryAfterGetContractId(TestCase testCase) {
 		Map<String, String> contractMap = queryContractId(testCase);
 		List<CompletableFuture<ComparedData>> asyncQuerys = new ArrayList<>();
-		// MoqueryContractType, MoqueryContractWithTelnumType
-		asyncQuerys.addAll(asyncQueryMocontractType(contractMap, testCase));
-		// MoquerySpsvc.mdsvc
-		asyncQuerys.addAll(asyncQueryMospsvcType(contractMap, testCase));
-		//
-		asyncQuerys.addAll(asyncQueryOrderType(contractMap, testCase));
 
+		asyncQuerys.addAll(asyncQueryMocontractType(contractMap, testCase));
+//        MoquerySpsvc / MoqueryOrderno / MoqueryRentCustNo / MoqueryTranscashId
+		asyncQuerys.addAll(asyncQueryWithTwoPhases(contractMap, testCase));
 		return asyncQuerys;
 	}
 
-	private List<CompletableFuture<ComparedData>> asyncQueryOrderType(Map<String, String> contractMap,
+	private List<CompletableFuture<ComparedData>> asyncQueryWithTwoPhases(Map<String, String> contractMap,
 			TestCase testCase) {
 
-		List<CompletableFuture<ComparedData>> asyncRequest = new ArrayList<>();
-		List<CompletableFuture<ComparedData>> asyncQueryForModelinsrec = Stream.of(enumsQueryForOrderNo)
-				.map(enumType -> {
-					return getAsyncTasksForOrderNo(enumType, MoqueryOrderNoType.Modelinsrec, contractMap, testCase);
-				}).collect(Collectors.toList());
+		ArrayList<CompletableFuture<ComparedData>> list = new ArrayList<>();
 
-		List<CompletableFuture<ComparedData>> asyncQueryForModeldeliverdetail = Stream.of(enumsQueryForOrderNo)
-				.map(enumType -> {
-					return getAsyncTasksForOrderNo(enumType, MoqueryOrderNoType.Modeldeliverdetail, contractMap,
-							testCase);
-				}).collect(Collectors.toList());
-
-		asyncRequest.addAll(asyncQueryForModelinsrec);
-		asyncRequest.addAll(asyncQueryForModeldeliverdetail);
-		return asyncRequest;
+		for (MoqueryEnumForTwiceQuery moqueryForTwiceQuery : enumsQueryTwicePhase) {
+			List<CompletableFuture<ComparedData>> completableFuture = Stream
+					.of(moqueryForTwiceQuery.getMoqueryEnumForFirstPhases())
+					.map(moqueryFirstPhase -> getAsyncTasksForWithTwoPhases(moqueryFirstPhase,
+							moqueryForTwiceQuery.getMoqueryEnumSecondPhase(), moqueryForTwiceQuery.getResponse(),
+							contractMap, testCase))
+					.collect(Collectors.toList());
+			list.addAll(completableFuture);
+		}
+		return list;
 	}
 
-	private CompletableFuture<ComparedData> getAsyncTasksForOrderNo(MoqueryEnumInterface enumType,
-			MoqueryEnumInterface orderNoQueryEnum, Map<String, String> contractMap, TestCase testCase) {
+	private CompletableFuture<ComparedData> getAsyncTasksForWithTwoPhases(MoqueryEnumInterface moqueryFirstType,
+			MoqueryEnumInterface moquerySecondType, ResponseVOFactory.ResponseType response,
+			Map<String, String> contractMap, TestCase testCase) {
 
 		return CompletableFuture.supplyAsync(() -> {
-			CompletableFuture<ComparedData> futureFromCht = queryChtForOrderNo(enumType, orderNoQueryEnum, contractMap,
-					testCase);
-			CompletableFuture<ComparedData> futureFromIISI = queryIISIForOrderNo(enumType, orderNoQueryEnum,
-					contractMap, testCase);
+			CompletableFuture<ComparedData> futureFromCht = queryChtForWithTwoPhases(moqueryFirstType,
+					moquerySecondType, response, contractMap, testCase);
+			CompletableFuture<ComparedData> futureFromIISI = queryIISIForWithTwoPhases(moqueryFirstType,
+					moquerySecondType, response, contractMap, testCase);
 
-			CompletableFuture<ComparedData>[] futureArray = new CompletableFuture[] { futureFromCht, futureFromIISI };
+			CompletableFuture[] futureArray = new CompletableFuture[] { futureFromCht, futureFromIISI };
 			CompletableFuture.allOf(futureArray).join();
 
 			try {
 				return mergeQuerys(futureFromCht.get(), futureFromIISI.get());
 			} catch (InterruptedException | ExecutionException e) {
-				ComparedData comparedData = factory.getComparedData((MoqueryEnumInterface) orderNoQueryEnum, testCase);
+				ComparedData comparedData = factory.getComparedData(moquerySecondType, testCase);
 				comparedData.setError(e.getMessage());
 				return comparedData;
 			}
 		});
 	}
 
-	private CompletableFuture<ComparedData> queryChtForOrderNo(MoqueryEnumInterface firstQueryEnum,
-			MoqueryEnumInterface secondQueryEnum, Map<String, String> contractMap, TestCase testCase) {
-		TwoPhasedQueryToCht queryCht = new TwoPhasedQueryToCht(testCase, firstQueryEnum, secondQueryEnum,
-				ResponseType.OrderNo);
-		CompletableFuture<ComparedData> asyncQueryFromCht = queryCht.runTwoPhaseQuery(contractMap.get(VALUE_FROM_CHT));
-		return asyncQueryFromCht;
+	private CompletableFuture<ComparedData> queryChtForWithTwoPhases(MoqueryEnumInterface firstQueryEnum,
+			MoqueryEnumInterface secondQueryEnum, ResponseVOFactory.ResponseType response,
+			Map<String, String> contractMap, TestCase testCase) {
+
+		TwoPhasedQueryToCht queryCht = new TwoPhasedQueryToCht(testCase, firstQueryEnum, secondQueryEnum, response);
+		return queryCht.runTwoPhaseQuery(contractMap.get(VALUE_FROM_CHT));
 	}
 
-	private CompletableFuture<ComparedData> queryIISIForOrderNo(MoqueryEnumInterface firstQueryEnum,
-			MoqueryEnumInterface secondQueryEnum, Map<String, String> contractMap, TestCase testCase) {
-		TwoPhasedQueryToIISI queryIISI = new TwoPhasedQueryToIISI(testCase, firstQueryEnum, secondQueryEnum,
-				ResponseType.OrderNo);
-		CompletableFuture<ComparedData> asyncQueryFromIISI = queryIISI
-				.runTwoPhaseQuery(contractMap.get(VALUE_FROM_IISI));
-		return asyncQueryFromIISI;
-	}
+	private CompletableFuture<ComparedData> queryIISIForWithTwoPhases(MoqueryEnumInterface firstQueryEnum,
+			MoqueryEnumInterface secondQueryEnum, ResponseVOFactory.ResponseType response,
+			Map<String, String> contractMap, TestCase testCase) {
 
-	private List<CompletableFuture<ComparedData>> asyncQueryMospsvcType(Map<String, String> contractIdMap,
-			TestCase testCase) {
-		return Stream.of(enumsQueryForSpsvc).map(enumType -> {
-			return getAsyncTasksForSpsvc(enumType, contractIdMap, testCase);
-		}).collect(Collectors.toList());
-	}
-
-	private CompletableFuture<ComparedData> getAsyncTasksForSpsvc(MoqueryEnumInterface enumContractType,
-			Map<String, String> contractIdMap, TestCase testCase) {
-		return CompletableFuture.supplyAsync(() -> {
-			// 查詢 table: specialsvc
-			CompletableFuture<ComparedData> futureFromCht = runSpsvcQueryForCht(enumContractType, testCase,
-					contractIdMap);
-			CompletableFuture<ComparedData> futureFromIISI = runSpsvcQueryForIISI(enumContractType, testCase,
-					contractIdMap);
-			CompletableFuture<ComparedData>[] futureArray = new CompletableFuture[] { futureFromCht, futureFromIISI };
-			CompletableFuture.allOf(futureArray).join();
-
-			try {
-				return mergeQuerys(futureFromCht.get(), futureFromIISI.get());
-			} catch (InterruptedException | ExecutionException e) {
-				ComparedData comparedData = null;
-				switch ((MoqueryContractType) enumContractType) {
-				case SpecsvcidMN:
-					comparedData = factory.getComparedData((MoqueryEnumInterface) MoquerySpsvcType.Mdsvc,
-							testCase);
-					break;
-				case SpecsvcidMV:
-					comparedData = factory.getComparedData((MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc,
-							testCase);
-					break;
-				}
-				comparedData.setError(e.getMessage());
-				return comparedData;
-			}
-		});
-	}
-
-	private CompletableFuture<ComparedData> runSpsvcQueryForIISI(MoqueryEnumInterface enumContractType,
-			TestCase testCase, Map<String, String> contractIdMap) {
-		TwoPhasedQueryToIISI queryIISI = null;
-		switch ((MoqueryContractType) enumContractType) {
-		case SpecsvcidMN:
-			queryIISI = new TwoPhasedQueryToIISI(testCase, enumContractType,
-					(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
-			break;
-		case SpecsvcidMV:
-			queryIISI = new TwoPhasedQueryToIISI(testCase, enumContractType,
-					(MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc, ResponseType.SpsvcId);
-			break;
-		}
-//		if (enumContractType == MoqueryContractType.SpecsvcidMN) {
-//			queryIISI = new TwoPhasedQueryToIISI(testCase, enumContractType,
-//					(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
-//		} else if (enumContractType == MoqueryContractType.SpecsvcidMV) {
-//			queryIISI = new TwoPhasedQueryToIISI(testCase, enumContractType,
-//					(MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc, ResponseType.SpsvcId);
-//		}
-		return queryIISI.runTwoPhaseQuery(contractIdMap.get(VALUE_FROM_IISI));
-	}
-
-	private CompletableFuture<ComparedData> runSpsvcQueryForCht(MoqueryEnumInterface enumContractType,
-			TestCase testCase, Map<String, String> contractIdMap) {
-		TwoPhasedQueryToCht queryCht = null;
-		switch ((MoqueryContractType) enumContractType) {
-		case SpecsvcidMN:
-			queryCht = new TwoPhasedQueryToCht(testCase, enumContractType,
-					(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
-			break;
-		case SpecsvcidMV:
-			queryCht = new TwoPhasedQueryToCht(testCase, enumContractType,
-					(MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc, ResponseType.SpsvcId);
-			break;
-		}
-//		if (enumContractType == MoqueryContractType.SpecsvcidMN) {
-//			queryCht = new TwoPhasedQueryToCht(testCase, enumContractType,
-//					(MoqueryEnumInterface) MoquerySpsvcType.Mdsvc, ResponseType.SpsvcId);
-//		} else if (enumContractType == MoqueryContractType.SpecsvcidMV) {
-//			queryCht = new TwoPhasedQueryToCht(testCase, enumContractType,
-//					(MoqueryEnumInterface) MoquerySpsvcType.Vpnsvc, ResponseType.SpsvcId);
-//		}
-		return queryCht.runTwoPhaseQuery(contractIdMap.get(VALUE_FROM_CHT));
+		TwoPhasedQueryToIISI queryIISI = new TwoPhasedQueryToIISI(testCase, firstQueryEnum, secondQueryEnum, response);
+		return queryIISI.runTwoPhaseQuery(contractMap.get(VALUE_FROM_IISI));
 	}
 
 	private List<CompletableFuture<ComparedData>> asyncQueryMocontractType(Map<String, String> contractMap,
 			TestCase testCase) {
 		List<CompletableFuture<ComparedData>> asyncQuerys = new ArrayList<>();
 
-		for (MoqueryEnumInterface contractType : enumsQueryWithContractId) {
-			asyncQuerys.add(getAsyncQueryForContract(testCase, contractMap, contractType));
-		}
+		MoqueryEnumInterface[][] totalOfQueryMocontractType = { enumsQueryWithContractId,
+				enumsQueryWithContractIdWithTelnum, enumsQueryWithContractIdWithOneDate,
+				enumsQueryWithContractIdWithTwoDate, enumsQueryWithContractWithMingGuoDate };
 
-		for (MoqueryEnumInterface contractType : enumsQueryWithContractIdWithTelnum) {
-			asyncQuerys.add(getAsyncQueryForContract(testCase, contractMap, contractType));
+		for (MoqueryEnumInterface[] targetContractTypeArray : totalOfQueryMocontractType) {
+			for (MoqueryEnumInterface contractType : targetContractTypeArray) {
+				asyncQuerys.add(getAsyncQueryForContract(testCase, contractMap, contractType));
+			}
 		}
 
 		return asyncQuerys;
@@ -262,14 +216,15 @@ public class MoqueryService extends QueryService {
 		ComparedData obj = comparedForCht.clone();
 		obj.setDataFromCht(comparedForCht.getDataFromCht());
 		obj.setDataFromIISI(comparedForIISI.getDataFromIISI());
-		
+
 		showErrorMsgWhenCheckMoquery(obj);
 
 		return obj;
 	}
-	
-	private ComparedData showErrorMsgWhenCheckMoquery (ComparedData mergedComparedData) {
-		if (StringUtils.isEmpty(mergedComparedData.getDataFromCht()) && StringUtils.isEmpty(mergedComparedData.getDataFromIISI())) {
+
+	private ComparedData showErrorMsgWhenCheckMoquery(ComparedData mergedComparedData) {
+		if (StringUtils.isEmpty(mergedComparedData.getDataFromCht())
+				&& StringUtils.isEmpty(mergedComparedData.getDataFromIISI())) {
 			mergedComparedData.setError(ERRMSG_NO_NEED_TO_CHECK_WHEN_NO_DATA);
 		} else {
 			return mergedComparedData;
@@ -277,6 +232,9 @@ public class MoqueryService extends QueryService {
 		return mergedComparedData;
 	}
 
+	/*
+	 * @parma value = contractId
+	 */
 	private TestCase getNewTestCaseWithContractId(TestCase testcase, String value) {
 		TestCase newObj = testcase.clone();
 		newObj.setContract(value);
@@ -304,10 +262,18 @@ public class MoqueryService extends QueryService {
 	}
 
 	private List<ComparedData> getQueryListByTelnum(TestCase testCase) {
-		MoqueryEnumInterface[] asyncQueryList = new MoqueryTelnumType[] { MoqueryTelnumType.Agent5id,
-				MoqueryTelnumType.Delcustinfoapply, MoqueryTelnumType.Eformapplyrec };
-		return Stream.of(asyncQueryList).map(enumType -> factory.getComparedData(enumType, testCase))
-				.collect(Collectors.toList());
+
+		ArrayList<ComparedData> queryTelnumList = new ArrayList<>();
+		MoqueryEnumInterface[][] totalOfQueryTelnumType = { enumsQueryWithTelnum, enumsQueryWithTelnumWithOneDate,
+				enumsQueryWithTelnumWithTwoDate, enumsQueryWithTelnumWithMingGuoDate, enumsQueryTelnumsWithDate };
+
+		for (MoqueryEnumInterface[] targetTelnumTypeArray : totalOfQueryTelnumType) {
+			for (MoqueryEnumInterface telnumType : targetTelnumTypeArray) {
+				queryTelnumList.add(factory.getComparedData(telnumType, testCase));
+			}
+		}
+
+		return queryTelnumList;
 	}
 
 	protected List<CompletableFuture<ComparedData>> asyncQueryBothServer(List<ComparedData> list) {
@@ -344,7 +310,7 @@ public class MoqueryService extends QueryService {
 		private String getValue(String returnString) {
 			AbstractJSONPathModel resVO = ResponseVOFactory.getResponseModel(responseType, returnString);
 			return resVO.getValue();
-		};
+		}
 
 		private void callTo(ComparedData comparedData) {
 			queryCht(comparedData);
@@ -356,6 +322,10 @@ public class MoqueryService extends QueryService {
 			testCase.setSpsvc(value);
 		} else if (secondQueryEnum instanceof MoqueryOrderNoType) {
 			testCase.setOrderno(value);
+		} else if (secondQueryEnum instanceof MoqueryTranscashIdType) {
+			testCase.setTranscashId(value);
+		} else if (secondQueryEnum instanceof MoqueryRentCustNoType) {
+			testCase.setRentcustno(value);
 		} else {
 			testCase.setErrorReason(value);
 		}
@@ -395,7 +365,7 @@ public class MoqueryService extends QueryService {
 			} catch (Exception e) {
 				return null;
 			}
-		};
+		}
 
 		private void callTo(ComparedData comparedData) {
 			queryIISI(comparedData);

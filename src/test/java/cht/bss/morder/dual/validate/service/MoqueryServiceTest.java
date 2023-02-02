@@ -16,7 +16,7 @@ import cht.bss.morder.dual.validate.vo.ComparedData;
 import cht.bss.morder.dual.validate.vo.QueryInput;
 import cht.bss.morder.dual.validate.vo.TestCase;
 
-@SpringBootTest
+@SpringBootTest(properties = {"dual-validate.checkTable=True"})
 public class MoqueryServiceTest {
 
 	@Autowired
@@ -29,8 +29,13 @@ public class MoqueryServiceTest {
 
 		assertNotNull(result);
 		assertNotEquals(0, result);
-		assertEquals(17, result.size());
+
+		// 17 (2022-11 雙軌階段一)
+		// +42 (2023-01 雙軌階段二)
+		assertEquals(59, result.size());
 	}
+
+
 
 	private TestCase getTestCase() {
 		return TestCase.builder().telNum("11223").custId("33445").build();

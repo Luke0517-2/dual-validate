@@ -1,0 +1,31 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "(expression)": "2020-09-23",
+                "subgroup": "0",
+                "productid": "177",
+                "groupid": "27881",
+                "contractid": "8285880",
+                "serviceno": "3",
+                "membertype": "1",
+                "billpayer": "1",
+                "telnum": "0972006688"
+            },
+            {
+                "(expression)": "",
+                "subgroup": "0",
+                "productid": "177",
+                "groupid": "27881",
+                "contractid": "8285880",
+                "serviceno": "3",
+                "membertype": "1",
+                "billpayer": "1",
+                "telnum": "0972006688"
+            }
+        ],
+        "tablename": "custdatainfo",
+        "querytype": "1"
+    }
+}
