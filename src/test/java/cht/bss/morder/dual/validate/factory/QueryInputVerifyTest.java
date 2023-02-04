@@ -367,7 +367,7 @@ public class QueryInputVerifyTest {
 		assertEquals(testFromSite, queryInput.getFromSite());
 		assertEquals(testClientIp, queryInput.getClientip());
 		assertEquals("empdiscntrec", queryInput.getParam().getQueryitem().getTablename());
-		assertEquals("1", queryInput.getParam().getQueryitem().getQuerytype());
+		assertEquals("2", queryInput.getParam().getQueryitem().getQuerytype());
 		assertNull(queryInput.getParam().getTelnum());
 		assertNull(queryInput.getParam().getQuerydata());
 		assertNull(queryInput.getParam().getCustid());
