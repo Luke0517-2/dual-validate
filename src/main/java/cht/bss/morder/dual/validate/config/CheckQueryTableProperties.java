@@ -1,4 +1,4 @@
-package cht.bss.morder.dual.validate.common;
+package cht.bss.morder.dual.validate.config;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "dynamic.rule", ignoreInvalidFields = true)
-public class CheckQueryTable {
+public class CheckQueryTableProperties {
 
 	private List<String> listOfQueryTable;
 	

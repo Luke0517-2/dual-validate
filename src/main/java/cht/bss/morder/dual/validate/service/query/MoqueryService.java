@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import cht.bss.morder.dual.validate.common.CheckQueryTable;
+import cht.bss.morder.dual.validate.config.CheckQueryTableProperties;
 import cht.bss.morder.dual.validate.enums.*;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -87,7 +87,7 @@ public class MoqueryService extends QueryService {
 	private MoqueryInputFactory factory;
 
 	@Autowired(required = false)
-	private CheckQueryTable checkQueryTable;
+	private CheckQueryTableProperties checkQueryTable;
 
 	@Override
 	public List<ComparedData> queryData(TestCase testCase) {
