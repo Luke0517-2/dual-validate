@@ -22,7 +22,7 @@ public class SpecsvcIDResponseVOTest {
 	@BeforeAll
 	static void init() throws IOException {
 		String SpecsvcID_JSON = FileUtils.readFileToString(
-				new File("./jsonsample/specialsvcMN_output.json"), StandardCharsets.UTF_8);
+				new File("./jsonsample/SpecsvcidMN_output.json"), StandardCharsets.UTF_8);
 		specsvcID = SpecsvcIDResponseVO.builder(SpecsvcID_JSON);
 		String Empty_SpecsvcID_JSON = FileUtils.readFileToString(new File("./jsonsample/emptydatalist_output.json"),
 				StandardCharsets.UTF_8);

@@ -1,28 +1,41 @@
 package cht.bss.morder.dual.validate.factory;
 
 import cht.bss.morder.dual.validate.enums.*;
+import cht.bss.morder.dual.validate.service.MOrderFacadeFileImpl;
+import cht.bss.morder.dual.validate.vo.*;
+import cht.bss.morder.dual.validate.vo.json.AbstractJSONPathModel;
+import com.jayway.jsonpath.JsonPath;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import cht.bss.morder.dual.validate.vo.ComparedData;
-import cht.bss.morder.dual.validate.vo.Params;
-import cht.bss.morder.dual.validate.vo.QueryInput;
-import cht.bss.morder.dual.validate.vo.QueryItem;
-import cht.bss.morder.dual.validate.vo.TestCase;
-
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/*
+ * 驗證 outputJ.json 中的 queryType / tableName 和 enum 中的 type / tableName 是否一致。
+ *
+ * */
 @SpringBootTest(properties = {"dual-validate.checkTable=false"})
 public class QueryInputFactoryTest {
 
     @Autowired
     private QueryInputFactory queryInputFactory;
 
+    @Autowired
+    private MOrderFacadeFileImpl mOrderFacadeFile;
     private final String yesterday = LocalDate.now().minusDays(1).toString();
+    private String result = StringUtils.EMPTY;
+    private final MoqueryContractType[] specialContractType = {MoqueryContractType.SpecsvcidMN, MoqueryContractType.SpecsvcidMV, MoqueryContractType.SpecsvcidF3};
 
     private static String getMingGouString() {
         int intYear = LocalDate.now().minusDays(1).getYear() - 1911;
@@ -56,8 +69,8 @@ public class QueryInputFactoryTest {
         assertEquals("querycustinfo", comparedDataForTelnum.getQueryService());
     }
 
-	@Test
-	public void testGetComparedData_In_QrySaleBehavior() {
+    @Test
+    public void testGetComparedData_In_QrySaleBehavior() {
         final String telnum = "0912345678";
         final String custid = "Helloworld";
         TestCase case1 = TestCase.builder().telNum(telnum).custId(custid).build();
@@ -73,70 +86,141 @@ public class QueryInputFactoryTest {
         assertEquals("qrysalebehavior", comparedData.getQueryService());
     }
 
-	@Test
-	public void testGetComparedData_In_MoqueryInputFactory_MoqueryContractWithTelnumType() {
+    @Test
+    public void testGetComparedData_In_MoqueryInputFactory_MoqueryContractWithTelnumType() {
         final String contractId = "Helloworld";
         final String telnum = "0912345678";
         TestCase case1 = TestCase.builder().telNum(telnum).contract(contractId).build();
 
-        MoqueryContractWithTelnumType type = MoqueryContractWithTelnumType.Contractret;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(contractId + "&" + telnum, comparedData.getData());
-        assertEquals("moquery", comparedData.getQueryService());
-    }
+        MoqueryContractWithTelnumType[] enumValueAll = MoqueryContractWithTelnumType.values();
+        Arrays.stream(enumValueAll)
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
 
-	@Test
-	public void testGetComparedData_In_MoqueryInputFactory_MoqueryOrderNoType() {
-        final String orderNo = "Helloworld";
-        TestCase case1 = TestCase.builder().orderno(orderNo).build();
-
-        MoqueryOrderNoType type = MoqueryOrderNoType.Modelinsrec;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(orderNo, comparedData.getData());
-        assertEquals("moquery", comparedData.getQueryService());
-    }
-
-	@Test
-	public void testGetComparedData_In_MoqueryInputFactory_MoqueryContractType() {
-        final String contractId = "Helloworld";
-        TestCase case1 = TestCase.builder().contract(contractId).build();
-
-        MoqueryContractType type = MoqueryContractType.AgentMobileSet;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(contractId, comparedData.getData());
-        assertEquals("moquery", comparedData.getQueryService());
-    }
-
-	@Test
-	public void testGetComparedData_In_MoqueryInputFactory_MoquerySpsvcType() {
-        final String spsvc = "Helloworld";
-        TestCase case1 = TestCase.builder().spsvc(spsvc).build();
-
-        MoquerySpsvcType type = MoquerySpsvcType.Mdsvc;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(spsvc, comparedData.getData());
-        assertEquals("moquery", comparedData.getQueryService());
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    assertEquals(contractId + "&" + telnum, comparedData.getData());
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
     }
 
     @Test
-    public void testGetComparedData_In_MoqueryInputFactory_MoquerySpsvcTypeCase2() {
+    public void testGetComparedData_In_MoqueryInputFactory_MoqueryOrderNoType() {
+        final String orderNo = "Helloworld";
+        TestCase case1 = TestCase.builder().orderno(orderNo).build();
+
+        MoqueryOrderNoType[] enumValueAll = MoqueryOrderNoType.values();
+        Arrays.stream(enumValueAll)
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    assertEquals(orderNo, comparedData.getData());
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
+    }
+
+    /*
+     *  由於 MoqueryContractType 中有幾個的 format 不太一樣，故將其抽出放置testGetComparedData_In_MoqueryInputFactory_MoquerySpsvcType 檢驗
+     * */
+    @Test
+    public void testGetComparedData_In_MoqueryInputFactory_MoqueryContractType() {
+        final String contractId = "Helloworld";
+        TestCase case1 = TestCase.builder().contract(contractId).build();
+
+        MoqueryContractType[] enumValueAll = MoqueryContractType.values();
+        Arrays.stream(enumValueAll)
+                .filter(enumValue -> !ArrayUtils.contains(specialContractType, enumValue))
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    assertEquals(contractId, comparedData.getData());
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
+    }
+
+    @Test
+    public void testGetComparedData_In_MoqueryInputFactory_MoqueryContractSpvcType() {
+        final String contractId = "Helloworld";
+        TestCase case1 = TestCase.builder().contract(contractId).build();
+
+        MoqueryContractType[] enumValueAll = specialContractType;
+        Arrays.stream(enumValueAll)
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    assertEquals(contractId + "&" + value.getContentTemplate().split("&")[1], comparedData.getData());
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
+    }
+
+    @Test
+    public void testGetComparedData_In_MoqueryInputFactory_MoquerySpsvcType() {
+        //todo
         final String spsvc = "Helloworld";
         TestCase case1 = TestCase.builder().spsvc(spsvc).build();
 
-        MoquerySpsvcType type = MoquerySpsvcType.F3svc;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(spsvc + "&" + yesterday + "&" + yesterday, comparedData.getData());
-        assertEquals("f3svc", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+        MoquerySpsvcType[] enumValueAll = MoquerySpsvcType.values();
+        Arrays.stream(enumValueAll)
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    String contentTemplate = value.getContentTemplate();
+                    switch (contentTemplate) {
+                        case "%s":
+                            assertEquals(spsvc, comparedData.getData(), " Something wrong with " + value);
+                            break;
+                        case "%s&%s&%s":
+                            assertEquals(spsvc + "&" + yesterday + "&" + yesterday, comparedData.getData(), " Something wrong with " + value);
+                            break;
+                        default:
+                            throw new RuntimeException();
+                    }
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
+
     }
 
     @Test
@@ -144,12 +228,22 @@ public class QueryInputFactoryTest {
         final String telnum = "0912345678";
         TestCase case1 = TestCase.builder().telNum(telnum).build();
 
-        MoqueryTelnumType type = MoqueryTelnumType.Agent5id;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(telnum, comparedData.getData());
-        assertEquals("moquery", comparedData.getQueryService());
+        MoqueryTelnumType[] enumValueAll = MoqueryTelnumType.values();
+        Arrays.stream(enumValueAll)
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    assertEquals(telnum, comparedData.getData());
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
     }
 
     @Test
@@ -157,13 +251,23 @@ public class QueryInputFactoryTest {
         final String contractId = "HelloWorld";
         TestCase case1 = TestCase.builder().contract(contractId).build();
 
-        MoqueryContractWithDateType type = MoqueryContractWithDateType.Telsusptype;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(contractId + "&" + yesterday, comparedData.getData());
-        assertEquals("moquery", comparedData.getQueryService());
-        assertEquals("telsusptype", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+        MoqueryContractWithDateType[] enumValueAll = MoqueryContractWithDateType.values();
+        Arrays.stream(enumValueAll)
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    assertNotNull(value.getTableName());
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    assertEquals(contractId + "&" + yesterday, comparedData.getData());
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
     }
 
     @Test
@@ -171,13 +275,23 @@ public class QueryInputFactoryTest {
         final String contractId = "HelloWorld";
         TestCase case1 = TestCase.builder().contract(contractId).build();
 
-        MoqueryContractWithMingGuoDateType type = MoqueryContractWithMingGuoDateType.Officialfee;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(contractId + "&" + getMingGouString(), comparedData.getData());
-        assertEquals("moquery", comparedData.getQueryService());
-        assertEquals("officialfee", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+        MoqueryContractWithMingGuoDateType[] enumValueAll = MoqueryContractWithMingGuoDateType.values();
+        Arrays.stream(enumValueAll)
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    assertNotNull(value.getTableName());
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    assertEquals(contractId + "&" + getMingGouString(), comparedData.getData());
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
     }
 
     @Test
@@ -185,13 +299,23 @@ public class QueryInputFactoryTest {
         final String contractId = "HelloWorld";
         TestCase case1 = TestCase.builder().contract(contractId).build();
 
-        MoqueryContractWithTwoDateType type = MoqueryContractWithTwoDateType.Discnttype;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(contractId + "&" + yesterday + "&" + yesterday, comparedData.getData());
-        assertEquals("moquery", comparedData.getQueryService());
-        assertEquals("discnttype", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+        MoqueryContractWithTwoDateType[] enumValueAll = MoqueryContractWithTwoDateType.values();
+        Arrays.stream(enumValueAll)
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    assertNotNull(value.getTableName());
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    assertEquals(contractId + "&" + yesterday + "&" + yesterday, comparedData.getData());
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
     }
 
     @Test
@@ -199,13 +323,23 @@ public class QueryInputFactoryTest {
         final String telnum = "0912345678";
         TestCase case1 = TestCase.builder().telNum(telnum).build();
 
-        MoqueryTelnumWithDateType type = MoqueryTelnumWithDateType.ModelinsrecShop;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(telnum + "&" + yesterday, comparedData.getData());
-        assertEquals("moquery", comparedData.getQueryService());
-        assertEquals("modelinsrec_shop", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+        MoqueryTelnumWithDateType[] enumValueAll = MoqueryTelnumWithDateType.values();
+        Arrays.stream(enumValueAll)
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    assertNotNull(value.getTableName());
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    assertEquals(telnum + "&" + yesterday, comparedData.getData());
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
     }
 
     @Test
@@ -213,13 +347,23 @@ public class QueryInputFactoryTest {
         final String telnum = "0912345678";
         TestCase case1 = TestCase.builder().telNum(telnum).build();
 
-        MoqueryTelnumWithMingGuoDateType type = MoqueryTelnumWithMingGuoDateType.Recotemp;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(telnum + "&" + getMingGouString(), comparedData.getData());
-        assertEquals("moquery", comparedData.getQueryService());
-        assertEquals("recotemp", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+        MoqueryTelnumWithMingGuoDateType[] enumValueAll = MoqueryTelnumWithMingGuoDateType.values();
+        Arrays.stream(enumValueAll)
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    assertNotNull(value.getTableName());
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    assertEquals(telnum + "&" + getMingGouString(), comparedData.getData());
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
     }
 
     @Test
@@ -227,13 +371,23 @@ public class QueryInputFactoryTest {
         final String telnum = "0912345678";
         TestCase case1 = TestCase.builder().telNum(telnum).build();
 
-        MoqueryTelnumWithTwoDateType type = MoqueryTelnumWithTwoDateType.Empdiscntrec;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(telnum + "&" + yesterday + "&" + yesterday, comparedData.getData());
-        assertEquals("moquery", comparedData.getQueryService());
-        assertEquals("empdiscntrec", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+        MoqueryTelnumWithTwoDateType[] enumValueAll = MoqueryTelnumWithTwoDateType.values();
+        Arrays.stream(enumValueAll)
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    assertNotNull(value.getTableName());
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    assertEquals(telnum + "&" + yesterday + "&" + yesterday, comparedData.getData());
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
     }
 
     @Test
@@ -241,13 +395,23 @@ public class QueryInputFactoryTest {
         final String telnum = "0912345678";
         TestCase case1 = TestCase.builder().telNum(telnum).build();
 
-        MoqueryTelnumsWithDateType type = MoqueryTelnumsWithDateType.Workingrecord;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(yesterday + "&" + telnum + "&" + telnum, comparedData.getData());
-        assertEquals("moquery", comparedData.getQueryService());
-        assertEquals("workingrecord", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+        MoqueryTelnumsWithDateType[] enumValueAll = MoqueryTelnumsWithDateType.values();
+        Arrays.stream(enumValueAll)
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    assertNotNull(value.getTableName());
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    assertEquals(yesterday + "&" + telnum + "&" + telnum, comparedData.getData());
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
     }
 
     @Test
@@ -255,13 +419,23 @@ public class QueryInputFactoryTest {
         final String rentcustno = "123456789";
         TestCase case1 = TestCase.builder().rentcustno(rentcustno).build();
 
-        MoqueryRentCustNoType type = MoqueryRentCustNoType.Pascustomer;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(rentcustno, comparedData.getData());
-        assertEquals("moquery", comparedData.getQueryService());
-        assertEquals("pascustomer", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+        MoqueryRentCustNoType[] enumValueAll = MoqueryRentCustNoType.values();
+        Arrays.stream(enumValueAll)
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    assertNotNull(value.getTableName());
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    assertEquals(rentcustno, comparedData.getData());
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
     }
 
     @Test
@@ -269,13 +443,24 @@ public class QueryInputFactoryTest {
         final String transcashId = "123456789";
         TestCase case1 = TestCase.builder().transcashId(transcashId).build();
 
-        MoqueryTranscashIdType type = MoqueryTranscashIdType.Chargeitem;
-        ComparedData comparedData = queryInputFactory.getComparedData(type, case1);
-        validataComparedData(comparedData);
-        validataComparedDataInMoquery(comparedData, type);
-        assertEquals(transcashId, comparedData.getData());
-        assertEquals("moquery", comparedData.getQueryService());
-        assertEquals("chargeitem", comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+        MoqueryTranscashIdType[] enumValueAll = MoqueryTranscashIdType.values();
+        Arrays.stream(enumValueAll)
+                .forEach(value -> {
+                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    try {
+                        compareJsonWithEnum(value, jsonFilePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    assertNotNull(value.getTableName());
+                    validataComparedData(comparedData);
+                    validataComparedDataInMoquery(comparedData, value);
+                    assertEquals(transcashId, comparedData.getData());
+                    assertEquals("moquery", comparedData.getQueryService());
+                    assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
+                });
+
     }
 
     private void validataComparedDataInMoquery(ComparedData data, MoqueryEnumInterface type) {
@@ -293,22 +478,51 @@ public class QueryInputFactoryTest {
         assertNotNull(queryItem.getContent());
     }
 
-	private void validataComparedData(ComparedData data) {
-		assertNotNull(data);
-		assertNotNull(data.getQueryService());
-		assertNotNull(data.getTable());
-		assertNotNull(data.getData());
+    private void validataComparedData(ComparedData data) {
+        assertNotNull(data);
+        assertNotNull(data.getQueryService());
+        assertNotNull(data.getTable());
+        assertNotNull(data.getData());
 
-		QueryInput input = data.getQueryInput();
-		assertNotNull(input);
-		assertNotNull(input.getCmd());
-		assertNotNull(input.getEmpno());
-		assertNotNull(input.getFromSite());
-		assertNotNull(input.getClientip());
-		assertNotNull(input.getParam());
-	}
+        QueryInput input = data.getQueryInput();
+        assertNotNull(input);
+        assertNotNull(input.getCmd());
+        assertNotNull(input.getEmpno());
+        assertNotNull(input.getFromSite());
+        assertNotNull(input.getClientip());
+        assertNotNull(input.getParam());
+    }
 
-	private String getTelnumFromComparedData(ComparedData data) {
-		return data.getQueryInput().getParam().getTelnum();
-	}
+    private String getTelnumFromComparedData(ComparedData data) {
+        return data.getQueryInput().getParam().getTelnum();
+    }
+
+    private void compareJsonWithEnum(MoqueryEnumInterface moqueryEnum, String jsonFilePath) throws IOException {
+        String json = FileUtils.readFileToString(new File(jsonFilePath), StandardCharsets.UTF_8);
+        AbstractJSONPathModel abstractJSONPathModel = new AbstractJSONPathModel(JsonPath.parse(json)) {
+            @Override
+            public String getValue() {
+                return null;
+            }
+        };
+        assertNotNull(json);
+        assertNotNull(abstractJSONPathModel);
+        Optional<Object> tableNameParamsFromJSON = abstractJSONPathModel.getSingleValueByParams("$..BMS.tablename");
+        Optional<Object> queryTypeParamsFromJSON = abstractJSONPathModel.getSingleValueByParams("$..BMS.querytype");
+        final String tableNameFromJSON = tableNameParamsFromJSON.isPresent() ? tableNameParamsFromJSON.get().toString() : null;
+        final String queryTypeFromJSON = queryTypeParamsFromJSON.isPresent() ? queryTypeParamsFromJSON.get().toString() : null;
+        assertEquals(queryTypeFromJSON, moqueryEnum.getType());
+        assertEquals(tableNameFromJSON, moqueryEnum.getTableName());
+    }
+
+    private String firstLetterToLowerCase(String str) {
+        if (str != null && str.isEmpty())
+            return str;
+        else {
+            String firstLetter = str.substring(0, 1);
+            String otherLetters = str.substring(1, str.length());
+            return firstLetter + otherLetters;
+        }
+    }
+
 }

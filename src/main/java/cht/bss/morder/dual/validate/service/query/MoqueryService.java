@@ -28,31 +28,31 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MoqueryService extends QueryService {
 
-	private static final MoqueryEnumInterface[] enumsQueryWithContractId = { MoqueryContractType.Projmember,
+	private static final MoqueryEnumInterface[] enumsQueryWithContractId = {MoqueryContractType.Projmember,
 			MoqueryContractType.Suspresumerec1, MoqueryContractType.Suspresumerec2, MoqueryContractType.Datashareinfo,
 			MoqueryContractType.Data_share_rec, MoqueryContractType.SponsorSpsvc, MoqueryContractType.Deductfee,
-			MoqueryContractType.Einvoicerec, MoqueryContractType.Newdiscntreserve, MoqueryContractType.Subapplytype };
+			MoqueryContractType.Einvoicerec, MoqueryContractType.Newdiscntreserve, MoqueryContractType.Subapplytype};
 	private static final MoqueryEnumInterface[] enumsQueryWithContractIdWithTelnum = {
-			MoqueryContractWithTelnumType.Contractret, MoqueryContractWithTelnumType.Pasuserec };
+			MoqueryContractWithTelnumType.Contractret, MoqueryContractWithTelnumType.Pasuserec};
 
 	// 目前將 enumsQueryForSpsvc 和 enumsQueryForOrderNo 移到 enumsQueryTwicePhase 內。
-	private static final MoqueryEnumInterface[] enumsQueryForSpsvc = { MoqueryContractType.SpecsvcidMN,
-			MoqueryContractType.SpecsvcidMV, MoqueryContractType.SpecsvcidF3 };
-	private static final MoqueryEnumInterface[] enumsQueryForOrderNo = { MoqueryContractType.AgentMobileSet,
-			MoqueryContractType.AgentMobileSetPart };
+	private static final MoqueryEnumInterface[] enumsQueryForSpsvc = {MoqueryContractType.SpecsvcidMN,
+			MoqueryContractType.SpecsvcidMV, MoqueryContractType.SpecsvcidF3};
+	private static final MoqueryEnumInterface[] enumsQueryForOrderNo = {MoqueryContractType.AgentMobileSet,
+			MoqueryContractType.AgentMobileSetPart};
 
 	private static final MoqueryEnumInterface[] enumsQueryWithContractIdWithOneDate = {
 			MoqueryContractWithDateType.Chgcustrec, MoqueryContractWithDateType.DataShareRecLog,
 			MoqueryContractWithDateType.Empbusiness, MoqueryContractWithDateType.Promofinereserve,
 			MoqueryContractWithDateType.Refundpaid, MoqueryContractWithDateType.Telsusptype,
-			MoqueryContractWithDateType.Transcashfee2 };
+			MoqueryContractWithDateType.Transcashfee2};
 	private static final MoqueryEnumInterface[] enumsQueryWithContractIdWithTwoDate = {
 			MoqueryContractWithTwoDateType.Applytypechgrec, MoqueryContractWithTwoDateType.Delaydisc,
 			MoqueryContractWithTwoDateType.Discnttype, MoqueryContractWithTwoDateType.Qosalert,
 			MoqueryContractWithTwoDateType.Packageservice, MoqueryContractWithTwoDateType.Promoprodrecold,
 			MoqueryContractWithTwoDateType.Promoprodreserve, MoqueryContractWithTwoDateType.Sharegroupdevice,
 			MoqueryContractWithTwoDateType.Sharegroupmem, MoqueryContractWithTwoDateType.Vspecialsvc,
-			MoqueryContractWithTwoDateType.Recashmark };
+			MoqueryContractWithTwoDateType.Recashmark};
 
 	private static final MoqueryEnumInterface[] enumsQueryWithTelnum = { MoqueryTelnumType.Agent5id,
 			MoqueryTelnumType.Delcustinfoapply, MoqueryTelnumType.Eformapplyrec };
