@@ -1,21 +1,41 @@
 package cht.bss.morder.dual.validate.common;
 
-import cht.bss.morder.dual.validate.enums.*;
+import java.util.HashSet;
+import java.util.List;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import cht.bss.morder.dual.validate.enums.MoqueryContractType;
+import cht.bss.morder.dual.validate.enums.MoqueryContractWithDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryContractWithMingGuoDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryContractWithTelnumType;
+import cht.bss.morder.dual.validate.enums.MoqueryContractWithTwoDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryEnumForTwiceQuery;
+import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
+import cht.bss.morder.dual.validate.enums.MoqueryTelnumType;
+import cht.bss.morder.dual.validate.enums.MoqueryTelnumWithDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryTelnumWithMingGuoDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryTelnumWithTwoDateType;
+import cht.bss.morder.dual.validate.enums.MoqueryTelnumsWithDateType;
+import lombok.Getter;
+import lombok.Setter;
 
 @Component
+@Getter
+@Setter
+@ConfigurationProperties(prefix = "dynamic.rule", ignoreInvalidFields = true)
 public class MoqueryRuleToEnumMapping {
-    public HashSet<MoqueryEnumInterface> getEnumInterfaces(ArrayList<String> queryRuleList) {
+	
+	private List<String> queryRuleList;
+	
+    public HashSet<MoqueryEnumInterface> getEnumInterfaces() {
 
         HashSet<MoqueryEnumInterface> mapping = new HashSet<>();
         queryRuleList.
                 forEach(tableName -> {
                     switch (tableName.toLowerCase()) {
                         case "numberusage":
-                            mapping.add(MoqueryTelnumType.Numberusage);
                             break;
                         case "agent5id":
                             mapping.add(MoqueryTelnumType.Agent5id);

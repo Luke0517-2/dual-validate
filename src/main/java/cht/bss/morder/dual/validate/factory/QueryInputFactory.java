@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import cht.bss.morder.dual.validate.common.YesterdayConvert;
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
-import cht.bss.morder.dual.validate.config.CheckQueryTableProperties;
+import cht.bss.morder.dual.validate.config.CheckQueryRuleProperties;
 import cht.bss.morder.dual.validate.config.TransferProperties;
 import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
 import cht.bss.morder.dual.validate.enums.QrySalebehaviorType;

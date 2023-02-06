@@ -11,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
@@ -60,7 +61,11 @@ public class Application implements ApplicationListener<ApplicationReadyEvent>{
 	 * @param args 啟動時額外的參數
 	 */
 	public static void main(final String[] args) {		
-		SpringApplication.run(Application.class, args);
+		ConfigurableApplicationContext applicationContext = SpringApplication.run(Application.class, args);
+		String[] allBeanNames = applicationContext.getBeanDefinitionNames();
+        for(String beanName : allBeanNames) {
+            System.out.println(beanName);
+        }
 	}
 
 	@Override

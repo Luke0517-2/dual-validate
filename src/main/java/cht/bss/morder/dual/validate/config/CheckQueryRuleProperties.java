@@ -5,10 +5,15 @@ import java.util.List;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-@Component
-@ConfigurationProperties(prefix = "dynamic.rule", ignoreInvalidFields = true)
-public class CheckQueryTableProperties {
+import lombok.Getter;
+import lombok.Setter;
 
-	private List<String> listOfQueryTable;
+@Component
+@Getter
+@Setter
+@ConfigurationProperties(prefix = "dynamic.rule", ignoreInvalidFields = true)
+public class CheckQueryRuleProperties {
+
+	private List<String> queryRuleList;
 	
 }
