@@ -21,8 +21,8 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.boot.autoconfigure.web.WebProperties; 
 import reactor.core.publisher.Mono;
 
-@Component
-@Order(-2)
+//@Component
+//@Order(-2)
 public class GlobalErrorWebExceptionHandler extends 
     AbstractErrorWebExceptionHandler {
 

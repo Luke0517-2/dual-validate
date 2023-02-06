@@ -23,12 +23,14 @@ public class RestResponseEntityExceptionHandler {
 	@Autowired
 	private MessageSource messageSource;
 
+
 	/**
 	 * 處理內部的任何錯誤並依照CHT的Response結構回傳
 	 *
 	 * @param ex 異常物件
 	 * @return 回應至前端的JSON結構內容
 	 */
+	
 	@ExceptionHandler({ Exception.class })
 	public @ResponseBody HttpErrorInfo handleExceptionForInternalServerError(final Exception ex) {
 		log.error("Unexpected Exception:", ex);

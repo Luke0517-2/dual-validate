@@ -13,6 +13,7 @@ import cht.bss.morder.dual.validate.vo.QueryItem;
 import cht.bss.morder.dual.validate.vo.TestCase;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -125,7 +126,42 @@ public class QueryInputFactoryTest {
         assertEquals(spsvc, comparedData.getData());
         assertEquals("moquery", comparedData.getQueryService());
     }
-
+	
+	
+	@Autowired
+	private DynamicRuleSampleProperties dynamicsRules;
+	@Test
+	public void test20230204() {
+		dynamicsRules.getRules().forEach(rule->{
+			MoqueryEnumForTwiceQuery aa= MoqueryEnumForTwiceQuery.valueOf(rule);
+			assertEquals( MoqueryEnumForTwiceQuery.MoqueryRentCustNo, aa);
+			MoqueryEnumInterface[] tables1 = aa.getMoqueryEnumForFirstPhases();
+			MoqueryEnumInterface tables2 = aa.getMoqueryEnumSecondPhase();
+			System.out.println(aa);
+		});;
+//		String rule ="MoqueryRentCustNo";
+		
+    }
+	
+	
+	@Test
+	public void testDynamic () {
+		ArrayList<MoqueryContractWithDateType> arrayList = new ArrayList<MoqueryContractWithDateType>();
+		dynamicsRules.getRules().forEach(rule -> {
+			System.out.println(rule);
+//			MoqueryContractWithDateType moqueryContractWithDateType = MoqueryContractWithDateType.valueOf(rule);
+//			arrayList.add(moqueryContractWithDateType);
+		});
+//		Object[] array = arrayList.toArray();
+		
+//		assertArrayEquals(new MoqueryContractWithDateType[]{
+//			MoqueryContractWithDateType.Chgcustrec,
+//			MoqueryContractWithDateType.DataShareRecLog,
+//			MoqueryContractWithDateType.Empbusiness
+//		}, array );
+	}
+	
+	
     @Test
     public void testGetComparedData_In_MoqueryInputFactory_MoquerySpsvcTypeCase2() {
         final String spsvc = "Helloworld";

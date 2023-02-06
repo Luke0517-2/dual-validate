@@ -20,7 +20,7 @@ public class MessageConfig {
 	    final ReloadableResourceBundleMessageSource messageSource
 	      = new ReloadableResourceBundleMessageSource();
 	    
-	    messageSource.setBasename("errorMessages");
+	    messageSource.setBasename("classpath:errorMessages");
 	    messageSource.setDefaultEncoding("UTF-8");
 	    return messageSource;
 	}

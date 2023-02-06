@@ -105,11 +105,6 @@ public class MoqueryService extends QueryService {
 			}
 		}
 
-		if (ObjectUtils.isNotEmpty(checkQueryTable)) {
-			totalQuerys = totalQuerys.stream()
-					.filter(comparedData -> checkQueryTable.filterQueryTable(comparedData.getTable()))
-					.collect(Collectors.toList());
-		}
 		return totalQuerys;
 	}
 
