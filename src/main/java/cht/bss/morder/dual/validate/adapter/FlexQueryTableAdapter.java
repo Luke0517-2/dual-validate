@@ -36,19 +36,17 @@ public class FlexQueryTableAdapter {
 //	@Autowired
 //	private CheckQueryRuleProperties checkQueryRuleProperties;
 
-	public ArrayList<MoqueryEnumInterface> enumsQueryWithContractId;
-	public ArrayList<MoqueryEnumInterface> enumsQueryWithContractIdWithTelnum;
-//	public ArrayList<MoqueryEnumInterface> enumsQueryForSpsvc;
-//	public ArrayList<MoqueryEnumInterface> enumsQueryForOrderNo;
-	public ArrayList<MoqueryEnumInterface> enumsQueryWithContractIdWithOneDate;
-	public ArrayList<MoqueryEnumInterface> enumsQueryWithContractIdWithTwoDate;
-	public ArrayList<MoqueryEnumInterface> enumsQueryWithTelnum;
-	public ArrayList<MoqueryEnumInterface> enumsQueryWithTelnumWithOneDate;
-	public ArrayList<MoqueryEnumInterface> enumsQueryWithTelnumWithTwoDate;
-	public ArrayList<MoqueryEnumInterface> enumsQueryTelnumsWithDate;
-	public ArrayList<MoqueryEnumForTwiceQuery> enumsQueryTwicePhase;
-	public ArrayList<MoqueryEnumInterface> enumsQueryWithTelnumWithMingGuoDate;
-	public ArrayList<MoqueryEnumInterface> enumsQueryWithContractWithMingGuoDate;
+	public ArrayList<MoqueryEnumInterface> enumsQueryWithContractId = new ArrayList<>();
+	public ArrayList<MoqueryEnumInterface> enumsQueryWithContractIdWithTelnum = new ArrayList<>();
+	public ArrayList<MoqueryEnumInterface> enumsQueryWithContractIdWithOneDate = new ArrayList<>();
+	public ArrayList<MoqueryEnumInterface> enumsQueryWithContractIdWithTwoDate = new ArrayList<>();
+	public ArrayList<MoqueryEnumInterface> enumsQueryWithTelnum = new ArrayList<>();
+	public ArrayList<MoqueryEnumInterface> enumsQueryWithTelnumWithOneDate = new ArrayList<>();
+	public ArrayList<MoqueryEnumInterface> enumsQueryWithTelnumWithTwoDate = new ArrayList<>();
+	public ArrayList<MoqueryEnumInterface> enumsQueryTelnumsWithDate = new ArrayList<>();
+	public ArrayList<MoqueryEnumForTwiceQuery> enumsQueryTwicePhase = new ArrayList<>();
+	public ArrayList<MoqueryEnumInterface> enumsQueryWithTelnumWithMingGuoDate = new ArrayList<>();
+	public ArrayList<MoqueryEnumInterface> enumsQueryWithContractWithMingGuoDate = new ArrayList<>();
 	
 
 	
@@ -56,13 +54,13 @@ public class FlexQueryTableAdapter {
 	@PostConstruct
 	public void init() {
 		
-	List[] totalEnumOfList ={enumsQueryWithContractId,enumsQueryWithContractIdWithTelnum,enumsQueryWithContractIdWithOneDate,enumsQueryWithContractIdWithTwoDate,
-		     enumsQueryWithTelnum,enumsQueryWithTelnumWithOneDate,enumsQueryWithTelnumWithTwoDate,enumsQueryTelnumsWithDate,
-		     enumsQueryTwicePhase,enumsQueryWithTelnumWithMingGuoDate,enumsQueryWithContractWithMingGuoDate};
-	
-	for(List target : totalEnumOfList) {
-		target = new ArrayList<MoqueryEnumInterface>();
-	}
+//	List[] totalEnumOfList ={enumsQueryWithContractId,enumsQueryWithContractIdWithTelnum,enumsQueryWithContractIdWithOneDate,enumsQueryWithContractIdWithTwoDate,
+//		     enumsQueryWithTelnum,enumsQueryWithTelnumWithOneDate,enumsQueryWithTelnumWithTwoDate,enumsQueryTelnumsWithDate,
+//		     enumsQueryTwicePhase,enumsQueryWithTelnumWithMingGuoDate,enumsQueryWithContractWithMingGuoDate};
+//	
+//	for(List target : totalEnumOfList) {
+//		target = new ArrayList<MoqueryEnumInterface>();
+//	}
 	
 	HashSet<MoqueryEnumInterface> enumInterfaces = moqueryRuleToEnumMapping.getEnumInterfaces();
 

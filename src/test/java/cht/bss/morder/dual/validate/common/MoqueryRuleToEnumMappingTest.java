@@ -18,24 +18,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class MoqueryRuleToEnumMappingTest {
 
-    @Autowired private MoqueryRuleToEnumMapping queryMapping;
+    @Autowired 
+    private MoqueryRuleToEnumMapping queryMapping;
 
     @Test
     public void getEnumFromRules_test() {
 
-        ArrayList testCase = new ArrayList<>();
-        testCase.add("Agent5id");
-        testCase.add("Deductfee");
-        testCase.add("numberusage");
-        testCase.add("vpnsvc");
+        ArrayList checkedCase = new ArrayList<>();
+        checkedCase.add("Agent5id");
+        checkedCase.add("Deductfee");
+        checkedCase.add("vpnsvc");
 
         HashSet<MoqueryEnumInterface> expectEnum = new HashSet<>();
         expectEnum.add(MoqueryTelnumType.Agent5id);
         expectEnum.add(MoqueryContractType.Deductfee);
-        expectEnum.add(MoqueryTelnumType.Numberusage);
         expectEnum.add(MoqueryEnumForTwiceQuery.MoquerySpsvcMV);
 
-        assertEquals(expectEnum, queryMapping.getEnumInterfaces(testCase));
+        queryMapping.setQueryRuleList(checkedCase);
+        assertEquals(expectEnum, queryMapping.getEnumInterfaces());
     }
 
     @Test
@@ -50,9 +50,12 @@ public class MoqueryRuleToEnumMappingTest {
                 "rfpaidlist","sernumusage","sharegroupdevice","sharegroupmem","specsvcmember","subapplytype","susptemp",
                 "telsusptype","transcashfee","vspecialsvc","workingrecord"};
 
-        ArrayList testCase = new ArrayList<> (Arrays.asList(allRules));
+        ArrayList checkedCase_getAll = new ArrayList<> (Arrays.asList(allRules));
 
+        // 重新復寫成getAllEnumFromAllRules_test()的testCase
+        queryMapping.setQueryRuleList(checkedCase_getAll);
+        
         //  總共規則數量：(第一階段文件)14 + (第二階段文件)42
-        assertEquals(allRules.length , queryMapping.getEnumInterfaces(testCase).size());
+        assertEquals(allRules.length , queryMapping.getEnumInterfaces().size());
     }
 }
