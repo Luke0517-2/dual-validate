@@ -1,0 +1,38 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "zratefee": "0",
+                "orderno": "M10TP3S037M26", 
+                "baseagentamt": "0",
+                "taxtype": "0",
+                "uniforminvoice": "NF73404713",
+                "printlimit": "0",
+                "supplier": "M",
+                "saledate": "2021-05-12",
+                "contractid": "106854408",
+                "officecode": "227",
+                "promoorderno": "M10TP3S037M27",
+                "ediscntcode": "",
+                "rejdate": "",
+                "business": "08",
+                "tax": "57",
+                "repairdate": "",
+                "discntcode": "",
+                "servicetype": "J",
+                "agentamt": "0",
+                "saleamt": "1200",
+                "modelcode": "MMZYLT33WA",
+                "basesaleamt": "1200",
+                "imei": "0",
+                "oprcode": "672397",
+                "promoprojid": "34484",
+                "paytype": "1",
+                "status": "0"
+            }
+        ],
+        "tablename": "agentmobset",
+        "querytype": "1"
+    }
+}

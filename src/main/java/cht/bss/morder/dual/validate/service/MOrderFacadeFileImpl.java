@@ -86,16 +86,16 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 				result = readFile("./jsonsample/numberusage_output.json");
 				break;
 			case "agentmobset" :
-				result = readFile("./jsonsample/agentmobset_output.json");
+				result = readFile("./jsonsample/agentmobileset_output.json");
 				break;
 			case "specialsvc" :
 				System.out.println();
 				if("MN".equals(input.getParam().getQueryitem().getContent().split("&")[1]))
-					result = readFile("./jsonsample/specialsvcMN_output.json");
+					result = readFile("./jsonsample/SpecsvcidMN_output.json");
 				else if("MV".equals(input.getParam().getQueryitem().getContent().split("&")[1]))
-					result = readFile("./jsonsample/specialsvcMV_output.json");
+					result = readFile("./jsonsample/SpecsvcidMV_output.json");
 				else if("F3".equals(input.getParam().getQueryitem().getContent().split("&")[1]))
-					result = readFile("./jsonsample/specialsvcF3_output.json");
+					result = readFile("./jsonsample/SpecsvcidF3_output.json");
 				break;
 			case "agent5id" :
 				result = readFile("./jsonsample/agent5id_output.json");
@@ -161,7 +161,7 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 				result = readFile("./jsonsample/custdatainfo_output.json");
 				break;
 			case "data_share_rec_log":
-				result = readFile("./jsonsample/data_share_rec_log_output.json");
+				result = readFile("./jsonsample/datasharereclog_output.json");
 				break;
 			case "deductfee":
 				result = readFile("./jsonsample/deductfee_output.json");
@@ -191,7 +191,7 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 				result = readFile("./jsonsample/familysvc_output.json");
 				break;
 			case "modelinsrec_shop":
-				result = readFile("./jsonsample/modelinsrec_shop_output.json");
+				result = readFile("./jsonsample/modelinsrecshop_output.json");
 				break;
 			case "newdiscntreserve":
 				result = readFile("./jsonsample/newdiscntreserve_output.json");

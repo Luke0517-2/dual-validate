@@ -23,7 +23,7 @@ public class OrderNoResponseVOTest {
 	@BeforeAll
 	static void init() throws IOException {
 		String OrderNo_JSON = FileUtils.readFileToString(
-				new File("./jsonsample/agentmobset_output.json"), StandardCharsets.UTF_8);
+				new File("./jsonsample/agentmobileset_output.json"), StandardCharsets.UTF_8);
 		orderNo = OrderNoResponseVO.builder(OrderNo_JSON);
 		String Empty_OrderNo_JSON = FileUtils.readFileToString(new File("./jsonsample/emptydatalist_output.json"),
 				StandardCharsets.UTF_8);
