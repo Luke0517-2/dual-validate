@@ -11,9 +11,9 @@ import lombok.Setter;
 @Component
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "dynamic.rule", ignoreInvalidFields = true)
+@ConfigurationProperties(prefix = "dual-validate", ignoreInvalidFields = true)
 public class CheckQueryRuleProperties {
 
-	private List<String> queryRuleList;
-	
+	public List<String> queryRuleList;
+
 }
