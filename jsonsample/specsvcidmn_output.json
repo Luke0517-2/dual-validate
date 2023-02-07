@@ -1,0 +1,24 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "billcoid": "0",
+                "sorderno": "M11TP1E01B865",
+                "specialsvcsno": "2573170",
+                "endtime": "",
+                "eorderno": "",
+                "starttime": "2022-08-23 13:30:27",
+                "specsvcname": "MN",
+                "specsvcid": "226226700", 
+                "password": "",
+                "endrent": "",
+                "contractid": "17913306",
+                "startrent": "2022-08-23",
+                "idx": "2"
+            }
+        ],
+        "tablename": "specialsvc",
+        "querytype": "1"
+    }
+}

@@ -69,7 +69,7 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 	private String responseFromQueryCustInfo(QueryInput input) {
 		String result = StringUtils.EMPTY;
 		if(StringUtils.isNoneEmpty(input.getParam().getTelnum())) {
-			result = readFile("./jsonsample/queryCustInfo_output.json");
+			result = readFile("./jsonsample/querycustInfo_output.json");
 		}else if(StringUtils.isNoneEmpty(input.getParam().getCustid()) && StringUtils.equals("custbehavior;", input.getParam().getQuerydata())) {
 			result = readFile("./jsonsample/custbehavior_output.json");
 		}else {
@@ -91,11 +91,11 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 			case "specialsvc" :
 				System.out.println();
 				if("MN".equals(input.getParam().getQueryitem().getContent().split("&")[1]))
-					result = readFile("./jsonsample/SpecsvcidMN_output.json");
+					result = readFile("./jsonsample/specsvcidmn_output.json");
 				else if("MV".equals(input.getParam().getQueryitem().getContent().split("&")[1]))
-					result = readFile("./jsonsample/SpecsvcidMV_output.json");
+					result = readFile("./jsonsample/specsvcidmv_output.json");
 				else if("F3".equals(input.getParam().getQueryitem().getContent().split("&")[1]))
-					result = readFile("./jsonsample/SpecsvcidF3_output.json");
+					result = readFile("./jsonsample/specsvcidf3_output.json");
 				break;
 			case "agent5id" :
 				result = readFile("./jsonsample/agent5id_output.json");

@@ -1,0 +1,12 @@
+{
+    "BMS": {
+        "result": "0",
+        "datalist": [
+            {
+                "specsvcid": "226229001"
+            }
+        ],
+        "tablename": "specialsvc",
+        "querytype": "1"
+    }
+}

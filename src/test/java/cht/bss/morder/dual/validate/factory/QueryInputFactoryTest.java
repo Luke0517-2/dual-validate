@@ -1,7 +1,6 @@
 package cht.bss.morder.dual.validate.factory;
 
 import cht.bss.morder.dual.validate.enums.*;
-import cht.bss.morder.dual.validate.service.MOrderFacadeFileImpl;
 import cht.bss.morder.dual.validate.vo.*;
 import cht.bss.morder.dual.validate.vo.json.AbstractJSONPathModel;
 import com.jayway.jsonpath.JsonPath;
@@ -18,12 +17,11 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
- * 驗證 outputJ.json 中的 queryType / tableName 和 enum 中的 type / tableName 是否一致。
+ * 驗證 output.json 中的 queryType / tableName 和 enum 中的 type / tableName 是否一致。
  *
  * */
 @SpringBootTest
@@ -32,10 +30,7 @@ public class QueryInputFactoryTest {
     @Autowired
     private QueryInputFactory queryInputFactory;
 
-    @Autowired
-    private MOrderFacadeFileImpl mOrderFacadeFile;
     private final String yesterday = LocalDate.now().minusDays(1).toString();
-    private String result = StringUtils.EMPTY;
     private final MoqueryContractType[] specialContractType = {MoqueryContractType.SpecsvcidMN, MoqueryContractType.SpecsvcidMV, MoqueryContractType.SpecsvcidF3};
 
     private static String getMingGouString() {
@@ -97,7 +92,7 @@ public class QueryInputFactoryTest {
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
 
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
@@ -121,7 +116,7 @@ public class QueryInputFactoryTest {
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
 
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
@@ -137,7 +132,8 @@ public class QueryInputFactoryTest {
     }
 
     /*
-     *  由於 MoqueryContractType 中有幾個的 format 不太一樣，故將其抽出放置testGetComparedData_In_MoqueryInputFactory_MoquerySpsvcType 檢驗
+     * 由於 MoqueryContractType 中有幾個的 contentTemplate 不太一樣，
+     * 故將其抽出放置testGetComparedData_In_MoqueryInputFactory_MoquerySpsvcType 檢驗
      * */
     @Test
     public void testGetComparedData_In_MoqueryInputFactory_MoqueryContractType() {
@@ -149,7 +145,7 @@ public class QueryInputFactoryTest {
                 .filter(enumValue -> !ArrayUtils.contains(specialContractType, enumValue))
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
 
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
@@ -169,11 +165,10 @@ public class QueryInputFactoryTest {
         final String contractId = "Helloworld";
         TestCase case1 = TestCase.builder().contract(contractId).build();
 
-        MoqueryContractType[] enumValueAll = specialContractType;
-        Arrays.stream(enumValueAll)
+        Arrays.stream(specialContractType)
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
 
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
@@ -188,11 +183,8 @@ public class QueryInputFactoryTest {
                 });
     }
 
-
-
     @Test
     public void testGetComparedData_In_MoqueryInputFactory_MoquerySpsvcType() {
-        //todo
         final String spsvc = "Helloworld";
         TestCase case1 = TestCase.builder().spsvc(spsvc).build();
 
@@ -200,7 +192,7 @@ public class QueryInputFactoryTest {
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
 
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
@@ -223,7 +215,6 @@ public class QueryInputFactoryTest {
                     assertEquals("moquery", comparedData.getQueryService());
                     assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
                 });
-
     }
 
     @Test
@@ -235,7 +226,7 @@ public class QueryInputFactoryTest {
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
                     } catch (IOException e) {
@@ -258,7 +249,7 @@ public class QueryInputFactoryTest {
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
                     } catch (IOException e) {
@@ -282,7 +273,7 @@ public class QueryInputFactoryTest {
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
                     } catch (IOException e) {
@@ -306,7 +297,7 @@ public class QueryInputFactoryTest {
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
                     } catch (IOException e) {
@@ -330,7 +321,7 @@ public class QueryInputFactoryTest {
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
                     } catch (IOException e) {
@@ -354,7 +345,7 @@ public class QueryInputFactoryTest {
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
                     } catch (IOException e) {
@@ -378,7 +369,7 @@ public class QueryInputFactoryTest {
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
                     } catch (IOException e) {
@@ -402,7 +393,7 @@ public class QueryInputFactoryTest {
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
                     } catch (IOException e) {
@@ -426,7 +417,7 @@ public class QueryInputFactoryTest {
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
                     } catch (IOException e) {
@@ -450,7 +441,7 @@ public class QueryInputFactoryTest {
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
                     ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
-                    String jsonFilePath = "./jsonsample/" + value.toString() + "_output.json";
+                    String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
                     } catch (IOException e) {
@@ -463,7 +454,6 @@ public class QueryInputFactoryTest {
                     assertEquals("moquery", comparedData.getQueryService());
                     assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
                 });
-
     }
 
     private void validataComparedDataInMoquery(ComparedData data, MoqueryEnumInterface type) {
@@ -512,20 +502,9 @@ public class QueryInputFactoryTest {
         assertNotNull(abstractJSONPathModel);
         Optional<Object> tableNameParamsFromJSON = abstractJSONPathModel.getSingleValueByParams("$..BMS.tablename");
         Optional<Object> queryTypeParamsFromJSON = abstractJSONPathModel.getSingleValueByParams("$..BMS.querytype");
-        final String tableNameFromJSON = tableNameParamsFromJSON.isPresent() ? tableNameParamsFromJSON.get().toString() : null;
-        final String queryTypeFromJSON = queryTypeParamsFromJSON.isPresent() ? queryTypeParamsFromJSON.get().toString() : null;
+        final String tableNameFromJSON = tableNameParamsFromJSON.map(Object::toString).orElse(null);
+        final String queryTypeFromJSON = queryTypeParamsFromJSON.map(Object::toString).orElse(null);
         assertEquals(queryTypeFromJSON, moqueryEnum.getType());
         assertEquals(tableNameFromJSON, moqueryEnum.getTableName());
     }
-
-    private String firstLetterToLowerCase(String str) {
-        if (str != null && str.isEmpty())
-            return str;
-        else {
-            String firstLetter = str.substring(0, 1);
-            String otherLetters = str.substring(1, str.length());
-            return firstLetter + otherLetters;
-        }
-    }
-
 }
