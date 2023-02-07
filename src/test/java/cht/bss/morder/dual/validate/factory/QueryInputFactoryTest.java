@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 驗證 outputJ.json 中的 queryType / tableName 和 enum 中的 type / tableName 是否一致。
  *
  * */
-@SpringBootTest(properties = {"dual-validate.checkTable=false"})
+@SpringBootTest
 public class QueryInputFactoryTest {
 
     @Autowired
@@ -188,39 +188,6 @@ public class QueryInputFactoryTest {
                 });
     }
 
-
-	@Autowired
-	private DynamicRuleSampleProperties dynamicsRules;
-	@Test
-	public void test20230204() {
-		dynamicsRules.getRules().forEach(rule->{
-			MoqueryEnumForTwiceQuery aa= MoqueryEnumForTwiceQuery.valueOf(rule);
-			assertEquals( MoqueryEnumForTwiceQuery.MoqueryRentCustNo, aa);
-			MoqueryEnumInterface[] tables1 = aa.getMoqueryEnumForFirstPhases();
-			MoqueryEnumInterface tables2 = aa.getMoqueryEnumSecondPhase();
-			System.out.println(aa);
-		});;
-//		String rule ="MoqueryRentCustNo";
-
-    }
-
-
-	@Test
-	public void testDynamic () {
-		ArrayList<MoqueryContractWithDateType> arrayList = new ArrayList<MoqueryContractWithDateType>();
-		dynamicsRules.getRules().forEach(rule -> {
-			System.out.println(rule);
-//			MoqueryContractWithDateType moqueryContractWithDateType = MoqueryContractWithDateType.valueOf(rule);
-//			arrayList.add(moqueryContractWithDateType);
-		});
-//		Object[] array = arrayList.toArray();
-
-//		assertArrayEquals(new MoqueryContractWithDateType[]{
-//			MoqueryContractWithDateType.Chgcustrec,
-//			MoqueryContractWithDateType.DataShareRecLog,
-//			MoqueryContractWithDateType.Empbusiness
-//		}, array );
-	}
 
 
     @Test
