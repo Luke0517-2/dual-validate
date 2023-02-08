@@ -6,7 +6,10 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum MoqueryEnumForTwiceQuery {
+/*
+ * 這邊implement是為了在QueryMapping可以放入MoqueryEnumInterface的list內
+ * */
+public enum MoqueryEnumForTwiceQuery implements MoqueryEnumInterface {
 
     MoqueryRentCustNo(new MoqueryEnumInterface[]{MoqueryContractType.Contract}, MoqueryRentCustNoType.Pascustomer, ResponseVOFactory.ResponseType.RentcustNo),
     MoqueryTranscashId(new MoqueryEnumInterface[]{MoqueryContractWithDateType.Transcashfee1}, MoqueryTranscashIdType.Chargeitem, ResponseVOFactory.ResponseType.TranscashId),
@@ -26,4 +29,19 @@ public enum MoqueryEnumForTwiceQuery {
     private final ResponseVOFactory.ResponseType response;
 
 
+    //以下方法沒用到，因為要implement，只好實作這些方法。
+    @Override
+    public String getTableName() {
+        return null;
+    }
+
+    @Override
+    public String getType() {
+        return null;
+    }
+
+    @Override
+    public String getContentTemplate() {
+        return null;
+    }
 }

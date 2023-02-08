@@ -1,18 +1,16 @@
 package cht.bss.morder.dual.validate.vo.json;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import lombok.extern.slf4j.Slf4j;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @Slf4j
 public class SpecsvcIDResponseVOTest {
@@ -22,7 +20,7 @@ public class SpecsvcIDResponseVOTest {
 	@BeforeAll
 	static void init() throws IOException {
 		String SpecsvcID_JSON = FileUtils.readFileToString(
-				new File("./jsonsample/specialsvcMN_output.json"), StandardCharsets.UTF_8);
+				new File("./jsonsample/specsvcidmn_output.json"), StandardCharsets.UTF_8);
 		specsvcID = SpecsvcIDResponseVO.builder(SpecsvcID_JSON);
 		String Empty_SpecsvcID_JSON = FileUtils.readFileToString(new File("./jsonsample/emptydatalist_output.json"),
 				StandardCharsets.UTF_8);

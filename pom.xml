@@ -302,6 +302,7 @@
 					</execution>
 				</executions>
 				<configuration>
+					<offline>true</offline>
 					<generateGitPropertiesFile>true</generateGitPropertiesFile>
 					<generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
 				</configuration>

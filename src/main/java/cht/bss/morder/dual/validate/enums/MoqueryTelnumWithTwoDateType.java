@@ -9,7 +9,7 @@ import lombok.Getter;
 public enum MoqueryTelnumWithTwoDateType implements MoqueryEnumInterface {
 
     Custdatainfo("custdatainfo", "1", "%s&%s&%s"),
-    Empdiscntrec("empdiscntrec", "1", "%s&%s&%s"),
+    Empdiscntrec("empdiscntrec", "2", "%s&%s&%s"),
     F4svc("f4svc", "1", "%s&%s&%s"),
     Familysvc("familysvc", "1", "%s&%s&%s"),
     Specsvcmember("specsvcmember", "1", "%s&%s&%s"),
