@@ -66,8 +66,8 @@ spec:
               resource: limits.memory
         - name: JAVA_OPTS
           value: >-
-                -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
+                -Xms1G -Xmx1536m -Dgit.branch=master
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
                 -Delastic.apm.service_name=dualvalidateservice
                 -Delastic.apm.application_packages=cht.bss
@@ -76,7 +76,7 @@ spec:
                 -Delastic.apm.stack_trace_limit=80
                 -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
                 -Delastic.apm.transaction_max_spans=1500
-                -Dlogging.level.root=WARN
+                -Dlogging.level.root=INFO
                 -Dmbms.source.root-path=/app/testCases/DualTrackSample
                 -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
@@ -85,6 +85,8 @@ spec:
                 -Dtransfer.property.m-order.apigw-properties.emp-no=123456
                 -Dtransfer.property.m-order.apigw-properties.from-site=EAI
                 -Dtransfer.property.m-order.apigw-properties.client-ip=10.144.94.120
+                -Ddual-validate.queryRuleList=agent5id,delcustinfoapply,eformapplyrec,contractret,pasuserec,projmember,modeldeliverdetail,modelinsrec,suspresumerec,mdsvc,vpnsvc,sponsorspsvc,datashareinfo,data_share_rec,adjustbill,applytypechgrec,chargeitem,chgcustrec,custdatainfo,data_share_rec_log,deductfee,delaydisc,discnttype,einvoicerec,empbusiness,empdiscntrec,f3svc,f4svc,familysvc,modelinsrec_shop,newdiscntreserve,officialfee,or13d0log,packageservice,pascustomer,prepaidsvc,promofinereserve,promoprodrecold,promoprodreserve,qosalert,querylog,recashmark,recotemp,refund,refundpaid,rfpaidlist,sernumusage,sharegroupdevice,sharegroupmem,specsvcmember,subapplytype,susptemp,telsusptype,transcashfee,vspecialsvc,workingrecord
+                -Dcompare.output.path=./comparelogs
         resources:
           requests: 
             memory: 1Gi
