@@ -51,7 +51,7 @@ public class ValidateService {
 		String fileName = result.getFileNameInIISI();
 		final String folderTemplate = "%s/%s";
 		final File outputFile = new File(String.format(folderTemplate, dataPath, queryService), fileName);
-		IOUtils.write(result.getDataFromCht(), FileUtils.openOutputStream(outputFile), StandardCharsets.UTF_8);
+		IOUtils.write(result.getDataFromIISI(), FileUtils.openOutputStream(outputFile), StandardCharsets.UTF_8);
 	}
 
 	private void writeCht(String dataPath, ComparedData result) throws IOException {
