@@ -41,6 +41,6 @@ public class AdapterTest {
 	
 	@Test
 	void getValueFromProperties() {
-		assertEquals(56, mapping.getEnumInterfaces(properties.getQueryRuleList()).size());
+		assertEquals(57, mapping.getEnumInterfaces(properties.getQueryRuleList()).size());
 	}
 }
