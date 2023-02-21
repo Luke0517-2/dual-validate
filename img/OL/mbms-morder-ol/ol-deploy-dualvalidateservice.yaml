@@ -79,13 +79,18 @@ spec:
                 -Delastic.apm.stack_trace_limit=80
                 -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
                 -Delastic.apm.transaction_max_spans=1500
-                -Dlogging.level.root=WARN
+                -Dlogging.level.root=INFO
+                -Dlogging.level.cht.bss=TRACE
                 -Dmbms.source.root-path=/app/testCases/DualTrackSample
                 -Ddual-validate.baseurl.iisi=https://mbms-order-ol-tpe.cht.com.tw
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=API
-
+                -Dtransfer.property.m-order.apigw-properties.emp-no=DRTEST
+                -Dtransfer.property.m-order.apigw-properties.from-site=EAI
+                -Dtransfer.property.m-order.apigw-properties.client-ip=10.144.94.120
+                -Ddual-validate.queryRuleList=agent5id,delcustinfoapply,eformapplyrec,contractret,pasuserec,projmember,modeldeliverdetail,modelinsrec,suspresumerec,mdsvc,vpnsvc,sponsorspsvc,datashareinfo,data_share_rec,adjustbill,applytypechgrec,chargeitem,chgcustrec,custdatainfo,data_share_rec_log,deductfee,delaydisc,discnttype,einvoicerec,empbusiness,empdiscntrec,f3svc,f4svc,familysvc,modelinsrec_shop,newdiscntreserve,officialfee,or13d0log,packageservice,pascustomer,prepaidsvc,promofinereserve,promoprodrecold,promoprodreserve,qosalert,querylog,recashmark,recotemp,refund,refundpaid,rfpaidlist,sernumusage,sharegroupdevice,sharegroupmem,specsvcmember,subapplytype,susptemp,telsusptype,transcashfee,vspecialsvc,workingrecord
+                -Dcompare.output.path=/app/comparelogs
         resources:
           requests: 
             memory: 1Gi
