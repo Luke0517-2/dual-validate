@@ -66,6 +66,11 @@ spec:
             resourceFieldRef:
               containerName: dual-validate
               resource: limits.memory
+        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+          value: >-
+                /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
+                *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
+                /actuator/*      
         - name: JAVA_OPTS
           value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
@@ -163,6 +168,11 @@ spec:
             resourceFieldRef:
               containerName: dual-validate
               resource: limits.memory
+        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+          value: >-
+                /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
+                *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
+                /actuator/*      
         - name: JAVA_OPTS
           value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
@@ -261,6 +271,11 @@ spec:
             resourceFieldRef:
               containerName: dual-validate
               resource: limits.memory
+        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+          value: >-
+                /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
+                *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
+                /actuator/*     
         - name: JAVA_OPTS
           value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
@@ -360,6 +375,11 @@ spec:
             resourceFieldRef:
               containerName: dual-validate
               resource: limits.memory
+        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+          value: >-
+                /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
+                *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
+                /actuator/*           
         - name: JAVA_OPTS
           value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
@@ -459,6 +479,11 @@ spec:
             resourceFieldRef:
               containerName: dual-validate
               resource: limits.memory
+        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+          value: >-
+                /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
+                *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
+                /actuator/*           
         - name: JAVA_OPTS
           value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
@@ -557,6 +582,11 @@ spec:
             resourceFieldRef:
               containerName: dual-validate
               resource: limits.memory
+        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+          value: >-
+                /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
+                *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
+                /actuator/*           
         - name: JAVA_OPTS
           value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
@@ -655,6 +685,11 @@ spec:
             resourceFieldRef:
               containerName: dual-validate
               resource: limits.memory
+        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+          value: >-
+                /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
+                *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
+                /actuator/*           
         - name: JAVA_OPTS
           value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
@@ -754,6 +789,11 @@ spec:
             resourceFieldRef:
               containerName: dual-validate
               resource: limits.memory
+        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+          value: >-
+                /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
+                *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
+                /actuator/*           
         - name: JAVA_OPTS
           value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
@@ -852,6 +892,11 @@ spec:
             resourceFieldRef:
               containerName: dual-validate
               resource: limits.memory
+        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+          value: >-
+                /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
+                *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
+                /actuator/*           
         - name: JAVA_OPTS
           value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
@@ -950,6 +995,11 @@ spec:
             resourceFieldRef:
               containerName: dual-validate
               resource: limits.memory
+        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+          value: >-
+                /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
+                *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
+                /actuator/*           
         - name: JAVA_OPTS
           value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
