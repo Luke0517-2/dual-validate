@@ -1,20 +1,23 @@
+
+--- 
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: dual-validate
+  name: dual-validate-v0
   labels:
     app: dual-validate
-    version: m5
+    version: v0
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: dual-validate
+      version: v0
   template:
     metadata:
       labels:
         app: dual-validate
-        version: m5
+        version: v0
       annotations:
         prometheus.io/path: /actuator/prometheus
         prometheus.io/port: '8080'
@@ -80,7 +83,7 @@ spec:
                 -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
-                -Ddual-validate.mode=API
+                -Ddual-validate.mode=FILE
 
         resources:
           requests: 
@@ -92,4 +95,888 @@ spec:
       volumes:
       - name: compares-data
         persistentVolumeClaim:
-          claimName: dual-validate-data
+          claimName: dualvalidateservice-data
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dual-validate-v1
+  labels:
+    app: dual-validate
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dual-validate
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: dual-validate
+        version: v1
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: '8080'
+        prometheus.io/scheme: http
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/inject: 'true'
+    spec:
+      containers:
+      - name: dual-validate
+        image: >-
+          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+        imagePullPolicy: Always
+        livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: compares-data
+          mountPath: /app/comparelogs
+        env:
+        - name: MEMORY_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: requests.memory
+        - name: MEMORY_LIMIT
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: limits.memory
+        - name: JAVA_OPTS
+          value: >-
+                -Xms1G -Xmx1536m -Dgit.branch=main
+                -javaagent:/app/elastic-apm-agent-1.28.3.jar 
+                -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
+                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.application_packages=cht.bss
+                -Delastic.apm.trace_methods=cht.bss.*
+                -Delastic.apm.trace_methods_duration_threshold=40ms
+                -Delastic.apm.stack_trace_limit=80
+                -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
+                -Delastic.apm.transaction_max_spans=1500
+                -Dlogging.level.root=WARN
+                -Dmbms.source.root-path=/app/testCases/DualTrackSample
+                -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
+                -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
+                -Dtransfer.property.m-order.oauth-properties.useOauth=false
+                -Ddual-validate.mode=FILE
+
+        resources:
+          requests: 
+            memory: 1Gi
+            cpu: 500m
+          limits: 
+            memory: 1536Mi
+            cpu: "1"
+      volumes:
+      - name: compares-data
+        persistentVolumeClaim:
+          claimName: dualvalidateservice-data
+
+--- 
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dual-validate-v2
+  labels:
+    app: dual-validate
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dual-validate
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: dual-validate
+        version: v2
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: '8080'
+        prometheus.io/scheme: http
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/inject: 'true'
+    spec:
+      containers:
+      - name: dual-validate
+        image: >-
+          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+        imagePullPolicy: Always
+        livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: compares-data
+          mountPath: /app/comparelogs
+        env:
+        - name: MEMORY_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: requests.memory
+        - name: MEMORY_LIMIT
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: limits.memory
+        - name: JAVA_OPTS
+          value: >-
+                -Xms1G -Xmx1536m -Dgit.branch=main
+                -javaagent:/app/elastic-apm-agent-1.28.3.jar 
+                -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
+                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.application_packages=cht.bss
+                -Delastic.apm.trace_methods=cht.bss.*
+                -Delastic.apm.trace_methods_duration_threshold=40ms
+                -Delastic.apm.stack_trace_limit=80
+                -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
+                -Delastic.apm.transaction_max_spans=1500
+                -Dlogging.level.root=WARN
+                -Dmbms.source.root-path=/app/testCases/DualTrackSample
+                -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
+                -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
+                -Dtransfer.property.m-order.oauth-properties.useOauth=false
+                -Ddual-validate.mode=FILE
+
+        resources:
+          requests: 
+            memory: 1Gi
+            cpu: 500m
+          limits: 
+            memory: 1536Mi
+            cpu: "1"
+      volumes:
+      - name: compares-data
+        persistentVolumeClaim:
+          claimName: dualvalidateservice-data
+
+
+--- 
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dual-validate-v3
+  labels:
+    app: dual-validate
+    version: v3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dual-validate
+      version: v3
+  template:
+    metadata:
+      labels:
+        app: dual-validate
+        version: v3
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: '8080'
+        prometheus.io/scheme: http
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/inject: 'true'
+    spec:
+      containers:
+      - name: dual-validate
+        image: >-
+          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+        imagePullPolicy: Always
+        livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: compares-data
+          mountPath: /app/comparelogs
+        env:
+        - name: MEMORY_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: requests.memory
+        - name: MEMORY_LIMIT
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: limits.memory
+        - name: JAVA_OPTS
+          value: >-
+                -Xms1G -Xmx1536m -Dgit.branch=main
+                -javaagent:/app/elastic-apm-agent-1.28.3.jar 
+                -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
+                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.application_packages=cht.bss
+                -Delastic.apm.trace_methods=cht.bss.*
+                -Delastic.apm.trace_methods_duration_threshold=40ms
+                -Delastic.apm.stack_trace_limit=80
+                -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
+                -Delastic.apm.transaction_max_spans=1500
+                -Dlogging.level.root=WARN
+                -Dmbms.source.root-path=/app/testCases/DualTrackSample
+                -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
+                -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
+                -Dtransfer.property.m-order.oauth-properties.useOauth=false
+                -Ddual-validate.mode=FILE
+
+        resources:
+          requests: 
+            memory: 1Gi
+            cpu: 500m
+          limits: 
+            memory: 1536Mi
+            cpu: "1"
+      volumes:
+      - name: compares-data
+        persistentVolumeClaim:
+          claimName: dualvalidateservice-data
+
+
+--- 
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dual-validate-v4
+  labels:
+    app: dual-validate
+    version: v4
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dual-validate
+      version: v4
+  template:
+    metadata:
+      labels:
+        app: dual-validate
+        version: v4
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: '8080'
+        prometheus.io/scheme: http
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/inject: 'true'
+    spec:
+      containers:
+      - name: dual-validate
+        image: >-
+          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+        imagePullPolicy: Always
+        livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: compares-data
+          mountPath: /app/comparelogs
+        env:
+        - name: MEMORY_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: requests.memory
+        - name: MEMORY_LIMIT
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: limits.memory
+        - name: JAVA_OPTS
+          value: >-
+                -Xms1G -Xmx1536m -Dgit.branch=main
+                -javaagent:/app/elastic-apm-agent-1.28.3.jar 
+                -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
+                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.application_packages=cht.bss
+                -Delastic.apm.trace_methods=cht.bss.*
+                -Delastic.apm.trace_methods_duration_threshold=40ms
+                -Delastic.apm.stack_trace_limit=80
+                -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
+                -Delastic.apm.transaction_max_spans=1500
+                -Dlogging.level.root=WARN
+                -Dmbms.source.root-path=/app/testCases/DualTrackSample
+                -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
+                -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
+                -Dtransfer.property.m-order.oauth-properties.useOauth=false
+                -Ddual-validate.mode=FILE
+
+        resources:
+          requests: 
+            memory: 1Gi
+            cpu: 500m
+          limits: 
+            memory: 1536Mi
+            cpu: "1"
+      volumes:
+      - name: compares-data
+        persistentVolumeClaim:
+          claimName: dualvalidateservice-data
+
+--- 
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dual-validate-v5
+  labels:
+    app: dual-validate
+    version: v5
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dual-validate
+      version: v5
+  template:
+    metadata:
+      labels:
+        app: dual-validate
+        version: v5
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: '8080'
+        prometheus.io/scheme: http
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/inject: 'true'
+    spec:
+      containers:
+      - name: dual-validate
+        image: >-
+          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+        imagePullPolicy: Always
+        livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: compares-data
+          mountPath: /app/comparelogs
+        env:
+        - name: MEMORY_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: requests.memory
+        - name: MEMORY_LIMIT
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: limits.memory
+        - name: JAVA_OPTS
+          value: >-
+                -Xms1G -Xmx1536m -Dgit.branch=main
+                -javaagent:/app/elastic-apm-agent-1.28.3.jar 
+                -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
+                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.application_packages=cht.bss
+                -Delastic.apm.trace_methods=cht.bss.*
+                -Delastic.apm.trace_methods_duration_threshold=40ms
+                -Delastic.apm.stack_trace_limit=80
+                -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
+                -Delastic.apm.transaction_max_spans=1500
+                -Dlogging.level.root=WARN
+                -Dmbms.source.root-path=/app/testCases/DualTrackSample
+                -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
+                -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
+                -Dtransfer.property.m-order.oauth-properties.useOauth=false
+                -Ddual-validate.mode=FILE
+
+        resources:
+          requests: 
+            memory: 1Gi
+            cpu: 500m
+          limits: 
+            memory: 1536Mi
+            cpu: "1"
+      volumes:
+      - name: compares-data
+        persistentVolumeClaim:
+          claimName: dualvalidateservice-data
+
+--- 
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dual-validate-v6
+  labels:
+    app: dual-validate
+    version: v6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dual-validate
+      version: v6
+  template:
+    metadata:
+      labels:
+        app: dual-validate
+        version: v6
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: '8080'
+        prometheus.io/scheme: http
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/inject: 'true'
+    spec:
+      containers:
+      - name: dual-validate
+        image: >-
+          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+        imagePullPolicy: Always
+        livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: compares-data
+          mountPath: /app/comparelogs
+        env:
+        - name: MEMORY_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: requests.memory
+        - name: MEMORY_LIMIT
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: limits.memory
+        - name: JAVA_OPTS
+          value: >-
+                -Xms1G -Xmx1536m -Dgit.branch=main
+                -javaagent:/app/elastic-apm-agent-1.28.3.jar 
+                -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
+                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.application_packages=cht.bss
+                -Delastic.apm.trace_methods=cht.bss.*
+                -Delastic.apm.trace_methods_duration_threshold=40ms
+                -Delastic.apm.stack_trace_limit=80
+                -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
+                -Delastic.apm.transaction_max_spans=1500
+                -Dlogging.level.root=WARN
+                -Dmbms.source.root-path=/app/testCases/DualTrackSample
+                -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
+                -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
+                -Dtransfer.property.m-order.oauth-properties.useOauth=false
+                -Ddual-validate.mode=FILE
+
+        resources:
+          requests: 
+            memory: 1Gi
+            cpu: 500m
+          limits: 
+            memory: 1536Mi
+            cpu: "1"
+      volumes:
+      - name: compares-data
+        persistentVolumeClaim:
+          claimName: dualvalidateservice-data
+
+
+--- 
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dual-validate-v7
+  labels:
+    app: dual-validate
+    version: v7
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dual-validate
+      version: v7
+  template:
+    metadata:
+      labels:
+        app: dual-validate
+        version: v7
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: '8080'
+        prometheus.io/scheme: http
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/inject: 'true'
+    spec:
+      containers:
+      - name: dual-validate
+        image: >-
+          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+        imagePullPolicy: Always
+        livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: compares-data
+          mountPath: /app/comparelogs
+        env:
+        - name: MEMORY_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: requests.memory
+        - name: MEMORY_LIMIT
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: limits.memory
+        - name: JAVA_OPTS
+          value: >-
+                -Xms1G -Xmx1536m -Dgit.branch=main
+                -javaagent:/app/elastic-apm-agent-1.28.3.jar 
+                -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
+                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.application_packages=cht.bss
+                -Delastic.apm.trace_methods=cht.bss.*
+                -Delastic.apm.trace_methods_duration_threshold=40ms
+                -Delastic.apm.stack_trace_limit=80
+                -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
+                -Delastic.apm.transaction_max_spans=1500
+                -Dlogging.level.root=WARN
+                -Dmbms.source.root-path=/app/testCases/DualTrackSample
+                -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
+                -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
+                -Dtransfer.property.m-order.oauth-properties.useOauth=false
+                -Ddual-validate.mode=FILE
+
+        resources:
+          requests: 
+            memory: 1Gi
+            cpu: 500m
+          limits: 
+            memory: 1536Mi
+            cpu: "1"
+      volumes:
+      - name: compares-data
+        persistentVolumeClaim:
+          claimName: dualvalidateservice-data
+
+--- 
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dual-validate-v8
+  labels:
+    app: dual-validate
+    version: v8
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dual-validate
+      version: v8
+  template:
+    metadata:
+      labels:
+        app: dual-validate
+        version: v8
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: '8080'
+        prometheus.io/scheme: http
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/inject: 'true'
+    spec:
+      containers:
+      - name: dual-validate
+        image: >-
+          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+        imagePullPolicy: Always
+        livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: compares-data
+          mountPath: /app/comparelogs
+        env:
+        - name: MEMORY_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: requests.memory
+        - name: MEMORY_LIMIT
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: limits.memory
+        - name: JAVA_OPTS
+          value: >-
+                -Xms1G -Xmx1536m -Dgit.branch=main
+                -javaagent:/app/elastic-apm-agent-1.28.3.jar 
+                -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
+                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.application_packages=cht.bss
+                -Delastic.apm.trace_methods=cht.bss.*
+                -Delastic.apm.trace_methods_duration_threshold=40ms
+                -Delastic.apm.stack_trace_limit=80
+                -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
+                -Delastic.apm.transaction_max_spans=1500
+                -Dlogging.level.root=WARN
+                -Dmbms.source.root-path=/app/testCases/DualTrackSample
+                -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
+                -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
+                -Dtransfer.property.m-order.oauth-properties.useOauth=false
+                -Ddual-validate.mode=FILE
+
+        resources:
+          requests: 
+            memory: 1Gi
+            cpu: 500m
+          limits: 
+            memory: 1536Mi
+            cpu: "1"
+      volumes:
+      - name: compares-data
+        persistentVolumeClaim:
+          claimName: dualvalidateservice-data
+
+--- 
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dual-validate-v9
+  labels:
+    app: dual-validate
+    version: v9
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dual-validate
+      version: v9
+  template:
+    metadata:
+      labels:
+        app: dual-validate
+        version: v9
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: '8080'
+        prometheus.io/scheme: http
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/inject: 'true'
+    spec:
+      containers:
+      - name: dual-validate
+        image: >-
+          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+        imagePullPolicy: Always
+        livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: compares-data
+          mountPath: /app/comparelogs
+        env:
+        - name: MEMORY_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: requests.memory
+        - name: MEMORY_LIMIT
+          valueFrom:
+            resourceFieldRef:
+              containerName: dual-validate
+              resource: limits.memory
+        - name: JAVA_OPTS
+          value: >-
+                -Xms1G -Xmx1536m -Dgit.branch=main
+                -javaagent:/app/elastic-apm-agent-1.28.3.jar 
+                -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
+                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.application_packages=cht.bss
+                -Delastic.apm.trace_methods=cht.bss.*
+                -Delastic.apm.trace_methods_duration_threshold=40ms
+                -Delastic.apm.stack_trace_limit=80
+                -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
+                -Delastic.apm.transaction_max_spans=1500
+                -Dlogging.level.root=WARN
+                -Dmbms.source.root-path=/app/testCases/DualTrackSample
+                -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
+                -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
+                -Dtransfer.property.m-order.oauth-properties.useOauth=false
+                -Ddual-validate.mode=FILE
+
+        resources:
+          requests: 
+            memory: 1Gi
+            cpu: 500m
+          limits: 
+            memory: 1536Mi
+            cpu: "1"
+      volumes:
+      - name: compares-data
+        persistentVolumeClaim:
+          claimName: dualvalidateservice-data

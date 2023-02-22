@@ -4,7 +4,7 @@ metadata:
   labels:
     app: dual-validate
     service: dual-validate
-  name: dual-validate
+  name: dualvalidateservice
 spec:
   ports:
   - name: http
