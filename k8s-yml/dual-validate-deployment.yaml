@@ -76,14 +76,14 @@ spec:
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
-                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.service_name=dual-validate-9-0
                 -Delastic.apm.application_packages=cht.bss
                 -Delastic.apm.trace_methods=cht.bss.*
                 -Delastic.apm.trace_methods_duration_threshold=40ms
                 -Delastic.apm.stack_trace_limit=80
                 -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
                 -Delastic.apm.transaction_max_spans=1500
-                -Dlogging.level.root=WARN
+                -Dlogging.level.root=INFO
                 -Dmbms.source.root-path=/app/testCases/DualTrackSample
                 -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
@@ -178,14 +178,14 @@ spec:
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
-                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.service_name=dual-validate-1
                 -Delastic.apm.application_packages=cht.bss
                 -Delastic.apm.trace_methods=cht.bss.*
                 -Delastic.apm.trace_methods_duration_threshold=40ms
                 -Delastic.apm.stack_trace_limit=80
                 -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
                 -Delastic.apm.transaction_max_spans=1500
-                -Dlogging.level.root=WARN
+                -Dlogging.level.root=INFO
                 -Dmbms.source.root-path=/app/testCases/DualTrackSample
                 -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
@@ -281,14 +281,14 @@ spec:
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
-                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.service_name=dual-validate-2
                 -Delastic.apm.application_packages=cht.bss
                 -Delastic.apm.trace_methods=cht.bss.*
                 -Delastic.apm.trace_methods_duration_threshold=40ms
                 -Delastic.apm.stack_trace_limit=80
                 -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
                 -Delastic.apm.transaction_max_spans=1500
-                -Dlogging.level.root=WARN
+                -Dlogging.level.root=INFO
                 -Dmbms.source.root-path=/app/testCases/DualTrackSample
                 -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
@@ -385,14 +385,14 @@ spec:
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
-                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.service_name=dual-validate-3
                 -Delastic.apm.application_packages=cht.bss
                 -Delastic.apm.trace_methods=cht.bss.*
                 -Delastic.apm.trace_methods_duration_threshold=40ms
                 -Delastic.apm.stack_trace_limit=80
                 -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
                 -Delastic.apm.transaction_max_spans=1500
-                -Dlogging.level.root=WARN
+                -Dlogging.level.root=INFO
                 -Dmbms.source.root-path=/app/testCases/DualTrackSample
                 -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
@@ -489,14 +489,14 @@ spec:
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
-                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.service_name=dual-validate-4
                 -Delastic.apm.application_packages=cht.bss
                 -Delastic.apm.trace_methods=cht.bss.*
                 -Delastic.apm.trace_methods_duration_threshold=40ms
                 -Delastic.apm.stack_trace_limit=80
                 -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
                 -Delastic.apm.transaction_max_spans=1500
-                -Dlogging.level.root=WARN
+                -Dlogging.level.root=INFO
                 -Dmbms.source.root-path=/app/testCases/DualTrackSample
                 -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
@@ -592,14 +592,14 @@ spec:
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
-                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.service_name=dual-validate-5
                 -Delastic.apm.application_packages=cht.bss
                 -Delastic.apm.trace_methods=cht.bss.*
                 -Delastic.apm.trace_methods_duration_threshold=40ms
                 -Delastic.apm.stack_trace_limit=80
                 -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
                 -Delastic.apm.transaction_max_spans=1500
-                -Dlogging.level.root=WARN
+                -Dlogging.level.root=INFO
                 -Dmbms.source.root-path=/app/testCases/DualTrackSample
                 -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
@@ -695,14 +695,14 @@ spec:
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
-                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.service_name=dual-validate-6
                 -Delastic.apm.application_packages=cht.bss
                 -Delastic.apm.trace_methods=cht.bss.*
                 -Delastic.apm.trace_methods_duration_threshold=40ms
                 -Delastic.apm.stack_trace_limit=80
                 -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
                 -Delastic.apm.transaction_max_spans=1500
-                -Dlogging.level.root=WARN
+                -Dlogging.level.root=INFO
                 -Dmbms.source.root-path=/app/testCases/DualTrackSample
                 -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
@@ -799,14 +799,14 @@ spec:
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
-                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.service_name=dual-validate-7
                 -Delastic.apm.application_packages=cht.bss
                 -Delastic.apm.trace_methods=cht.bss.*
                 -Delastic.apm.trace_methods_duration_threshold=40ms
                 -Delastic.apm.stack_trace_limit=80
                 -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
                 -Delastic.apm.transaction_max_spans=1500
-                -Dlogging.level.root=WARN
+                -Dlogging.level.root=INFO
                 -Dmbms.source.root-path=/app/testCases/DualTrackSample
                 -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
@@ -902,14 +902,14 @@ spec:
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
-                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.service_name=dual-validate-8
                 -Delastic.apm.application_packages=cht.bss
                 -Delastic.apm.trace_methods=cht.bss.*
                 -Delastic.apm.trace_methods_duration_threshold=40ms
                 -Delastic.apm.stack_trace_limit=80
                 -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
                 -Delastic.apm.transaction_max_spans=1500
-                -Dlogging.level.root=WARN
+                -Dlogging.level.root=INFO
                 -Dmbms.source.root-path=/app/testCases/DualTrackSample
                 -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
@@ -1005,14 +1005,14 @@ spec:
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
-                -Delastic.apm.service_name=dual-validate
+                -Delastic.apm.service_name=dual-validate-9
                 -Delastic.apm.application_packages=cht.bss
                 -Delastic.apm.trace_methods=cht.bss.*
                 -Delastic.apm.trace_methods_duration_threshold=40ms
                 -Delastic.apm.stack_trace_limit=80
                 -Delastic.apm.classes_excluded_from_instrumentation=*model*,*vo*,*entity* 
                 -Delastic.apm.transaction_max_spans=1500
-                -Dlogging.level.root=WARN
+                -Dlogging.level.root=INFO
                 -Dmbms.source.root-path=/app/testCases/DualTrackSample
                 -Ddual-validate.baseurl.iisi=https://apigw-qa.bss-tpe.cht.com.tw
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
