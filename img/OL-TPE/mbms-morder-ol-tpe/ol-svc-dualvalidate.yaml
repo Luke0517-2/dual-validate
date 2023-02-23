@@ -1,0 +1,24 @@
+#*YAML命名規則:${環境代碼}-${對應 K8s API資源縮寫 (shortnames) }-${模組名稱|系統功能}-${opt 用途}
+#*metadata 命名規則：${對應 K8s API資源縮寫 (shortnames)}-${模組名稱|系統功能|NameSpace}-${opt 用途|敘述}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: dualvalidate
+    service: svc-dualvalidate
+  name: svc-dualvalidate
+  namespace: mbms-morder-ol
+spec:
+  ports:
+  - name: http
+    port: 8050
+    protocol: HTTP
+    targetPort: 8080
+  - name: https
+    port: 8051
+    protocol: HTTP
+    targetPort: 8080    
+  selector:
+    app: dualvalidate
+  sessionAffinity: None
+  type: ClusterIP

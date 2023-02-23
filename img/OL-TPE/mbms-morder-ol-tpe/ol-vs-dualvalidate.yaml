@@ -1,0 +1,23 @@
+#*YAML命名規則:${環境代碼}-${對應 K8s API資源縮寫 (shortnames) }-${模組名稱|系統功能}-${opt 用途}
+#*metadata 命名規則：${對應 K8s API資源縮寫 (shortnames)}-${模組名稱|系統功能|NameSpace}-${opt 用途|敘述}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: vs-dualvalidate
+  namespace: mbms-morder-ol-tpe
+spec:
+  hosts: 
+  - '*' # invalid: domain name "morder-qa/*" invalid (label "morder-qa/*" invalid)
+  gateways:
+  - istio-morder-ol-tpe/gw-morder-ol-tpe
+  #- mesh #applies to all the sidecars in the mesh
+  http:
+  - match:
+    - uri:
+        prefix: /cht/validate
+    route:
+    - destination:    
+        host: dualvalidate #對應 Anthos GKE sevice name
+        port:
+          number: 8050
+    timeout: 180s

@@ -1,20 +1,22 @@
+#*YAML命名規則:${環境代碼}-${對應 K8s API資源縮寫 (shortnames) }-${模組名稱|系統功能}-${opt 用途}
+#*metadata 命名規則：${對應 K8s API資源縮寫 (shortnames)}-${模組名稱|系統功能|NameSpace}-${opt 用途|敘述}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: dualvalidateservice
-  namespace: mbms-morder-ol
+  name: deploy-dualvalidate
+  namespace: mbms-morder-ol-tpe
   labels:
-    app: dualvalidateservice
+    app: dualvalidate
     version: m5
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dualvalidateservice
+      app: dualvalidate
   template:
     metadata:
       labels:
-        app: dualvalidateservice
+        app: dualvalidate
         version: m5
       annotations:
         prometheus.io/path: /actuator/prometheus
@@ -27,7 +29,7 @@ spec:
       imagePullSecrets:
       - name: secret-harbor-morder-ol
       containers:
-      - name: dualvalidateservice
+      - name: dualvalidate
         image: >-
           harbor.cht.com.tw:30725/mbms-morder-prod/dual-validate:latest
         imagePullPolicy: Always
@@ -60,19 +62,19 @@ spec:
         - name: MEMORY_REQUEST
           valueFrom:
             resourceFieldRef:
-              containerName: dualvalidateservice
+              containerName: dualvalidate
               resource: requests.memory
         - name: MEMORY_LIMIT
           valueFrom:
             resourceFieldRef:
-              containerName: dualvalidateservice
+              containerName: dualvalidate
               resource: limits.memory
         - name: JAVA_OPTS
           value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
-                -Delastic.apm.service_name=dualvalidateservice
+                -Delastic.apm.service_name=dualvalidate
                 -Delastic.apm.application_packages=cht.bss
                 -Delastic.apm.trace_methods=cht.bss.*
                 -Delastic.apm.trace_methods_duration_threshold=40ms
