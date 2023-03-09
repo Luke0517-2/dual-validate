@@ -32,8 +32,7 @@ public class MoqueryServiceTest {
 
 		// 17 (2022-11 雙軌階段一)
 		// +42 (2023-01 雙軌階段二)
-		// -1 (2023-02 test properties 拿掉numberusage)
-		assertEquals(58, result.size());
+		assertEquals(59, result.size());
 	}
 
 

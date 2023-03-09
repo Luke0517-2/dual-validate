@@ -54,7 +54,7 @@ public class MoqueryRuleToEnumMappingTest {
 				"refundpaid", "rfpaidlist", "sernumusage", "sharegroupdevice", "sharegroupmem", "specsvcmember",
 				"subapplytype", "susptemp", "telsusptype", "transcashfee", "vspecialsvc", "workingrecord"};
 
-		// 總共規則數量：(第一階段文件)14 + (第二階段文件)42
-		assertEquals(allRules.length, queryMapping.getEnumInterfaces(checkQueryRuleProperties.getQueryRuleList()).size());
+		// 總共規則數量：(第一階段文件)14 + (第二階段文件)42 + 1(numberusage)
+		assertEquals(allRules.length + 1, queryMapping.getEnumInterfaces(checkQueryRuleProperties.getQueryRuleList()).size());
 	}
 }

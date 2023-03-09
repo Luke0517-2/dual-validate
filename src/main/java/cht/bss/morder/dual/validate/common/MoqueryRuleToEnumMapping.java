@@ -71,7 +71,6 @@ public class MoqueryRuleToEnumMapping {
 			case "data_share_rec":
 				mapping.add(MoqueryContractType.Data_share_rec);
 				break;
-
 			case "adjustbill":
 				mapping.add(MoqueryTelnumWithDateType.Adjustbill);
 				break;
@@ -145,7 +144,7 @@ public class MoqueryRuleToEnumMapping {
 				mapping.add(MoqueryContractWithTwoDateType.Promoprodrecold);
 				break;
 			case "promoprodreserve":
-				mapping.add(MoqueryContractWithTwoDateType.Packageservice);
+				mapping.add(MoqueryContractWithTwoDateType.Promoprodreserve);
 				break;
 			case "qosalert":
 				mapping.add(MoqueryContractWithTwoDateType.Qosalert);
