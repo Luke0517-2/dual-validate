@@ -2,6 +2,7 @@ package cht.bss.morder.dual.validate.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,6 +41,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
 import cht.bss.morder.dual.validate.vo.ComparedData;
+import cht.bss.morder.dual.validate.vo.Params;
+import cht.bss.morder.dual.validate.vo.QueryInput;
 import cht.bss.morder.dual.validate.vo.Report;
 import cht.bss.morder.dual.validate.vo.TestCase;
 import lombok.extern.slf4j.Slf4j;
@@ -224,7 +227,11 @@ public class ReportServiceTest {
 	// 把add進去的假資料包裝成method、setBy: 1. queryService
 	private ComparedData mockDataOfQuerycustinfo(String dataFromCht, String dataFromIISI, String table) {
 		ComparedData data = ComparedData.builder().dataFromCht(dataFromCht).dataFromIISI(dataFromIISI)
-				.queryService("querycustinfo").table(table).build();
+				.queryService("querycustinfo").table(table).queryInput(mockInstanceOfQueryInput()).build();
 		return data;
+	}
+	
+	private QueryInput mockInstanceOfQueryInput() {
+		return QueryInput.builder().param(Params.builder().build()).build();
 	}
 }

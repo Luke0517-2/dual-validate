@@ -333,22 +333,22 @@ public class ReportService {
 	}
 	
 	public void cleanReportObject(Report report) {
-		List<TestCase> list = report.getTestCases();
-		list.parallelStream().forEach(testCase -> {
-			List<ComparedData> list2 = testCase.getComparedData();
-			list2.stream().forEach(comparedata -> {
-				QueryItem queryitem = comparedata.getQueryInput().getParam().getQueryitem();
-				queryitem = null;
-				Params param = comparedata.getQueryInput().getParam();
-				param = null;
+		List<TestCase> listOfTestCase = report.getTestCases();
+		listOfTestCase.parallelStream().forEach(testCase -> {
+			List<ComparedData> listOfComparedData = testCase.getComparedData();
+			listOfComparedData.stream().forEach(comparedata -> {
 				QueryInput queryInput = comparedata.getQueryInput();
+				Params param = comparedata.getQueryInput().getParam();
+				QueryItem queryitem = comparedata.getQueryInput().getParam().getQueryitem();
+				param = null;
+				queryitem = null; 
 				queryInput = null;
 				comparedata = null;
 			});
-			list2 = null;
+			listOfComparedData = null;
 			testCase = null;
 		});
-		list = null;
+		listOfTestCase = null;
 		report = null;
 	}
 }
