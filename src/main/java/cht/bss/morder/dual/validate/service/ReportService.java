@@ -33,8 +33,12 @@ import cht.bss.morder.dual.validate.common.CalendarUtil;
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
 import cht.bss.morder.dual.validate.enums.CompareResultType;
 import cht.bss.morder.dual.validate.vo.ComparedData;
+import cht.bss.morder.dual.validate.vo.Params;
+import cht.bss.morder.dual.validate.vo.QueryInput;
+import cht.bss.morder.dual.validate.vo.QueryItem;
 import cht.bss.morder.dual.validate.vo.Report;
 import cht.bss.morder.dual.validate.vo.TestCase;
+import io.netty.util.internal.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
 import net.lingala.zip4j.io.outputstream.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
@@ -91,11 +95,11 @@ public class ReportService {
 	 * @return the byte[]
 	 */
 	public byte[] processReport(final Report report) {
-		try (XSSFWorkbook workbook = new XSSFWorkbook()) {
+		try (XSSFWorkbook workbook = new XSSFWorkbook();
+			 ByteArrayOutputStream out = new ByteArrayOutputStream();) {
 
 			generateExcelByReport(workbook, report);
-
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			
 			workbook.write(out);
 			byte[] content = out.toByteArray();
 			return content;
@@ -252,8 +256,8 @@ public class ReportService {
 	}
 
 	private byte[] getZipStream(File folder) {
-		try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-			ZipOutputStream zos = new ZipOutputStream(baos);
+		try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				ZipOutputStream zos = new ZipOutputStream(baos);) {
 
 			Arrays.stream(folder.listFiles()).forEach(file -> {
 				addToZip(file, zos, "");
@@ -318,11 +322,33 @@ public class ReportService {
 	 * @param uuid the uuid
 	 */
 	public void cleanUpReportByUuid(final String uuid) {
-		final Report report = getReportByUuid(uuid);
+		Report report = getReportByUuid(uuid);
 		if (report != null) {
 			final String basePath = report.getBasePath();
 			FileUtils.deleteQuietly(new File(basePath));
-			this.uuidReportMap.remove(uuid, report);
+			cleanReportObject(report);
+			this.uuidReportMap.remove(uuid,report);
 		}
+		System.gc();		
+	}
+	
+	public void cleanReportObject(Report report) {
+		List<TestCase> listOfTestCase = report.getTestCases();
+		listOfTestCase.parallelStream().forEach(testCase -> {
+			List<ComparedData> listOfComparedData = testCase.getComparedData();
+			listOfComparedData.stream().forEach(comparedata -> {
+				QueryInput queryInput = comparedata.getQueryInput();
+				Params param = comparedata.getQueryInput().getParam();
+				QueryItem queryitem = comparedata.getQueryInput().getParam().getQueryitem();
+				param = null;
+				queryitem = null; 
+				queryInput = null;
+				comparedata = null;
+			});
+			listOfComparedData = null;
+			testCase = null;
+		});
+		listOfTestCase = null;
+		report = null;
 	}
 }
