@@ -327,8 +327,8 @@ public class ReportService {
 		if (report != null) {
 			final String basePath = report.getBasePath();
 			FileUtils.deleteQuietly(new File(basePath));
-			cleanReportObject(report);
 			this.uuidReportMap.remove(uuid,report);
+			cleanReportObject(report);
 			log.info("success remove :{}", uuid);
 		}
 		System.gc();		
