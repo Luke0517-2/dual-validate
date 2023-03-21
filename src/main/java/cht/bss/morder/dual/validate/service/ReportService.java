@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -326,30 +327,47 @@ public class ReportService {
 		if (report != null) {
 			final String basePath = report.getBasePath();
 			FileUtils.deleteQuietly(new File(basePath));
-//			cleanReportObject(report);
-			this.uuidReportMap.remove(uuid);
-			report = null;
+			this.uuidReportMap.remove(uuid,report);
+			cleanReportObject(report);
+			log.info("success remove :{}", uuid);
 		}
 		System.gc();		
 	}
 	
 	public void cleanReportObject(Report report) {
-		List<TestCase> listOfTestCase = report.getTestCases();
-		listOfTestCase.parallelStream().forEach(testCase -> {
-			List<ComparedData> listOfComparedData = testCase.getComparedData();
-			listOfComparedData.stream().forEach(comparedata -> {
-				QueryInput queryInput = comparedata.getQueryInput();
-				Params param = comparedata.getQueryInput().getParam();
-				QueryItem queryitem = comparedata.getQueryInput().getParam().getQueryitem();
-				param = null;
-				queryitem = null; 
-				queryInput = null;
-				comparedata = null;
-			});
-			listOfComparedData = null;
-			testCase = null;
-		});
-		listOfTestCase = null;
-		report = null;
+		try {
+				List<TestCase> listOfTestCase = report.getTestCases();
+				if(CollectionUtils.isNotEmpty(listOfTestCase)) {
+					listOfTestCase.parallelStream().forEach(testCase -> {
+						if(ObjectUtils.isNotEmpty(testCase)) {
+							List<ComparedData> listOfComparedData = testCase.getComparedData();
+							if(CollectionUtils.isNotEmpty(listOfComparedData)) {
+								listOfComparedData.parallelStream().forEach(comparedata -> {
+									if(ObjectUtils.isNotEmpty(comparedata)) {
+										QueryInput queryInput = comparedata.getQueryInput();
+											if(ObjectUtils.isNotEmpty(queryInput)) {
+												Params param = queryInput.getParam();
+													if(ObjectUtils.isNotEmpty(param)) {
+														QueryItem queryitem = param.getQueryitem();
+														queryitem = null; 
+														param = null;
+													}
+													queryInput = null;
+											}
+											comparedata = null;
+									}
+								});
+								listOfComparedData = null;
+							}				
+							testCase = null;
+						}			
+					});
+					listOfTestCase = null;
+				}
+				report = null;
+		}catch(NullPointerException exception) {
+			log.debug(exception.getMessage());
+		}
+		
 	}
 }
