@@ -240,6 +240,7 @@ public class ReportService {
 	 * @throws IOException            Signals that an I/O exception has occurred.
 	 */
 	public byte[] getCurrentReportWithZip(final Report report) throws InvalidFormatException, IOException {
+		log.info("正在產製報告，uuid :{}",report.getUuid());
 		final Date date = Date.from(report.getStartDate().toInstant());
 		final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 		final String excelFileName = String.format("report_%s.xlsx", sdf.format(date));
