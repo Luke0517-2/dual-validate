@@ -6,7 +6,7 @@ pool:
 
 variables:
   dual-validate-postman-script: CHT_MOrder_Dual-validate.postman_collection.json
-  baseUrl: http://dual-validate-d210641.apps.ocp.iisi.test
+  baseUrl: http://dualvalidateservice-istio-system.apps.ocp.iisi.test/v0
   floderName: wildflyVerifyUnLoadDataExe
 
 
@@ -63,10 +63,9 @@ stages:
 
             date1=$(date +%Y%m%d)                # 今天的日期
             fileName=$(floderName)_${date1}      # 設定檔名
-            
             # 在電話前後加入雙引號
-            sed -i -e 's/^0/"0/g' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv
-            sed -i -e 's/,/",/g' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv
+            #sed -i -e 's/^0/"0/g' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv
+            #sed -i -e 's/,/",/g' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv
 
             str1='"telNum","custId"'
             str2=$(sed -n '1,1p' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv)
@@ -107,11 +106,11 @@ stages:
             newman run $(Build.SourcesDirectory)/$(dual-validate-postman-script) --env-var="baseUrl=$(baseUrl)" -d $(Build.SourcesDirectory)/$(floderName)/$(FILE_NAME).csv --global-var="uuid=$UUID" --folder 透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對
             
             echo '取得現行統計報表，產出Zip檔案'
-            curl -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
+            curl -v --trace-time --max-time 3600 --connect-timeout 3600 -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
             ls $(Build.SourcesDirectory)/report
             
             echo '清除目前的驗證測試，會清空相關測試資料'
-            curl --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/stopTest'
+            curl -v --trace-time --max-time 3600 --connect-timeout 3600 --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/stopTest'
             
             echo ' 成功執行'
         continueOnError: false
