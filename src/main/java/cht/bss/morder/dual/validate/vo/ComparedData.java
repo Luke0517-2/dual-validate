@@ -11,9 +11,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import cht.bss.morder.dual.validate.enums.CompareResultType;
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Builder
+@Slf4j
 public class ComparedData implements Cloneable {
 
 	private QueryInput queryInput;
@@ -64,6 +66,8 @@ public class ComparedData implements Cloneable {
 		if (jsonDataFromCht.equals(jsonDataFromIISI)) {
 			return CompareResultType.EQUAL;
 		} else {
+			log.error("Data From Cht :{}", getDataFromCht());
+			log.error("Data From IISI :{}", getDataFromIISI());
 			return CompareResultType.NONEQUAL;
 		}
 	}
