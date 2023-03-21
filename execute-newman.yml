@@ -100,6 +100,8 @@ stages:
             curl --help http
             echo '---'
             curl --help verbose
+            echo '---'
+            curl --help connection
             #echo '開始進行驗證測試，會重新統計報表'
             #UUID=$(curl -s '$(baseUrl)/cht/validate/startTest' | jq -r '.uuid')
             #echo  $UUID
