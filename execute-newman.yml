@@ -106,7 +106,7 @@ stages:
             newman run $(Build.SourcesDirectory)/$(dual-validate-postman-script) --env-var="baseUrl=$(baseUrl)" -d $(Build.SourcesDirectory)/$(floderName)/$(FILE_NAME).csv --global-var="uuid=$UUID" --folder 透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對
             
             echo '取得現行統計報表，產出Zip檔案'
-            curl -I -v --trace-time --max-time 3600 --connect-timeout 3600 -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
+            curl -I -v --trace-time --max-time 7200 --connect-timeout 7200 -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
             ls $(Build.SourcesDirectory)/report
             
             echo '清除目前的驗證測試，會清空相關測試資料'
