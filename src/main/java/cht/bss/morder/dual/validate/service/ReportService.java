@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -52,11 +53,11 @@ import net.lingala.zip4j.model.enums.EncryptionMethod;
 @Slf4j
 public class ReportService {
 
-	/** 用來放置比對過程中所產生的比對檔案，可以提供匯出．. */
+	/** 用來放置比尝靎程中所產生的比尝檔案，坯以杝供匯出．. */
 	@Value("${compare.output.path}")
 	private String outputPath;
 
-	/** 有多個測試報告同時執行. */
+	/** 有多個測試報告坌時執行. */
 	private ConcurrentMap<String, Report> uuidReportMap;
 
 	@Autowired
@@ -120,14 +121,14 @@ public class ReportService {
 
 		final XSSFSheet sheet = workbook.createSheet("TestCases");
 
-		final String[] columns = new String[] { "比對門號", "證號", "比對類別", "比對參數or表格", "參數欄位或資料", "比對CHT與IISI結果", "說明資訊",
+		final String[] columns = new String[] { "比尝門號", "證號", "比尝類別", "比尝坃數or表格", "坃數欄佝或資料", "比尝CHT與IISI絝果", "說明資訊",
 				"檔案路徑" };
 		insertTitleRows(sheet, columns);
 		insertData(sheet, report);
 	}
 
 	/**
-	 * 設定Excel顯示欄位名稱
+	 * 設定Excel顯示欄佝坝稱
 	 * 
 	 * @param sheet
 	 * @param columns
@@ -166,7 +167,7 @@ public class ReportService {
 							dataRow.createCell(5).setCellValue(comparedData.getComparedResult(mapper).getValue());
 						} catch (JsonProcessingException e) {
 							dataRow.createCell(5).setCellValue(CompareResultType.NONEQUAL.getValue());
-							dataRow.createCell(6).setCellValue("文字資料不一致，轉成json結構比較時出錯");
+							dataRow.createCell(6).setCellValue("文字資料丝一致，轉戝json絝構比較時出錯");
 						}
 					} else {
 						try {
@@ -174,7 +175,7 @@ public class ReportService {
 							dataRow.createCell(6).setCellValue(error);
 						} catch (JsonProcessingException e) {
 							dataRow.createCell(5).setCellValue(CompareResultType.NONEQUAL.getValue());
-							dataRow.createCell(6).setCellValue("文字資料不一致，轉成json結構比較時出錯");
+							dataRow.createCell(6).setCellValue("文字資料丝一致，轉戝json絝構比較時出錯");
 						}
 					}
 
@@ -189,7 +190,7 @@ public class ReportService {
 		if (dataInComparedData!= null &&  !(dataInComparedData.equals("null"))) {
 			return dataInComparedData;
 		} else {
-			return "無對應參數，不須進行後續查詢";
+			return "無尝應坃數，丝須進行後續查詢";
 		}
 	}
 
@@ -231,7 +232,7 @@ public class ReportService {
 	}
 
 	/**
-	 * 將測試報告與測試過程中所產生的轉換檔案一併打包成ZIP檔案.
+	 * 將測試報告與測試靎程中所產生的轉杛檔案一併打包戝ZIP檔案.
 	 *
 	 * @param report the current report
 	 * @return the current report with zip
@@ -326,30 +327,47 @@ public class ReportService {
 		if (report != null) {
 			final String basePath = report.getBasePath();
 			FileUtils.deleteQuietly(new File(basePath));
-//			cleanReportObject(report);
-			this.uuidReportMap.remove(uuid);
-			report = null;
+			this.uuidReportMap.remove(uuid,report);
+			cleanReportObject(report);
+			log.info("success remove :{}", uuid);
 		}
 		System.gc();		
 	}
 	
 	public void cleanReportObject(Report report) {
-		List<TestCase> listOfTestCase = report.getTestCases();
-		listOfTestCase.parallelStream().forEach(testCase -> {
-			List<ComparedData> listOfComparedData = testCase.getComparedData();
-			listOfComparedData.stream().forEach(comparedata -> {
-				QueryInput queryInput = comparedata.getQueryInput();
-				Params param = comparedata.getQueryInput().getParam();
-				QueryItem queryitem = comparedata.getQueryInput().getParam().getQueryitem();
-				param = null;
-				queryitem = null; 
-				queryInput = null;
-				comparedata = null;
-			});
-			listOfComparedData = null;
-			testCase = null;
-		});
-		listOfTestCase = null;
-		report = null;
+		try {
+				List<TestCase> listOfTestCase = report.getTestCases();
+				if(CollectionUtils.isNotEmpty(listOfTestCase)) {
+					listOfTestCase.parallelStream().forEach(testCase -> {
+						if(ObjectUtils.isNotEmpty(testCase)) {
+							List<ComparedData> listOfComparedData = testCase.getComparedData();
+							if(CollectionUtils.isNotEmpty(listOfComparedData)) {
+								listOfComparedData.parallelStream().forEach(comparedata -> {
+									if(ObjectUtils.isNotEmpty(comparedata)) {
+										QueryInput queryInput = comparedata.getQueryInput();
+											if(ObjectUtils.isNotEmpty(queryInput)) {
+												Params param = queryInput.getParam();
+													if(ObjectUtils.isNotEmpty(param)) {
+														QueryItem queryitem = param.getQueryitem();
+														queryitem = null; 
+														param = null;
+													}
+													queryInput = null;
+											}
+											comparedata = null;
+									}
+								});
+								listOfComparedData = null;
+							}				
+							testCase = null;
+						}			
+					});
+					listOfTestCase = null;
+				}
+				report = null;
+		}catch(NullPointerException exception) {
+			log.debug(exception.getMessage());
+		}
+		
 	}
 }

@@ -63,7 +63,10 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 		}else {
 			throw new BusinessException("Input參數不正確");
 		}
-		return result;
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(result);
+		stringBuilder.append(System.currentTimeMillis());
+		return stringBuilder.toString();
 	}
 
 	private String responseFromQueryCustInfo(QueryInput input) {
@@ -75,7 +78,10 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 		}else {
 			throw new BusinessException("Input參數不正確");
 		}
-		return result;
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(result);
+		stringBuilder.append(System.currentTimeMillis());
+		return stringBuilder.toString();
 	}
 
 	private String responseFromMoquery(QueryInput input) {
@@ -278,8 +284,12 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 				result = readFile("./jsonsample/contract_output.json");
 				break;
 		}
-		if(StringUtils.isNotBlank(result))
-			return result;
+		if(StringUtils.isNotBlank(result)) {
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append(result);
+			stringBuilder.append(System.currentTimeMillis());
+			return stringBuilder.toString();
+		}
 		else
 			throw new BusinessException("Input有誤");
 	}	

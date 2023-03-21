@@ -1,7 +1,8 @@
 package cht.bss.morder.dual.validate.vo;
 
+import java.util.Objects;
+
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -26,8 +27,6 @@ public class ComparedData implements Cloneable {
 	private String data;
 	private String error;
 
-	@Autowired
-	private ObjectMapper mapper;
 
 	protected boolean equals() {
 		return StringUtils.equals(getDataFromCht(), getDataFromIISI());
