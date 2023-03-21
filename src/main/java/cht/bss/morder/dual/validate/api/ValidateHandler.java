@@ -133,6 +133,7 @@ public class ValidateHandler {
 
 	public Mono<ServerResponse> stopTest(final ServerRequest request) {
 		final String uuid = getUUID(request);
+		log.info("stopTest uuid :{}",uuid);
 		reportService.cleanUpReportByUuid(uuid);
 		return ServerResponse.ok().build();
 	}
