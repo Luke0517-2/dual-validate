@@ -6,7 +6,7 @@ pool:
 
 variables:
   dual-validate-postman-script: CHT_MOrder_Dual-validate.postman_collection.json
-  baseUrl: http://dual-validate-d210641.apps.ocp.iisi.test
+  baseUrl: http://dualvalidateservice-istio-system.apps.ocp.iisi.test/v0
   floderName: wildflyVerifyUnLoadDataExe
 
 
