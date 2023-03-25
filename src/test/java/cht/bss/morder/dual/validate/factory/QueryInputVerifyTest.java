@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -49,7 +50,7 @@ public class QueryInputVerifyTest {
 	private String testClientIp;	
 
 	@Autowired
-	private QueryInputFactory queryInputFactory;
+	private ObjectProvider<ComparedData> comparedDataProvider;
 	
 	@Autowired
 	private ObjectMapper mapper;
@@ -58,7 +59,7 @@ public class QueryInputVerifyTest {
 	public void testGetComparedData_In_QueryCustInfo_Telnum() throws JsonProcessingException {
 		TestCase case1 = getTestCase();
 
-		ComparedData data = queryInputFactory.getComparedData(QueryCustinfoType.telnum, case1);
+		ComparedData data = comparedDataProvider.getObject(QueryCustinfoType.telnum, case1,null);
 			String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 			QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 			
@@ -76,7 +77,7 @@ public class QueryInputVerifyTest {
 	public void testGetComparedData_In_QueryCustInfo_CustID() throws JsonProcessingException {
 		TestCase case1 = getTestCase();
 
-		ComparedData data = queryInputFactory.getComparedData(QueryCustinfoType.custbehavior, case1);
+		ComparedData data = comparedDataProvider.getObject(QueryCustinfoType.custbehavior, case1,null);
 			String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 			QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 			
@@ -92,7 +93,7 @@ public class QueryInputVerifyTest {
 	@Test
 	public void testGetComparedData_In_QrySaleBehavior() throws JsonProcessingException {
 		TestCase testCase = getTestCase();
-		ComparedData data = queryInputFactory.getComparedData(QrySalebehaviorType.qrySalebehavior, testCase);
+		ComparedData data = comparedDataProvider.getObject(QrySalebehaviorType.qrySalebehavior, testCase,null);
 		
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
@@ -111,7 +112,7 @@ public class QueryInputVerifyTest {
 		TestCase case1 = getTestCase();
 
 		MoqueryContractWithTelnumType type = MoqueryContractWithTelnumType.Contractret;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		ComparedData data = comparedDataProvider.getObject(null, case1,type);
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 		
@@ -131,7 +132,7 @@ public class QueryInputVerifyTest {
 		TestCase case1 = TestCase.builder().orderno(TEST_CONTRACT_ID).build();
 
 		MoqueryOrderNoType type = MoqueryOrderNoType.Modelinsrec;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		ComparedData data = comparedDataProvider.getObject(null, case1,type);
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 
@@ -152,7 +153,7 @@ public class QueryInputVerifyTest {
 		TestCase case1 = TestCase.builder().contract(TEST_CONTRACT_ID).build();
 
 		MoqueryContractType type = MoqueryContractType.AgentMobileSet;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		ComparedData data = comparedDataProvider.getObject(null, case1,type);
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 
@@ -176,7 +177,7 @@ public class QueryInputVerifyTest {
 		TestCase case1 = TestCase.builder().spsvc(spsvc).build();
 
 		MoquerySpsvcType type = MoquerySpsvcType.Mdsvc;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		ComparedData data = comparedDataProvider.getObject(null, case1,type);
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 
@@ -197,7 +198,7 @@ public class QueryInputVerifyTest {
 		TestCase case1 = getTestCase();
 
 		MoqueryTelnumType type = MoqueryTelnumType.Agent5id;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		ComparedData data = comparedDataProvider.getObject(null, case1,type);
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 		
@@ -218,7 +219,7 @@ public class QueryInputVerifyTest {
 		TestCase case1 = getTestCase();
 
 		MoqueryContractWithDateType type = MoqueryContractWithDateType.Chgcustrec;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		ComparedData data = comparedDataProvider.getObject(null, case1,type);
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 		
@@ -238,7 +239,7 @@ public class QueryInputVerifyTest {
 		TestCase case1 = getTestCase();
 
 		MoqueryContractWithMingGuoDateType type = MoqueryContractWithMingGuoDateType.Officialfee;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		ComparedData data = comparedDataProvider.getObject(null, case1,type);
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 		
@@ -258,7 +259,7 @@ public class QueryInputVerifyTest {
 		TestCase case1 = getTestCase();
 
 		MoqueryContractWithTwoDateType type = MoqueryContractWithTwoDateType.Applytypechgrec;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		ComparedData data = comparedDataProvider.getObject(null, case1,type);
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 		
@@ -278,7 +279,7 @@ public class QueryInputVerifyTest {
 		TestCase case1 = getTestCase();
 
 		MoqueryRentCustNoType type = MoqueryRentCustNoType.Pascustomer;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		ComparedData data = comparedDataProvider.getObject(null, case1,type);
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 		
@@ -298,7 +299,7 @@ public class QueryInputVerifyTest {
 		TestCase case1 = getTestCase();
 
 		MoqueryTelnumsWithDateType type = MoqueryTelnumsWithDateType.Workingrecord;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		ComparedData data = comparedDataProvider.getObject(null, case1,type);
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 		
@@ -318,7 +319,7 @@ public class QueryInputVerifyTest {
 		TestCase case1 = getTestCase();
 
 		MoqueryTelnumWithDateType type = MoqueryTelnumWithDateType.Adjustbill;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		ComparedData data = comparedDataProvider.getObject(null, case1,type);
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 		
@@ -338,7 +339,7 @@ public class QueryInputVerifyTest {
 		TestCase case1 = getTestCase();
 
 		MoqueryTelnumWithMingGuoDateType type = MoqueryTelnumWithMingGuoDateType.Recotemp;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		ComparedData data = comparedDataProvider.getObject(null, case1,type);
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 		
@@ -358,7 +359,7 @@ public class QueryInputVerifyTest {
 		TestCase case1 = getTestCase();
 
 		MoqueryTelnumWithTwoDateType type = MoqueryTelnumWithTwoDateType.Empdiscntrec;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		ComparedData data = comparedDataProvider.getObject(null, case1,type);
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 		
@@ -378,7 +379,7 @@ public class QueryInputVerifyTest {
 		TestCase case1 = getTestCase();
 
 		MoqueryTranscashIdType type = MoqueryTranscashIdType.Chargeitem;
-		ComparedData data = queryInputFactory.getComparedData(type, case1);
+		ComparedData data = comparedDataProvider.getObject(null, case1,type);
 		String queryInputString = mapper.writeValueAsString(data.getQueryInput());
 		QueryInput queryInput = mapper.readValue(queryInputString, QueryInput.class);
 		

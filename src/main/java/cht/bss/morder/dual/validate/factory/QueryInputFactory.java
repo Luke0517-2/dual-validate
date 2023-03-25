@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import cht.bss.morder.dual.validate.common.YesterdayConvert;
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
-import cht.bss.morder.dual.validate.config.CheckQueryRuleProperties;
 import cht.bss.morder.dual.validate.config.TransferProperties;
 import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
 import cht.bss.morder.dual.validate.enums.QrySalebehaviorType;
@@ -35,14 +34,17 @@ public class QueryInputFactory {
 	private YesterdayConvert yesterdayConvert;
 	
 
-	public ComparedData getComparedData(Enum type, TestCase testCase) {
-		Class clazz = type.getDeclaringClass();
+	public ComparedData getComparedData(Enum type, TestCase testCase , MoqueryEnumInterface moquery) {		
+		Class clazz = null;
+		if (ObjectUtils.isNotEmpty(type)) {
+			clazz = type.getDeclaringClass();			
+		}
 		if (QueryCustinfoType.class == clazz)
 			return custInfoInputFactory.getComparedData((QueryCustinfoType) type, testCase);
 		else if (QrySalebehaviorType.class == clazz) {
 			return qrySaleBehaviorInputFactory.getComparedData(testCase);
-		} else if (type instanceof MoqueryEnumInterface) {
-			return moqueryInputFactory.getComparedData((MoqueryEnumInterface)type, testCase);
+		} else if (moquery instanceof MoqueryEnumInterface) {
+			return moqueryInputFactory.getComparedData(moquery, testCase);
 		} else {
 			throw new BusinessException("未設定查找類型");
 		}

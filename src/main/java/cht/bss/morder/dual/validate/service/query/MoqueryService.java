@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,7 +76,7 @@ public class MoqueryService extends QueryService {
 	public final String ERRMSG_NO_NEED_TO_CHECK_WHEN_NO_DATA = "無聯單資料，不須查詢";
 
 	@Autowired
-	private MoqueryInputFactory factory;
+	private ObjectProvider<ComparedData> comparedDataProvider;
 
 	@Override
 	public List<ComparedData> queryData(TestCase testCase) {
@@ -139,7 +140,7 @@ public class MoqueryService extends QueryService {
 			try {
 				return mergeQuerys(futureFromCht.get(), futureFromIISI.get());
 			} catch (InterruptedException | ExecutionException e) {
-				ComparedData comparedData = factory.getComparedData(moquerySecondType, testCase);
+				ComparedData comparedData = comparedDataProvider.getObject(null, testCase,moquerySecondType);
 				comparedData.setError(e.getMessage());
 				return comparedData;
 			}
@@ -184,11 +185,11 @@ public class MoqueryService extends QueryService {
 			MoqueryEnumInterface contractType) {
 		return CompletableFuture.supplyAsync(() -> {
 			TestCase testCaseForCht = getNewTestCaseWithContractId(testCase, contractMap.get(VALUE_FROM_CHT));
-			ComparedData comparedForCht = factory.getComparedData(contractType, testCaseForCht);
+			ComparedData comparedForCht = comparedDataProvider.getObject(null, testCaseForCht, contractType);
 			queryCht(comparedForCht);
 
 			TestCase testCaseForIISI = getNewTestCaseWithContractId(testCase, contractMap.get(VALUE_FROM_IISI));
-			ComparedData comparedForIISI = factory.getComparedData(contractType, testCaseForIISI);
+			ComparedData comparedForIISI = comparedDataProvider.getObject(null, testCaseForIISI, contractType);
 			queryIISI(comparedForIISI);
 
 			return mergeQuerys(comparedForCht, comparedForIISI);
@@ -227,8 +228,7 @@ public class MoqueryService extends QueryService {
 
 	private Map<String, String> queryContractId(TestCase testCase) {
 		Map<String, String> map = new HashMap<>();
-		ComparedData comparedData = factory.getComparedData((MoqueryEnumInterface) MoqueryTelnumType.Numberusage,
-				testCase);
+		ComparedData comparedData = comparedDataProvider.getObject(null,testCase,(MoqueryEnumInterface) MoqueryTelnumType.Numberusage);
 		queryBothServer(comparedData);
 		ContractIDResponseVO voFromIISI = ContractIDResponseVO.builder(comparedData.getDataFromIISI());
 		ContractIDResponseVO voFromCht = ContractIDResponseVO.builder(comparedData.getDataFromCht());
@@ -255,7 +255,7 @@ public class MoqueryService extends QueryService {
 
 		for (ArrayList<MoqueryEnumInterface> targetTelnumTypeArray : totalOfQueryTelnumType) {
 			for (MoqueryEnumInterface moqueryOftelnumType : targetTelnumTypeArray) {
-				queryTelnumList.add(factory.getComparedData(moqueryOftelnumType, testCase));
+				queryTelnumList.add(comparedDataProvider.getObject(null, testCase,moqueryOftelnumType));
 			}
 		}
 
@@ -285,13 +285,13 @@ public class MoqueryService extends QueryService {
 		public CompletableFuture<ComparedData> runTwoPhaseQuery(String contractId) {
 
 			TestCase testCaseForServer = getNewTestCaseWithContractId(testCase, contractId);
-			ComparedData comparedDataForFirstQuery = factory.getComparedData(firstQueryEnum, testCaseForServer);
+			ComparedData comparedDataForFirstQuery = comparedDataProvider.getObject(null, testCaseForServer, firstQueryEnum);
 
 			return CompletableFuture.supplyAsync(() -> {
 				callTo(comparedDataForFirstQuery);
 				String value = getValue(comparedDataForFirstQuery.getDataFromCht());
 				setValue(testCaseForServer, value, secondQueryEnum);
-				ComparedData comparedDataWithSecondQuery = factory.getComparedData(secondQueryEnum, testCaseForServer);
+				ComparedData comparedDataWithSecondQuery = comparedDataProvider.getObject(null, testCaseForServer, secondQueryEnum);
 				if (StringUtils.isEmpty(value)) {
 					return comparedDataWithSecondQuery.clone();
 				} else {
@@ -336,13 +336,13 @@ public class MoqueryService extends QueryService {
 		public CompletableFuture<ComparedData> runTwoPhaseQuery(String contractId) {
 
 			TestCase testCaseForServer = getNewTestCaseWithContractId(testCase, contractId);
-			ComparedData comparedDataForFirstQuery = factory.getComparedData(firstQueryEnum, testCaseForServer);
+			ComparedData comparedDataForFirstQuery = comparedDataProvider.getObject(null, testCaseForServer, firstQueryEnum);
 
 			return CompletableFuture.supplyAsync(() -> {
 				callTo(comparedDataForFirstQuery);
 				String value = getValue(comparedDataForFirstQuery.getDataFromIISI());
 				setValue(testCaseForServer, value, secondQueryEnum);
-				ComparedData comparedDataWithSecondQuery = factory.getComparedData(secondQueryEnum, testCaseForServer);
+				ComparedData comparedDataWithSecondQuery = comparedDataProvider.getObject(null, testCaseForServer, secondQueryEnum);
 				if (StringUtils.isEmpty(value)) {
 					return comparedDataWithSecondQuery.clone();
 				} else {
