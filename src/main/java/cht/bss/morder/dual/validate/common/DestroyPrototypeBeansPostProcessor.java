@@ -33,7 +33,6 @@ public class DestroyPrototypeBeansPostProcessor implements BeanPostProcessor, Be
             if (beanFactory.isPrototype(beanName)) {
                 synchronized (prototypeBeans) {
                     prototypeBeans.add(bean);
-                    System.out.println(bean);
                 }
             }
         } catch (Exception e) {
@@ -55,7 +54,6 @@ public class DestroyPrototypeBeansPostProcessor implements BeanPostProcessor, Be
                     DisposableBean disposable = (DisposableBean) bean;
                     try {
                         disposable.destroy();
-                        System.out.println(bean);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
