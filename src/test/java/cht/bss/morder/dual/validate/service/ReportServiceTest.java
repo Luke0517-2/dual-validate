@@ -76,7 +76,7 @@ public class ReportServiceTest {
 		log.info("report uuid:{}", uuid);
 		assertEquals(report, reportService.getReportByUuid(uuid));
 
-		reportService.cleanUpReportByUuid(uuid);
+//		reportService.cleanUpReportByUuid(uuid);
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class ReportServiceTest {
 
 		File file = new File(root + File.separator + fileName + ".xlsx");
 		FileUtils.writeByteArrayToFile(file, datas);
-		reportService.cleanUpReportByUuid(uuid);
+//		reportService.cleanUpReportByUuid(uuid);
 	}
 
 	@Test
@@ -118,7 +118,7 @@ public class ReportServiceTest {
 
 		File file = new File(root + File.separator + fileName + ".zip");
 		FileUtils.writeByteArrayToFile(file, zip);
-		reportService.cleanUpReportByUuid(uuid);
+//		reportService.cleanUpReportByUuid(uuid);
 	}
 
 	@Test
