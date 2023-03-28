@@ -109,8 +109,8 @@ stages:
             curl -I -v --trace-time --max-time 7200 --connect-timeout 7200 -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
             ls $(Build.SourcesDirectory)/report
             
-            echo '清除目前的驗證測試，會清空相關測試資料'
-            curl -I -v --trace-time --max-time 3600 --connect-timeout 3600 --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/stopTest'
+            #echo '清除目前的驗證測試，會清空相關測試資料'
+            #curl -I -v --trace-time --max-time 3600 --connect-timeout 3600 --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/stopTest'
             
             echo ' 成功執行'
         continueOnError: false
