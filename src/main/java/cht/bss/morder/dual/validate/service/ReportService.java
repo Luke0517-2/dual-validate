@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.annotation.PostConstruct;
 
+import cht.bss.morder.dual.validate.Application;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ObjectUtils;
@@ -27,6 +28,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
@@ -71,8 +75,10 @@ public class ReportService {
 	public TriFunction<String, OffsetDateTime, List<TestCase>, Report> reportFactory;
 	
 	@Autowired
-	DestroyPrototypeBeansPostProcessor processor;
+	private DestroyPrototypeBeansPostProcessor processor;
 
+	@Autowired
+	private  ConfigurableApplicationContext context;
 	/**
 	 * Post construct.
 	 */
@@ -336,13 +342,20 @@ public class ReportService {
 		if (report != null) {
 			final String basePath = report.getBasePath();
 			FileUtils.deleteQuietly(new File(basePath));
-			this.uuidReportMap.remove(uuid);
-			cleanReportObject(report);
-			log.info("success remove :{}", uuid);
+			restart();
 		}
-		System.gc();		
 	}
-	
+	public void restart() {
+		ApplicationArguments args = context.getBean(ApplicationArguments.class);
+
+		Thread thread = new Thread(() -> {
+			context.close();
+			context = SpringApplication.run(Application.class, args.getSourceArgs());
+		});
+
+		thread.setDaemon(false);
+		thread.start();
+	}
 	public void cleanReportObject(Report report) {
 			processor.destroy();
 	}
