@@ -30,7 +30,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
@@ -78,7 +80,7 @@ public class ReportService {
 	private DestroyPrototypeBeansPostProcessor processor;
 
 	@Autowired
-	private  ConfigurableApplicationContext context;
+	private ApplicationContext applicationContext;
 	/**
 	 * Post construct.
 	 */
@@ -342,19 +344,11 @@ public class ReportService {
 		if (report != null) {
 			final String basePath = report.getBasePath();
 			FileUtils.deleteQuietly(new File(basePath));
-			restart();
+			shutDown();
 		}
 	}
-	public void restart() {
-		ApplicationArguments args = context.getBean(ApplicationArguments.class);
-
-		Thread thread = new Thread(() -> {
-			context.close();
-			context = SpringApplication.run(Application.class, args.getSourceArgs());
-		});
-
-		thread.setDaemon(false);
-		thread.start();
+	public void shutDown() {
+		((ConfigurableApplicationContext )applicationContext).close();
 	}
 	public void cleanReportObject(Report report) {
 			processor.destroy();
