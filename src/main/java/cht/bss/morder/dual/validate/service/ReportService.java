@@ -344,8 +344,7 @@ public class ReportService {
 		if (report != null) {
 			final String basePath = report.getBasePath();
 			FileUtils.deleteQuietly(new File(basePath));
-			shutDown();
-
+			System.exit(SpringApplication.exit(((ConfigurableApplicationContext )applicationContext), () -> 0));
 		}
 	}
 	public void shutDown() {
