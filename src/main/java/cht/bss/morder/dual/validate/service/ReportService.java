@@ -345,9 +345,11 @@ public class ReportService {
 			final String basePath = report.getBasePath();
 			FileUtils.deleteQuietly(new File(basePath));
 			shutDown();
+
 		}
 	}
 	public void shutDown() {
+		log.info("execute shutDown");
 		((ConfigurableApplicationContext )applicationContext).close();
 	}
 	public void cleanReportObject(Report report) {
