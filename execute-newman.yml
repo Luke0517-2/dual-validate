@@ -110,7 +110,7 @@ stages:
             
             echo '取得現行統計報表，產出Zip檔案'
             curl -I -v --trace-time --max-time 7200 --connect-timeout 7200 -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
-            var0=`ls $(Build.SourcesDirectory)/report`
+            var0=`ls $(Build.SourcesDirectory)/report | wc -l`
             if [[ $var0 -eq 1 ]]
             then
               echo "success downloand zip"
