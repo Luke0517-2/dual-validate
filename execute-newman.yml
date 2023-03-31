@@ -136,6 +136,7 @@ stages:
           script: |
             echo '清除目前的驗證測試，會清空相關測試資料'
             curl -v --trace-time --max-time 3600 --connect-timeout 3600 --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/stopTest'
+        displayName:  'stop test'     
 
       - task: oc-setup@2
         inputs:
@@ -161,6 +162,7 @@ stages:
             kubectl delete pod $i
             count=$(($count+1)) 
           done
+        displayName:  'download log & delete pod' 
 
       - task: PublishPipelineArtifact@1
         continueOnError: true
