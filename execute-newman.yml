@@ -108,17 +108,35 @@ stages:
             echo '透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對'
             newman run $(Build.SourcesDirectory)/$(dual-validate-postman-script) --env-var="baseUrl=$(baseUrl)" -d $(Build.SourcesDirectory)/$(floderName)/$(FILE_NAME).csv --global-var="uuid=$UUID" --folder 透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對
             
-            #echo '取得現行統計報表，產出Zip檔案'
-            #curl -I -v --trace-time --max-time 7200 --connect-timeout 7200 -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
-            #ls $(Build.SourcesDirectory)/report
-            
-            echo '清除目前的驗證測試，會清空相關測試資料'
-            curl -v --trace-time --max-time 3600 --connect-timeout 3600 --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/stopTest'
-            
-            echo ' 成功執行'
+            echo '取得現行統計報表，產出Zip檔案'
+            curl -I -v --trace-time --max-time 7200 --connect-timeout 7200 -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
+            var0=`ls $(Build.SourcesDirectory)/report`
+            if [[ $var0 -eq 1 ]]
+            then
+              echo "success downloand zip"
+            else
+              echo "try again"
+              curl -I -v --trace-time --max-time 7200 --connect-timeout 7200 -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
+            fi
+                        
+            echo '成功執行'
         continueOnError: false
         displayName: '執行雙軌驗證'
+
+      - task: PublishPipelineArtifact@1
+        continueOnError: true
+        inputs:
+          targetPath: $(Build.SourcesDirectory)/report
+          artifact: 'report'
+        displayName: '上傳 report'
         
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            echo '清除目前的驗證測試，會清空相關測試資料'
+            curl -v --trace-time --max-time 3600 --connect-timeout 3600 --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/stopTest'
+
       - task: oc-setup@2
         inputs:
           openshiftService: 'ocp-4.11'
@@ -126,7 +144,6 @@ stages:
         continueOnError: false 
 
       - script: |
-
           #切換ns
           oc project mbms-morder-feature
 
@@ -144,6 +161,7 @@ stages:
             kubectl delete pod $i
             count=$(($count+1)) 
           done
+          
       - task: PublishPipelineArtifact@1
         continueOnError: true
         inputs:
@@ -151,9 +169,3 @@ stages:
           artifact: 'logs'
         displayName: '上傳 logs'          
 
-      - task: PublishPipelineArtifact@1
-        continueOnError: true
-        inputs:
-          targetPath: $(Build.SourcesDirectory)/report
-          artifact: 'report'
-        displayName: '上傳 report'
