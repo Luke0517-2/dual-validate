@@ -118,12 +118,6 @@ stages:
             echo ' 成功執行'
         continueOnError: false
         displayName: '執行雙軌驗證'
-
-
-      - task: oc-setup@3
-        inputs:
-          connectionType: 'OpenShift Connection Service'
-          openshiftService: 'ocp-4.11'
         
       - task: oc-setup@2
         inputs:
