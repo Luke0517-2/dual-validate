@@ -126,6 +126,9 @@ stages:
         continueOnError: false 
 
       - script: |
+
+          oc project mbms-morder-feature
+          
           #取得所有dual-validate的pod
           varPod=`kubectl get pod | grep dual-validate | awk '{print $1}'`
 
