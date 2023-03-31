@@ -115,7 +115,7 @@ stages:
             then
               echo "success downloand zip"
             else
-              echo "try again"
+              echo "try again downloand zip"
               curl -I -v --trace-time --max-time 7200 --connect-timeout 7200 -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
             fi
                         
@@ -161,7 +161,7 @@ stages:
             kubectl delete pod $i
             count=$(($count+1)) 
           done
-          
+
       - task: PublishPipelineArtifact@1
         continueOnError: true
         inputs:
