@@ -113,6 +113,7 @@ stages:
             var0=`ls $(Build.SourcesDirectory)/report | wc -l`
             for i in {1..$(loopTimes)}
             do
+                    echo $i 'time'
                     if [[ $var0 -eq 1 ]]
                     then
                             echo 'success download'
