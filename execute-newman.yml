@@ -149,6 +149,7 @@ stages:
         continueOnError: false 
 
       - script: |
+          kubectl version --client
           #切換ns
           kubectl config use-context mbms-morder-feature/api-ocp-iisi-test:6443/admin
 
