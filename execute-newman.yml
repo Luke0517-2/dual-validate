@@ -113,13 +113,13 @@ stages:
             var0=`ls $(Build.SourcesDirectory)/report | wc -l`
             for i in {1..$(loopTimes)}
             do
+                    curl -I -v --trace-time --max-time 7200 --connect-timeout 7200 -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
                     echo $i 'time'
                     if [[ $var0 -eq 1 ]]
                     then
                             echo 'success download'
                             break
-                    fi
-                    curl -I -v --trace-time --max-time 7200 --connect-timeout 7200 -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
+                    fi                    
             done
 
             echo '成功執行'
