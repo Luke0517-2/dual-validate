@@ -150,22 +150,20 @@ stages:
         continueOnError: false 
 
       - script: |
-          kubectl version --client
-          #切換ns
-          kubectl config use-context "mbms-morder-feature/api-ocp-iisi-test:6443/$(hello)"
+
 
           #取得所有dual-validate的pod
-          varPods=`kubectl get pod | grep dual-validate | awk '{print $1}'`
+          varPods=`kubectl get pod -n mbms-morder-feature| grep dual-validate | awk '{print $1}'`
 
           count=0
           for i in $varPods; 
           do 
             #下載log
             echo generate $count"-logs"
-            kubectl logs $i -c dual-validate > $(Build.SourcesDirectory)/logs/$count"-logs".txt
+            kubectl logs $i -c dual-validate -n mbms-morder-feature > $(Build.SourcesDirectory)/logs/$count"-logs".txt
             #刪除pod，自動重啟
             echo delete "Pod" $i
-            kubectl delete pod $i
+            kubectl delete pod $i -n mbms-morder-feature
             count=$(($count+1)) 
           done
         displayName:  'download log & delete pod' 
