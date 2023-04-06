@@ -113,7 +113,7 @@ stages:
             
             for i in {1..$(loopTimes)}
             do
-                    curl -v --trace-time --max-time 7200 --connect-timeout 7200 -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
+                    curl -v --trace-time -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
                     var0=`ls $(Build.SourcesDirectory)/report | wc -l`
                     echo "report folder :" $var0
                     if [[ $var0 -eq 1 ]]
@@ -150,7 +150,7 @@ stages:
 
       - script: |
           #切換ns
-          oc project mbms-morder-feature
+          kubectl config set-context –current –namespace=mbms-morder-feature
 
           #取得所有dual-validate的pod
           varPods=`kubectl get pod | grep dual-validate | awk '{print $1}'`
