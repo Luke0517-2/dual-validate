@@ -150,7 +150,7 @@ stages:
 
       - script: |
           #切換ns
-          kubectl config set-context --current --namespace=mbms-morder-feature
+          kubectl config use-context mbms-morder-feature/api-ocp-iisi-test:6443/admin
 
           #取得所有dual-validate的pod
           varPods=`kubectl get pod | grep dual-validate | awk '{print $1}'`
