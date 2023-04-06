@@ -344,12 +344,20 @@ public class ReportService {
 		if (report != null) {
 			final String basePath = report.getBasePath();
 			FileUtils.deleteQuietly(new File(basePath));
-			System.exit(SpringApplication.exit(((ConfigurableApplicationContext )applicationContext), () -> 0));
 		}
 	}
 	public void shutDown() {
 		log.info("execute shutDown");
 		((ConfigurableApplicationContext )applicationContext).close();
+	}
+	public void restartContext(){
+		Thread thread = new Thread(() -> {
+			((ConfigurableApplicationContext )applicationContext).close();
+			applicationContext = SpringApplication.run(Application.class);
+		});
+		thread.setDaemon(false);
+		thread.start();
+
 	}
 	public void cleanReportObject(Report report) {
 			processor.destroy();
