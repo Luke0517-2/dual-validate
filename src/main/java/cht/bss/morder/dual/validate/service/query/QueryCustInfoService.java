@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import cht.bss.morder.dual.validate.vo.TestCase;
 public class QueryCustInfoService extends QueryService {
 
 	@Autowired
-	private QueryCustInfoInputFactory factory;
+	private ObjectProvider<ComparedData> comparedDataProvider;
 
 	@Override
 	protected List<ComparedData> queryData(TestCase testCase) {
@@ -29,7 +30,7 @@ public class QueryCustInfoService extends QueryService {
 	}
 
 	private ComparedData queryByCustId(TestCase testCase) {
-		ComparedData comparedData = factory.getComparedData(QueryCustinfoType.custbehavior, testCase);
+		ComparedData comparedData = comparedDataProvider.getObject(QueryCustinfoType.custbehavior, testCase, null);
 		CompletableFuture<ComparedData> result = queryResult(comparedData);
 		try {
 			return result.get();
@@ -40,7 +41,7 @@ public class QueryCustInfoService extends QueryService {
 	}
 
 	private ComparedData queryByTelnum(TestCase testCase) {
-		ComparedData comparedData = factory.getComparedData(QueryCustinfoType.telnum, testCase);
+		ComparedData comparedData = comparedDataProvider.getObject(QueryCustinfoType.telnum, testCase, null);
 		CompletableFuture<ComparedData> result = queryResult(comparedData);
 		try {
 			return result.get();

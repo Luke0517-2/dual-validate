@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -15,22 +16,31 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.annotation.PostConstruct;
 
+import cht.bss.morder.dual.validate.Application;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.function.TriFunction;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cht.bss.morder.dual.validate.common.CalendarUtil;
+import cht.bss.morder.dual.validate.common.DestroyPrototypeBeansPostProcessor;
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
 import cht.bss.morder.dual.validate.enums.CompareResultType;
 import cht.bss.morder.dual.validate.vo.ComparedData;
@@ -62,7 +72,15 @@ public class ReportService {
 
 	@Autowired
 	private ObjectMapper mapper;
+	
+	@Autowired
+	public TriFunction<String, OffsetDateTime, List<TestCase>, Report> reportFactory;
+	
+	@Autowired
+	private DestroyPrototypeBeansPostProcessor processor;
 
+	@Autowired
+	private ApplicationContext applicationContext;
 	/**
 	 * Post construct.
 	 */
@@ -202,10 +220,8 @@ public class ReportService {
 	public Report startReport() {
 		final UUID uuid = UUID.randomUUID();
 
-		final Report newReport = new Report();
-		newReport.setUuid(uuid.toString());
-		newReport.setStartDate(CalendarUtil.calendarToOffsetDateTime(Calendar.getInstance()));
-		newReport.setTestCases(new ArrayList<TestCase>());
+		Report newReport = reportFactory.apply(uuid.toString(), CalendarUtil.calendarToOffsetDateTime(Calendar.getInstance())
+				, new ArrayList<TestCase>());
 
 		final String basePath = String.format("%s/%s", this.outputPath, newReport.getUuid());
 		newReport.setBasePath(basePath);
@@ -240,6 +256,7 @@ public class ReportService {
 	 * @throws IOException            Signals that an I/O exception has occurred.
 	 */
 	public byte[] getCurrentReportWithZip(final Report report) throws InvalidFormatException, IOException {
+		log.info("正在產製報告，uuid :{}",report.getUuid());
 		final Date date = Date.from(report.getStartDate().toInstant());
 		final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 		final String excelFileName = String.format("report_%s.xlsx", sdf.format(date));
@@ -327,47 +344,22 @@ public class ReportService {
 		if (report != null) {
 			final String basePath = report.getBasePath();
 			FileUtils.deleteQuietly(new File(basePath));
-			this.uuidReportMap.remove(uuid,report);
-			cleanReportObject(report);
-			log.info("success remove :{}", uuid);
 		}
-		System.gc();		
 	}
-	
+	public void shutDown() {
+		log.info("execute shutDown");
+		((ConfigurableApplicationContext )applicationContext).close();
+	}
+	public void restartContext(){
+		Thread thread = new Thread(() -> {
+			((ConfigurableApplicationContext )applicationContext).close();
+			applicationContext = SpringApplication.run(Application.class);
+		});
+		thread.setDaemon(false);
+		thread.start();
+
+	}
 	public void cleanReportObject(Report report) {
-		try {
-				List<TestCase> listOfTestCase = report.getTestCases();
-				if(CollectionUtils.isNotEmpty(listOfTestCase)) {
-					listOfTestCase.parallelStream().forEach(testCase -> {
-						if(ObjectUtils.isNotEmpty(testCase)) {
-							List<ComparedData> listOfComparedData = testCase.getComparedData();
-							if(CollectionUtils.isNotEmpty(listOfComparedData)) {
-								listOfComparedData.parallelStream().forEach(comparedata -> {
-									if(ObjectUtils.isNotEmpty(comparedata)) {
-										QueryInput queryInput = comparedata.getQueryInput();
-											if(ObjectUtils.isNotEmpty(queryInput)) {
-												Params param = queryInput.getParam();
-													if(ObjectUtils.isNotEmpty(param)) {
-														QueryItem queryitem = param.getQueryitem();
-														queryitem = null; 
-														param = null;
-													}
-													queryInput = null;
-											}
-											comparedata = null;
-									}
-								});
-								listOfComparedData = null;
-							}				
-							testCase = null;
-						}			
-					});
-					listOfTestCase = null;
-				}
-				report = null;
-		}catch(NullPointerException exception) {
-			log.debug(exception.getMessage());
-		}
-		
+			processor.destroy();
 	}
 }

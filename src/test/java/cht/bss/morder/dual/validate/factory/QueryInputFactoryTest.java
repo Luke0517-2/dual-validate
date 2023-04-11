@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -27,8 +28,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class QueryInputFactoryTest {
 
-    @Autowired
-    private QueryInputFactory queryInputFactory;
+	@Autowired
+	private ObjectProvider<ComparedData> comparedDataProvider;
 
     private final String yesterday = LocalDate.now().minusDays(1).toString();
     private final MoqueryContractType[] specialContractType = {MoqueryContractType.SpecsvcidMN, MoqueryContractType.SpecsvcidMV, MoqueryContractType.SpecsvcidF3};
@@ -50,14 +51,14 @@ public class QueryInputFactoryTest {
         final String custid = "Helloworld";
         TestCase case1 = TestCase.builder().telNum(telnum).custId(custid).build();
 
-        ComparedData comparedDataForTelnum = queryInputFactory.getComparedData(QueryCustinfoType.telnum, case1);
+        ComparedData comparedDataForTelnum = comparedDataProvider.getObject(QueryCustinfoType.telnum, case1,null);
 
         validataComparedData(comparedDataForTelnum);
         assertEquals(comparedDataForTelnum.getData(), telnum);
         assertEquals(comparedDataForTelnum.getTable(), "telnum");
         assertEquals("querycustinfo", comparedDataForTelnum.getQueryService());
 
-        ComparedData comparedDataForCustbehavior = queryInputFactory.getComparedData(QueryCustinfoType.custbehavior, case1);
+        ComparedData comparedDataForCustbehavior = comparedDataProvider.getObject(QueryCustinfoType.custbehavior, case1,null);
 
         validataComparedData(comparedDataForCustbehavior);
         assertEquals(comparedDataForCustbehavior.getData(), custid);
@@ -71,7 +72,7 @@ public class QueryInputFactoryTest {
         final String custid = "Helloworld";
         TestCase case1 = TestCase.builder().telNum(telnum).custId(custid).build();
 
-        ComparedData comparedData = queryInputFactory.getComparedData(QrySalebehaviorType.qrySalebehavior, case1);
+        ComparedData comparedData = comparedDataProvider.getObject(QrySalebehaviorType.qrySalebehavior, case1,null);
         String telnumFromComparedData = getTelnumFromComparedData(comparedData);
         assertFalse(StringUtils.isEmpty(telnumFromComparedData));
         assertEquals(telnum, telnumFromComparedData);
@@ -91,7 +92,7 @@ public class QueryInputFactoryTest {
         MoqueryContractWithTelnumType[] enumValueAll = MoqueryContractWithTelnumType.values();
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
 
                     try {
@@ -115,7 +116,7 @@ public class QueryInputFactoryTest {
         MoqueryOrderNoType[] enumValueAll = MoqueryOrderNoType.values();
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
 
                     try {
@@ -144,7 +145,7 @@ public class QueryInputFactoryTest {
         Arrays.stream(enumValueAll)
                 .filter(enumValue -> !ArrayUtils.contains(specialContractType, enumValue))
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
 
                     try {
@@ -167,7 +168,7 @@ public class QueryInputFactoryTest {
 
         Arrays.stream(specialContractType)
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
 
                     try {
@@ -191,7 +192,7 @@ public class QueryInputFactoryTest {
         MoquerySpsvcType[] enumValueAll = MoquerySpsvcType.values();
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
 
                     try {
@@ -225,7 +226,7 @@ public class QueryInputFactoryTest {
         MoqueryTelnumType[] enumValueAll = MoqueryTelnumType.values();
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
@@ -248,7 +249,7 @@ public class QueryInputFactoryTest {
         MoqueryContractWithDateType[] enumValueAll = MoqueryContractWithDateType.values();
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
@@ -272,7 +273,7 @@ public class QueryInputFactoryTest {
         MoqueryContractWithMingGuoDateType[] enumValueAll = MoqueryContractWithMingGuoDateType.values();
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
@@ -296,7 +297,7 @@ public class QueryInputFactoryTest {
         MoqueryContractWithTwoDateType[] enumValueAll = MoqueryContractWithTwoDateType.values();
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
@@ -320,7 +321,7 @@ public class QueryInputFactoryTest {
         MoqueryTelnumWithDateType[] enumValueAll = MoqueryTelnumWithDateType.values();
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
@@ -344,7 +345,7 @@ public class QueryInputFactoryTest {
         MoqueryTelnumWithMingGuoDateType[] enumValueAll = MoqueryTelnumWithMingGuoDateType.values();
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
@@ -368,7 +369,7 @@ public class QueryInputFactoryTest {
         MoqueryTelnumWithTwoDateType[] enumValueAll = MoqueryTelnumWithTwoDateType.values();
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
@@ -392,7 +393,7 @@ public class QueryInputFactoryTest {
         MoqueryTelnumsWithDateType[] enumValueAll = MoqueryTelnumsWithDateType.values();
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
@@ -416,7 +417,7 @@ public class QueryInputFactoryTest {
         MoqueryRentCustNoType[] enumValueAll = MoqueryRentCustNoType.values();
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);
@@ -440,7 +441,7 @@ public class QueryInputFactoryTest {
         MoqueryTranscashIdType[] enumValueAll = MoqueryTranscashIdType.values();
         Arrays.stream(enumValueAll)
                 .forEach(value -> {
-                    ComparedData comparedData = queryInputFactory.getComparedData(value, case1);
+                    ComparedData comparedData = comparedDataProvider.getObject(null, case1 , value);
                     String jsonFilePath = "./jsonsample/" + value.toString().toLowerCase() + "_output.json";
                     try {
                         compareJsonWithEnum(value, jsonFilePath);

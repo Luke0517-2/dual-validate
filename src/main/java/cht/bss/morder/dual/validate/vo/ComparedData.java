@@ -2,7 +2,9 @@ package cht.bss.morder.dual.validate.vo;
 
 import java.util.Objects;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.DisposableBean;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -17,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @Builder
 @Slf4j
-public class ComparedData implements Cloneable {
+public class ComparedData implements Cloneable ,DisposableBean{
 
 	private QueryInput queryInput;
 	private String dataFromCht;
@@ -83,5 +85,11 @@ public class ComparedData implements Cloneable {
 
 	public ComparedData clone() {
 		return ComparedData.builder().queryInput(queryInput).table(table).data(data).queryService(queryService).build();
+	}
+
+	@Override
+	public void destroy() throws Exception {
+		if(ObjectUtils.isNotEmpty(this))
+			this.queryInput = null;
 	}
 }

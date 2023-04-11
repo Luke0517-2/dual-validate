@@ -73,7 +73,7 @@ spec:
                 /actuator/*      
         - name: JAVA_OPTS
           value: >-
-                -Xms1G -Xmx1536m -Dgit.branch=main
+                -Xms1G -Xmx7500m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
                 -Delastic.apm.service_name=dual-validate-9-0
@@ -92,7 +92,7 @@ spec:
 
         resources:
           requests: 
-            memory: 1Gi
+            memory: 8Gi
             cpu: 500m
           limits: 
             memory: 1536Mi

@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
+import cht.bss.morder.dual.validate.enums.QrySalebehaviorType;
 import cht.bss.morder.dual.validate.factory.QrySaleBehaviorInputFactory;
 import cht.bss.morder.dual.validate.vo.ComparedData;
 import cht.bss.morder.dual.validate.vo.TestCase;
@@ -17,7 +19,7 @@ import cht.bss.morder.dual.validate.vo.TestCase;
 public class QrysalebehaviorService extends QueryService {
 
 	@Autowired
-	private QrySaleBehaviorInputFactory factory;
+	private ObjectProvider<ComparedData> comparedDataProvider;
 
 	@Override
 	public List<ComparedData> queryData(TestCase testCase) {
@@ -33,7 +35,7 @@ public class QrysalebehaviorService extends QueryService {
 	}
 
 	private ComparedData buildQueryInputIntoComparedData(TestCase testCase) {
-		ComparedData comparedData = factory.getComparedData(testCase);
+		ComparedData comparedData = comparedDataProvider.getObject(QrySalebehaviorType.qrySalebehavior, testCase, null);
 		return comparedData;
 	}
 

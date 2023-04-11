@@ -6,8 +6,10 @@ pool:
 
 variables:
   dual-validate-postman-script: CHT_MOrder_Dual-validate.postman_collection.json
-  baseUrl: http://dual-validate-d210641.apps.ocp.iisi.test
+  baseUrl: http://dualvalidateservice-istio-system.apps.ocp.iisi.test/v0
   floderName: wildflyVerifyUnLoadDataExe
+  loopTimes : 2
+  namespace : mbms-morder-feature
 
 
 stages:
@@ -23,7 +25,8 @@ stages:
         inputs:
           targetType: 'inline'
           script: |
-            
+            sudo -- sh -c "echo '60.250.171.28    oauth-openshift.apps.ocp.iisi.test' >> /etc/hosts"
+            sudo -- sh -c "echo '60.250.171.28    api.ocp.iisi.test' >> /etc/hosts"
             sudo -- sh -c "echo '60.250.171.28    dual-validate-d210641.apps.ocp.iisi.test' >> /etc/hosts"
             sudo -- sh -c "echo '60.250.171.28    dualvalidateservice-istio-system.apps.ocp.iisi.test' >> /etc/hosts"
             
@@ -44,6 +47,8 @@ stages:
             echo '產生結果報表放置的目錄'
             mkdir $(Build.SourcesDirectory)/report
             echo $(Build.SourcesDirectory)/report
+
+            mkdir $(Build.SourcesDirectory)/logs
         displayName: 'set env'
 
       - task: NodeTool@0
@@ -63,10 +68,9 @@ stages:
 
             date1=$(date +%Y%m%d)                # 今天的日期
             fileName=$(floderName)_${date1}      # 設定檔名
-            
             # 在電話前後加入雙引號
-            sed -i -e 's/^0/"0/g' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv
-            sed -i -e 's/,/",/g' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv
+            #sed -i -e 's/^0/"0/g' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv
+            #sed -i -e 's/,/",/g' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv
 
             str1='"telNum","custId"'
             str2=$(sed -n '1,1p' $(Build.SourcesDirectory)/$(floderName)/${fileName}.csv)
@@ -106,20 +110,68 @@ stages:
             echo '透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對'
             newman run $(Build.SourcesDirectory)/$(dual-validate-postman-script) --env-var="baseUrl=$(baseUrl)" -d $(Build.SourcesDirectory)/$(floderName)/$(FILE_NAME).csv --global-var="uuid=$UUID" --folder 透過聯單號碼取得既有系統的聯單並進行新舊查核機制比對
             
-            echo '取得現行統計報表，產出Zip檔案'
-            curl -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
-            ls $(Build.SourcesDirectory)/report
+            echo '取得現行統計報表，產出Zip檔案'            
             
-            echo '清除目前的驗證測試，會清空相關測試資料'
-            curl --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/stopTest'
-            
-            echo ' 成功執行'
+            for i in {1..$(loopTimes)}
+            do
+                    curl -v --trace-time -o $(Build.SourcesDirectory)/report/report.zip --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/currentReportWithZip'
+                    var0=`ls $(Build.SourcesDirectory)/report | wc -l`
+                    echo "report folder :" $var0
+                    if [[ $var0 -eq 1 ]]
+                    then
+                            echo 'success download'
+                            break
+                    fi                    
+            done
+
+            echo '成功執行'
         continueOnError: false
         displayName: '執行雙軌驗證'
-        
+
       - task: PublishPipelineArtifact@1
         continueOnError: true
         inputs:
           targetPath: $(Build.SourcesDirectory)/report
           artifact: 'report'
         displayName: '上傳 report'
+        
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            echo '清除目前的驗證測試，會清空相關測試資料'
+            curl -v --trace-time --max-time 3600 --connect-timeout 3600 --request GET -H "uuid: $UUID" '$(baseUrl)/cht/validate/stopTest'
+        displayName:  'stop test'     
+
+      - task: oc-setup@2
+        inputs:
+          openshiftService: 'ocp-4.11'
+          version: '4.9.28'
+        continueOnError: false 
+
+      - script: |
+
+
+          #取得所有dual-validate的pod
+          varPods=`kubectl get pod -n $(namespace) | grep dual-validate | awk '{print $1}'`
+
+          count=0
+          for i in $varPods; 
+          do 
+            #下載log
+            echo generate $count"-logs"
+            kubectl logs $i -c dual-validate -n $(namespace) > $(Build.SourcesDirectory)/logs/$count"-logs".txt
+            #刪除pod，自動重啟
+            echo delete "Pod" $i
+            kubectl delete pod $i -n $(namespace)
+            count=$(($count+1)) 
+          done
+        displayName:  'download log & delete pod' 
+
+      - task: PublishPipelineArtifact@1
+        continueOnError: true
+        inputs:
+          targetPath: $(Build.SourcesDirectory)/logs
+          artifact: 'logs'
+        displayName: '上傳 logs'          
+
