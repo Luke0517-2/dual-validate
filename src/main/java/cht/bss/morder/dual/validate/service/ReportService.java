@@ -139,7 +139,7 @@ public class ReportService {
 
 		final XSSFSheet sheet = workbook.createSheet("TestCases");
 
-		final String[] columns = new String[] { "比尝門號", "證號", "比尝類別", "比尝坃數or表格", "坃數欄佝或資料", "比尝CHT與IISI絝果", "說明資訊",
+		final String[] columns = new String[] { "比對門號", "證號", "比對類別", "比對參數or表格", "參數欄位或資料", "比對CHT與IISI結果", "說明資訊",
 				"檔案路徑" };
 		insertTitleRows(sheet, columns);
 		insertData(sheet, report);
@@ -185,7 +185,7 @@ public class ReportService {
 							dataRow.createCell(5).setCellValue(comparedData.getComparedResult(mapper).getValue());
 						} catch (JsonProcessingException e) {
 							dataRow.createCell(5).setCellValue(CompareResultType.NONEQUAL.getValue());
-							dataRow.createCell(6).setCellValue("文字資料丝一致，轉戝json絝構比較時出錯");
+							dataRow.createCell(6).setCellValue("文字資料不一致，轉成json結構比較時出錯");
 						}
 					} else {
 						try {
@@ -193,7 +193,7 @@ public class ReportService {
 							dataRow.createCell(6).setCellValue(error);
 						} catch (JsonProcessingException e) {
 							dataRow.createCell(5).setCellValue(CompareResultType.NONEQUAL.getValue());
-							dataRow.createCell(6).setCellValue("文字資料丝一致，轉戝json絝構比較時出錯");
+							dataRow.createCell(6).setCellValue("文字資料不一致，轉成json結構比較時出錯");
 						}
 					}
 
@@ -208,7 +208,7 @@ public class ReportService {
 		if (dataInComparedData!= null &&  !(dataInComparedData.equals("null"))) {
 			return dataInComparedData;
 		} else {
-			return "無尝應坃數，丝須進行後續查詢";
+			return "無對應參數，不須進行後續查詢";
 		}
 	}
 
