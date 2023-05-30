@@ -1,0 +1,39 @@
+{
+
+  "BMS":{
+
+    "result":"0",
+
+    "datalist":[
+
+      {
+
+        "chtoffice":"34",
+
+        "result":"0",
+
+        "(expression)":"2007-06-04",
+
+        "reason":"1",
+
+        "outopcode":"CHM",
+
+        "oprcode":"587372",
+
+        "ss7rn":"1439",
+
+        "outopoffice":"0000",
+
+        "status":"7"
+
+      }
+
+    ],
+
+    "tablename":"npinrecord",
+
+    "querytype":"4"
+
+  }
+
+}

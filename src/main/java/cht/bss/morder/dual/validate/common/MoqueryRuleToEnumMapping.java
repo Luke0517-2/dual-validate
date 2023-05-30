@@ -37,6 +37,9 @@ public class MoqueryRuleToEnumMapping {
 			case "eformapplyrec":
 				mapping.add(MoqueryTelnumType.Eformapplyrec);
 				break;
+			case "npinrecord":
+				mapping.add(MoqueryTelnumType.Npinrecord);
+				break;
 			case "contractret":
 				mapping.add(MoqueryContractWithTelnumType.Contractret);
 				break;

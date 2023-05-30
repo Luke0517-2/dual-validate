@@ -95,7 +95,6 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 				result = readFile("./jsonsample/agentmobileset_output.json");
 				break;
 			case "specialsvc" :
-				System.out.println();
 				if("MN".equals(input.getParam().getQueryitem().getContent().split("&")[1]))
 					result = readFile("./jsonsample/specsvcidmn_output.json");
 				else if("MV".equals(input.getParam().getQueryitem().getContent().split("&")[1]))
@@ -112,6 +111,9 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 			case "eformapplyrec" :
 				result = readFile("./jsonsample/eformapplyrec_output.json");
 				break;
+			case "npinrecord" :			
+				result = readFile("./jsonsample/npinrecord_output.json");
+				break;				
 			case "contractret" :
 				result = readFile("./jsonsample/contractret_output.json");
 				break;
