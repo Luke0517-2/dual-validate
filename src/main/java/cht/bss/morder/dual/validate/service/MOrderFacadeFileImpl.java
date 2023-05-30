@@ -111,10 +111,8 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 			case "eformapplyrec" :
 				result = readFile("./jsonsample/eformapplyrec_output.json");
 				break;
-			case "npinrecord" :
-				System.out.println(input);				
-				result = readFile("./jsonsample/eformapplyrec_output.json");
-				System.out.println(result);
+			case "npinrecord" :			
+				result = readFile("./jsonsample/npinrecord_output.json");
 				break;				
 			case "contractret" :
 				result = readFile("./jsonsample/contractret_output.json");
