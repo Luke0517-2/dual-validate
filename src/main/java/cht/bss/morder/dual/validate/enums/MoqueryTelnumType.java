@@ -11,6 +11,7 @@ public enum MoqueryTelnumType implements MoqueryEnumInterface {
 	Delcustinfoapply("delcustinfoapply", "1", "%s"),
 	Eformapplyrec("eformapplyrec", "1", "%s"), 
 	Numberusage("numberusage", "1", "%s"),//get contract
+	Npinrecord("npinrecord", "4" , "%s"),
 	;
 
 	private final String tableName;
