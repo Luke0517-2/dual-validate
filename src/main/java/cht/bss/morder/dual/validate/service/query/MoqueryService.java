@@ -201,6 +201,7 @@ public class MoqueryService extends QueryService {
 		ComparedData obj = comparedForCht.clone();
 		obj.setDataFromCht(comparedForCht.getDataFromCht());
 		obj.setDataFromIISI(comparedForIISI.getDataFromIISI());
+		obj.setContentForIISI(comparedForIISI.getData());
 
 		showErrorMsgWhenCheckMoquery(obj);
 

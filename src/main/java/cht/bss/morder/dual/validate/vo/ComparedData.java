@@ -28,6 +28,7 @@ public class ComparedData implements Cloneable ,DisposableBean{
 	private String table;
 	private String data;
 	private String error;
+	private String contentForIISI;
 
 
 	protected boolean equals() {
