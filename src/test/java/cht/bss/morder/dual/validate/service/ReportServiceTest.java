@@ -184,15 +184,15 @@ public class ReportServiceTest {
 	}
 
 	/**
-	 * 取出F2儲存格value。 (CHT、IISI的比較結果固定放在Excel sheet的F2儲存格。)
+	 * 取出G2儲存格value。 (CHT、IISI的比較結果固定放在Excel sheet的G2儲存格。)
 	 * 
 	 * @param filePath 目標Excel檔路徑
-	 * @return 位置為F2 cell value
+	 * @return 位置為G2 cell value
 	 */
 	private String retrieveValueOfExcelCellF2(XSSFWorkbook book) {
 		XSSFSheet sheet = (XSSFSheet) book.getSheetAt(0);
 
-		CellReference cellReference = new CellReference("F2");
+		CellReference cellReference = new CellReference("G2");
 		Row row = sheet.getRow(cellReference.getRow());
 		Cell cell = row.getCell(cellReference.getCol());
 		String cellValueOfCompareResult = cell.getStringCellValue();
