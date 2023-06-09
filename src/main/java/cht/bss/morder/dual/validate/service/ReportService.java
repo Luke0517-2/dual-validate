@@ -140,7 +140,7 @@ public class ReportService {
 		final XSSFSheet sheet = workbook.createSheet("TestCases");
 
 		final String[] columns = new String[] { "比對門號", "證號", "比對類別", "比對參數or表格", "參數欄位或資料", "比對CHT與IISI結果", "說明資訊",
-				"檔案路徑" };
+				"檔案路徑" , "Data from CHT" , "Data from IISI"};
 		insertTitleRows(sheet, columns);
 		insertData(sheet, report);
 	}
@@ -182,7 +182,12 @@ public class ReportService {
 					String error = comparedData.getError();
 					if (StringUtils.isEmpty(error)) {
 						try {
-							dataRow.createCell(5).setCellValue(comparedData.getComparedResult(mapper).getValue());
+							String compareResult = comparedData.getComparedResult(mapper).getValue();
+							dataRow.createCell(5).setCellValue(compareResult);
+							if ("不相同".equals(compareResult)){
+								dataRow.createCell(8).setCellValue(comparedData.getDataFromCht());
+								dataRow.createCell(9).setCellValue(comparedData.getDataFromIISI());
+							}
 						} catch (JsonProcessingException e) {
 							dataRow.createCell(5).setCellValue(CompareResultType.NONEQUAL.getValue());
 							dataRow.createCell(6).setCellValue("文字資料不一致，轉成json結構比較時出錯");

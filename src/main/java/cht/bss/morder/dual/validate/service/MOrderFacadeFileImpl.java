@@ -83,7 +83,7 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 		stringBuilder.append(System.currentTimeMillis());
 		return stringBuilder.toString();
 	}
-
+private int i = 0;
 	private String responseFromMoquery(QueryInput input) {
 		String tablename = input.getParam().getQueryitem().getTablename();
 		String result = StringUtils.EMPTY;
@@ -103,8 +103,15 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 					result = readFile("./jsonsample/specsvcidf3_output.json");
 				break;
 			case "agent5id" :
-				result = readFile("./jsonsample/agent5id_output.json");
-				break;
+				if (i == 0){
+					result = readFile("./jsonsample/agent5id_output.json");
+					i++;
+					break;
+				}else {
+					result = readFile("./jsonsample/delcustinfoapply_output.json");
+					break;
+				}
+
 			case "delcustinfoapply" :
 				result = readFile("./jsonsample/delcustinfoapply_output.json");
 				break;
