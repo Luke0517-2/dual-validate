@@ -1,0 +1,12 @@
+{
+  "BMS": {
+    "result": "0",
+    "datalist": [
+      {
+        "contractid": "888888"
+      }
+    ],
+    "tablename": "numberusage",
+    "querytype": "1"
+  }
+}

@@ -22,6 +22,9 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 	@Autowired
 	private ObjectMapper mapper;
 
+	private int testDiff = 0;
+	private int testDiff2 = 0;
+
 	@Override
 	public String queryIISI(QueryInput queryInput) {
 //		try {
@@ -83,17 +86,32 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 		stringBuilder.append(System.currentTimeMillis());
 		return stringBuilder.toString();
 	}
-private int i = 0;
+
 	private String responseFromMoquery(QueryInput input) {
 		String tablename = input.getParam().getQueryitem().getTablename();
 		String result = StringUtils.EMPTY;
 		switch(tablename) {
-			case "numberusage" : 
-				result = readFile("./jsonsample/numberusage_output.json");
-				break;
+			case "numberusage" :
+				if (testDiff == 0){
+					result = readFile("./jsonsample/numberusage_output.json");
+					testDiff++;
+					break;
+				}else {
+					result = readFile("./jsonsample/numberusage_output2.json");
+					testDiff = 0;
+					break;
+				}
 			case "agentmobset" :
-				result = readFile("./jsonsample/agentmobileset_output.json");
-				break;
+				if (testDiff == 0){
+					result = readFile("./jsonsample/agentmobileset_output.json");
+					testDiff++;
+					break;
+				}else {
+					result = readFile("./jsonsample/agentmobileset_output2.json");
+					testDiff = 0;
+					break;
+				}
+
 			case "specialsvc" :
 				if("MN".equals(input.getParam().getQueryitem().getContent().split("&")[1]))
 					result = readFile("./jsonsample/specsvcidmn_output.json");
@@ -103,12 +121,13 @@ private int i = 0;
 					result = readFile("./jsonsample/specsvcidf3_output.json");
 				break;
 			case "agent5id" :
-				if (i == 0){
+				if (testDiff == 0){
 					result = readFile("./jsonsample/agent5id_output.json");
-					i++;
+					testDiff++;
 					break;
 				}else {
 					result = readFile("./jsonsample/delcustinfoapply_output.json");
+					testDiff = 0;
 					break;
 				}
 
@@ -290,8 +309,16 @@ private int i = 0;
 				result = readFile("./jsonsample/workingrecord_output.json");
 				break;
 			case "contract":
-				result = readFile("./jsonsample/contract_output.json");
-				break;
+				if (testDiff2 == 0){
+					result = readFile("./jsonsample/contract_output.json");
+					testDiff2++;
+					break;
+				}else {
+					result = readFile("./jsonsample/contract_output2.json");
+					testDiff2 = 0;
+					break;
+				}
+
 		}
 		if(StringUtils.isNotBlank(result)) {
 			StringBuilder stringBuilder = new StringBuilder();
