@@ -5,12 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -63,11 +58,11 @@ import net.lingala.zip4j.model.enums.EncryptionMethod;
 @Slf4j
 public class ReportService {
 
-	/** 用來放置比尝靎程中所產生的比尝檔案，坯以杝供匯出．. */
+	/** 用來放置比對過程中所產生的比對檔案，可以提供匯出．. */
 	@Value("${compare.output.path}")
 	private String outputPath;
 
-	/** 有多個測試報告坌時執行. */
+	/** 有多個測試報告同時執行. */
 	private ConcurrentMap<String, Report> uuidReportMap;
 
 	@Autowired
@@ -137,16 +132,27 @@ public class ReportService {
 	 */
 	protected void generateExcelByReport(XSSFWorkbook workbook, Report report) throws IOException {
 
+		/**
+		 * Sheet TestCases - show every api compare result
+		 */
 		final XSSFSheet sheet = workbook.createSheet("TestCases");
 
 		final String[] columns = new String[] { "比對門號", "證號", "比對類別", "比對參數or表格", "CHT參數欄位或資料","IISI參數欄位或資料" ,"比對CHT與IISI結果", "說明資訊",
 				"檔案路徑" , "Data from CHT" , "Data from IISI"};
 		insertTitleRows(sheet, columns);
 		insertData(sheet, report);
-	}
 
+		/**
+		 * Sheet Result - show every phoneNumber with customerID compare result
+		 */
+		final XSSFSheet sheetForResult = workbook.createSheet("Result");
+
+		final String[] columnsForResult = new String[] { "比對門號", "證號", "門號比對結果"};
+		insertTitleRows(sheetForResult, columnsForResult);
+		insertResult(sheetForResult, report);
+	}
 	/**
-	 * 設定Excel顯示欄佝坝稱
+	 * 設定Excel顯示欄位名稱
 	 * 
 	 * @param sheet
 	 * @param columns
@@ -186,6 +192,7 @@ public class ReportService {
 							String compareResult = comparedData.getComparedResult(mapper).getValue();
 							dataRow.createCell(6).setCellValue(compareResult);
 							if ("不相同".equals(compareResult)){
+								testCase.setAllCorrect(false);
 								dataRow.createCell(9).setCellValue(comparedData.getDataFromCht());
 								dataRow.createCell(10).setCellValue(comparedData.getDataFromIISI());
 							}
@@ -209,6 +216,30 @@ public class ReportService {
 		}
 	}
 
+	/**
+	 * 產製"門號"、"證號"，比對結果
+	 * 完全一致 -> 門號正常
+	 * 有不相同 -> 有差異
+	 * @param sheet
+	 * @param report
+	 */
+	private void insertResult(XSSFSheet sheet, Report report){
+		List<TestCase> testCases = report.getTestCases();
+		int rowNum = 0;
+		for (final TestCase testCase : testCases) {
+
+			final Row dataRow = sheet.createRow(++rowNum);
+			final boolean isAllCorrect = testCase.isAllCorrect();
+
+			dataRow.createCell(0).setCellValue(testCase.getTelNum());
+			dataRow.createCell(1).setCellValue(testCase.getCustId());
+			if (isAllCorrect)
+				dataRow.createCell(2).setCellValue(CompareResultType.NORMAL.getValue());
+			else
+				dataRow.createCell(2).setCellValue(CompareResultType.DIFF.getValue());
+		}
+	}
+
 	private String showDataInReport(ComparedData comparedData) {
 		String dataInComparedData = comparedData.getData();
 		if (dataInComparedData!= null &&  !(dataInComparedData.equals("null"))) {
@@ -223,7 +254,7 @@ public class ReportService {
 		if (dataInComparedData!= null &&  !(dataInComparedData.equals("null"))) {
 			return dataInComparedData;
 		} else {
-			return showDataInReport(comparedData);
+			return "null";
 		}
 	}
 
@@ -263,7 +294,7 @@ public class ReportService {
 	}
 
 	/**
-	 * 將測試報告與測試靎程中所產生的轉杛檔案一併打包戝ZIP檔案.
+	 * 將測試報告與測試過程中所產生的轉換檔案一併打包成ZIP檔案.
 	 *
 	 * @param report the current report
 	 * @return the current report with zip
@@ -281,7 +312,6 @@ public class ReportService {
 				.append(report.getUuid());
 		final File excelFile = new File(uuidPath.toString() + File.separator + excelFileName);
 		FileUtils.writeByteArrayToFile(excelFile, excelStream);
-
 		final File uuidFolder = new File(uuidPath.toString());
 
 		byte[] byteArray = getZipStream(uuidFolder);

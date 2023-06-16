@@ -8,10 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 //import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * @author 1909002
@@ -43,7 +40,10 @@ public class TestCase implements Cloneable {
 	private String rentcustno;
 	private String transcashId;
 
-
+	/**
+	 * 因應中華提出需求 "門號比對一致額外顯示標記"
+	 */
+	private boolean isAllCorrect = true;
 
 	/**
 	 * 顯示錯誤原因

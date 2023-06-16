@@ -4,35 +4,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.SpreadsheetVersion;
-import org.apache.poi.ss.formula.udf.UDFFinder;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.DataFormat;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Name;
-import org.apache.poi.ss.usermodel.PictureData;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.SheetVisibility;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -76,7 +58,7 @@ public class ReportServiceTest {
 		log.info("report uuid:{}", uuid);
 		assertEquals(report, reportService.getReportByUuid(uuid));
 
-//		reportService.cleanUpReportByUuid(uuid);
+		reportService.cleanUpReportByUuid(uuid);
 	}
 
 	@Test
@@ -97,7 +79,7 @@ public class ReportServiceTest {
 
 		File file = new File(root + File.separator + fileName + ".xlsx");
 		FileUtils.writeByteArrayToFile(file, datas);
-//		reportService.cleanUpReportByUuid(uuid);
+		reportService.cleanUpReportByUuid(uuid);
 	}
 
 	@Test
@@ -118,7 +100,7 @@ public class ReportServiceTest {
 
 		File file = new File(root + File.separator + fileName + ".zip");
 		FileUtils.writeByteArrayToFile(file, zip);
-//		reportService.cleanUpReportByUuid(uuid);
+		reportService.cleanUpReportByUuid(uuid);
 	}
 
 	@Test
@@ -126,8 +108,8 @@ public class ReportServiceTest {
 	void test_checkSingleComparedDataResult() throws IOException {
 
 		List<String[]> assertEqualsPair = new ArrayList<>();
-//		assertEqualsPair.add(new String[] { null, null });
-//		assertEqualsPair.add(new String[] { null, "" });
+		assertEqualsPair.add(new String[] { null, null });
+		assertEqualsPair.add(new String[] { null, "" });
 		assertEqualsPair.add(new String[] { jsonCase1, jsonCase1 });
 		assertEqualsPair.add(new String[] { jsonStructureError, jsonStructureError });
 

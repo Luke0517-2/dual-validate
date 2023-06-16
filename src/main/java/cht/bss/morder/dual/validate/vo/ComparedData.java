@@ -2,8 +2,12 @@ package cht.bss.morder.dual.validate.vo;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.JsonParser;
+import net.minidev.json.JSONValue;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.DisposableBean;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,10 +41,10 @@ public class ComparedData implements Cloneable ,DisposableBean{
 
 	/**
 	 * 回傳dataFromCht與dataFromIISI的比對結果。
-	 * 
+	 *
 	 * @return
-	 * @throws JsonProcessingException 
-	 * @throws JsonMappingException 
+	 * @throws JsonProcessingException
+	 * @throws JsonMappingException
 	 */
 	public CompareResultType getComparedResult(ObjectMapper mapper) throws JsonMappingException, JsonProcessingException {
 		if (StringUtils.isEmpty(getDataFromCht()) && StringUtils.isEmpty(getDataFromIISI())) {
@@ -56,8 +60,8 @@ public class ComparedData implements Cloneable ,DisposableBean{
 
 	/**
 	 * 對dataFromCht與dataFromIISI，進行JsonNode比對。
-	 * @param mapper 
-	 * 
+	 * @param mapper
+	 *
 	 * @return
 	 * @throws JsonProcessingException 
 	 * @throws JsonMappingException 
@@ -68,9 +72,14 @@ public class ComparedData implements Cloneable ,DisposableBean{
 		if (jsonDataFromCht.equals(jsonDataFromIISI)) {
 			return CompareResultType.EQUAL;
 		} else {
-			log.error("Data From Cht :{}", getDataFromCht());
-			log.error("Data From IISI :{}", getDataFromIISI());
-			return CompareResultType.NONEQUAL;
+			try {
+				JSONAssert.assertEquals(getDataFromCht(),getDataFromIISI(),false);
+				return CompareResultType.EQUAL;
+			}catch (AssertionError exception){
+				log.error("Data From Cht :{}", getDataFromCht());
+				log.error("Data From IISI :{}", getDataFromIISI());
+				return CompareResultType.NONEQUAL;
+			}
 		}
 	}
 
