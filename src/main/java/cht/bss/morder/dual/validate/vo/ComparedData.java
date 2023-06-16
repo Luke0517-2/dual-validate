@@ -1,10 +1,6 @@
 package cht.bss.morder.dual.validate.vo;
 
-import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.gson.JsonParser;
-import net.minidev.json.JSONValue;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.skyscreamer.jsonassert.JSONAssert;
