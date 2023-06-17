@@ -99,7 +99,7 @@ public class ComparedData implements Cloneable ,DisposableBean{
 			this.queryInput = null;
 	}
 
-	/*Add IISI param , this method only suitable for CHT&IISI must same like phoneNumber or date*/
+	/*Add IISI param , this method only suitable for CHT&IISI param must same, like phoneNumber or date*/
 	public void addIISIParam(){
 		this.setContentForIISI(this.getData());
 	}
