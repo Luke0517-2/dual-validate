@@ -43,6 +43,7 @@ public class TestCase implements Cloneable {
 	/**
 	 * 因應中華提出需求 "門號比對一致額外顯示標記"
 	 */
+	@JsonIgnore
 	private boolean isAllCorrect = true;
 
 	/**
