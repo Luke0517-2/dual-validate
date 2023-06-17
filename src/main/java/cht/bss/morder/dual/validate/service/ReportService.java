@@ -21,6 +21,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -191,22 +192,24 @@ public class ReportService {
 					String error = comparedData.getError();
 					if (StringUtils.isEmpty(error)) {
 						try {
-							String compareResult = comparedData.getComparedResult(mapper).getValue();
+							String compareResult = comparedData.getComparedResult().getValue();
 							dataRow.createCell(6).setCellValue(compareResult);
 							if ("不相同".equals(compareResult)){
 								testCase.setAllCorrect(false);
 								dataRow.createCell(9).setCellValue(comparedData.getDataFromCht());
 								dataRow.createCell(10).setCellValue(comparedData.getDataFromIISI());
 							}
-						} catch (JsonProcessingException e) {
+						} catch (JSONException e) {
+							log.error(e.getMessage());
 							dataRow.createCell(6).setCellValue(CompareResultType.NONEQUAL.getValue());
 							dataRow.createCell(7).setCellValue("文字資料不一致，轉成json結構比較時出錯");
 						}
 					} else {
 						try {
-							dataRow.createCell(6).setCellValue(comparedData.getComparedResult(mapper).getValue());
+							dataRow.createCell(6).setCellValue(comparedData.getComparedResult().getValue());
 							dataRow.createCell(7).setCellValue(error);
-						} catch (JsonProcessingException e) {
+						} catch (JSONException e) {
+							log.error(e.getMessage());
 							dataRow.createCell(6).setCellValue(CompareResultType.NONEQUAL.getValue());
 							dataRow.createCell(7).setCellValue("文字資料不一致，轉成json結構比較時出錯");
 						}
