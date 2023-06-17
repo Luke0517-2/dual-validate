@@ -183,8 +183,10 @@ public class ReportService {
 					dataRow.createCell(1).setCellValue(testCase.getCustId());
 					dataRow.createCell(2).setCellValue(comparedData.getQueryService());
 					dataRow.createCell(3).setCellValue(comparedData.getTable());
-					dataRow.createCell(4).setCellValue(showDataInReport(comparedData));
-					dataRow.createCell(5).setCellValue(contentForIISI(comparedData));
+					/*CHT param*/
+					dataRow.createCell(4).setCellValue(showDataInReport(comparedData.getData()));
+					/*IISI param*/
+					dataRow.createCell(5).setCellValue(showDataInReport(comparedData.getContentForIISI()));
 
 					String error = comparedData.getError();
 					if (StringUtils.isEmpty(error)) {
@@ -240,21 +242,11 @@ public class ReportService {
 		}
 	}
 
-	private String showDataInReport(ComparedData comparedData) {
-		String dataInComparedData = comparedData.getData();
-		if (dataInComparedData!= null &&  !(dataInComparedData.equals("null"))) {
-			return dataInComparedData;
+	private String showDataInReport(String paramInComparedData) {
+		if (paramInComparedData!= null &&  !("null".equals(paramInComparedData))) {
+			return paramInComparedData;
 		} else {
 			return "無對應參數，不須進行後續查詢";
-		}
-	}
-
-	private String contentForIISI(ComparedData comparedData){
-		String dataInComparedData = comparedData.getContentForIISI();
-		if (dataInComparedData!= null &&  !(dataInComparedData.equals("null"))) {
-			return dataInComparedData;
-		} else {
-			return "null";
 		}
 	}
 

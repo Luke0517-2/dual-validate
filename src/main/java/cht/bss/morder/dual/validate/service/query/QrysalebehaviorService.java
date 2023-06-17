@@ -36,6 +36,7 @@ public class QrysalebehaviorService extends QueryService {
 
 	private ComparedData buildQueryInputIntoComparedData(TestCase testCase) {
 		ComparedData comparedData = comparedDataProvider.getObject(QrySalebehaviorType.qrySalebehavior, testCase, null);
+		comparedData.addIISIParam();
 		return comparedData;
 	}
 

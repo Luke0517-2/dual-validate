@@ -13,8 +13,8 @@
       "type": "mobile"
     },
     {
-      "number": "000000000",
-      "type": "home"
+      "type": "home",
+      "number": "000000000"
     }
   ]
 }

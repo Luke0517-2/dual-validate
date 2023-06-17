@@ -256,7 +256,9 @@ public class MoqueryService extends QueryService {
 
 		for (ArrayList<MoqueryEnumInterface> targetTelnumTypeArray : totalOfQueryTelnumType) {
 			for (MoqueryEnumInterface moqueryOftelnumType : targetTelnumTypeArray) {
-				queryTelnumList.add(comparedDataProvider.getObject(null, testCase,moqueryOftelnumType));
+				ComparedData comparedData = comparedDataProvider.getObject(null, testCase, moqueryOftelnumType);
+				comparedData.addIISIParam();
+				queryTelnumList.add(comparedData);
 			}
 		}
 

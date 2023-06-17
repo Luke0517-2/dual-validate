@@ -31,6 +31,7 @@ public class QueryCustInfoService extends QueryService {
 
 	private ComparedData queryByCustId(TestCase testCase) {
 		ComparedData comparedData = comparedDataProvider.getObject(QueryCustinfoType.custbehavior, testCase, null);
+		comparedData.addIISIParam();
 		CompletableFuture<ComparedData> result = queryResult(comparedData);
 		try {
 			return result.get();
@@ -42,6 +43,7 @@ public class QueryCustInfoService extends QueryService {
 
 	private ComparedData queryByTelnum(TestCase testCase) {
 		ComparedData comparedData = comparedDataProvider.getObject(QueryCustinfoType.telnum, testCase, null);
+		comparedData.addIISIParam();
 		CompletableFuture<ComparedData> result = queryResult(comparedData);
 		try {
 			return result.get();
