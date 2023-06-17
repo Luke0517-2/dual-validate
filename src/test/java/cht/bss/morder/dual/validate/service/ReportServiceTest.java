@@ -7,9 +7,12 @@ import static org.mockito.Mockito.mock;
 import java.io.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
@@ -267,5 +270,41 @@ public class ReportServiceTest {
 		report.setTestCases(caseList);
 
 		return report;
+	}
+
+	@Test
+	public void testUniqueTestCase(){
+		HashMap<String, Integer> map = new HashMap<>();
+		String phone1 = "09123";
+		String phone2 = "09456";
+		String superPhone = "88888888";
+		String cust1 = "A1234";
+		String cust2 = "A5678";
+		String superCust = "A8888888";
+
+		map.put(StringUtils.join(phone1,cust1),1);
+		map.put(StringUtils.join(phone1,cust2),11);
+		map.put(StringUtils.join(phone2,cust1),2);
+		map.put(StringUtils.join(phone2,cust2),21);
+		System.out.println("first : " + map);
+
+		if (unique(map,phone1,cust1) == false)
+			map.put(StringUtils.join(superPhone,superCust),888888888);
+
+		assertEquals(4,map.size());
+
+		if (unique(map,superPhone,superCust) == false)
+			map.put(StringUtils.join(superPhone,superCust),888888888);
+		System.out.println("second : " + map);
+
+		assertEquals(5,map.size());
+
+	}
+
+	private boolean unique(Map<String,Integer> map, String front, String back){
+		if (map.containsKey(StringUtils.join(front,back)))
+			return true;
+		else
+			return false;
 	}
 }

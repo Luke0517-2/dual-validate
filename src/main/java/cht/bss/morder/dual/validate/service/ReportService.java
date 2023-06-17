@@ -229,10 +229,9 @@ public class ReportService {
 	 * @param report
 	 */
 	private void insertResult(XSSFSheet sheet, Report report){
-		List<TestCase> testCases = report.getTestCases();
+		Map<String, TestCase> map = filterTestCase(report);
 		int rowNum = 0;
-		for (final TestCase testCase : testCases) {
-
+		for (TestCase testCase : map.values()) {
 			final Row dataRow = sheet.createRow(++rowNum);
 			final boolean isAllCorrect = testCase.isAllCorrect();
 
@@ -243,6 +242,17 @@ public class ReportService {
 			else
 				dataRow.createCell(2).setCellValue(CompareResultType.DIFF.getValue());
 		}
+	}
+
+	private Map<String, TestCase> filterTestCase(Report report){
+		HashMap<String, TestCase> uniqueMap = new HashMap<>();
+		List<TestCase> testCases = report.getTestCases();
+		testCases.stream().forEach(testCase -> {
+			String telNumJoinCustId = StringUtils.join(testCase.getTelNum(), testCase.getCustId());
+			if (!uniqueMap.containsKey(telNumJoinCustId))
+				uniqueMap.put(telNumJoinCustId,testCase);
+		});
+		return uniqueMap;
 	}
 
 	private String showDataInReport(String paramInComparedData) {

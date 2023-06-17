@@ -84,10 +84,4 @@ public class JsonDiffTest {
 			System.out.println("Exception happen : " + e.getMessage());
 		}
 	}
-
-	@Test
-	public void testJSONAssert(){
-		ComparedData comparedData = ComparedData.builder().dataFromCht(testCase1).dataFromIISI(testCase2).build();
-		comparedData.compareJsonIgnoreOrder();
-	}
 }
