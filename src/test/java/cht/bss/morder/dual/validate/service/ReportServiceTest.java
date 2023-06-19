@@ -4,35 +4,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.SpreadsheetVersion;
-import org.apache.poi.ss.formula.udf.UDFFinder;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.DataFormat;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Name;
-import org.apache.poi.ss.usermodel.PictureData;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.SheetVisibility;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -59,6 +44,8 @@ public class ReportServiceTest {
 	private final static String resultEqual = "一致";
 	private final static String resultNonEqual = "不相同";
 	private final static String resultFormatError = "格式錯誤";
+	private final static String resultNormal = "門號正常";
+	private final static String resultDiff = "有差異";
 
 	private final static String jsonCase1 = "{\"BMS\":{\"Status\":\"0\",\"Msg\":\"成功\",\"TelNum\":\"0928879901\",\"Data\":{\"Renter\":{\"RentId\":\"G499280561\"}}}}";
 	private final static String jsonCase2 = "{\"BMS\":{\"Status\":\"0\",\"Msg\":\"失敗\",\"TelNum\":\"0928879901\",\"Data\":{\"Renter\":{\"RentId\":\"mockERROR\"}}}}";
@@ -76,7 +63,7 @@ public class ReportServiceTest {
 		log.info("report uuid:{}", uuid);
 		assertEquals(report, reportService.getReportByUuid(uuid));
 
-//		reportService.cleanUpReportByUuid(uuid);
+		reportService.cleanUpReportByUuid(uuid);
 	}
 
 	@Test
@@ -97,7 +84,7 @@ public class ReportServiceTest {
 
 		File file = new File(root + File.separator + fileName + ".xlsx");
 		FileUtils.writeByteArrayToFile(file, datas);
-//		reportService.cleanUpReportByUuid(uuid);
+		reportService.cleanUpReportByUuid(uuid);
 	}
 
 	@Test
@@ -118,7 +105,7 @@ public class ReportServiceTest {
 
 		File file = new File(root + File.separator + fileName + ".zip");
 		FileUtils.writeByteArrayToFile(file, zip);
-//		reportService.cleanUpReportByUuid(uuid);
+		reportService.cleanUpReportByUuid(uuid);
 	}
 
 	@Test
@@ -126,25 +113,66 @@ public class ReportServiceTest {
 	void test_checkSingleComparedDataResult() throws IOException {
 
 		List<String[]> assertEqualsPair = new ArrayList<>();
-//		assertEqualsPair.add(new String[] { null, null });
-//		assertEqualsPair.add(new String[] { null, "" });
+		assertEqualsPair.add(new String[] { null, null });
+		assertEqualsPair.add(new String[] { null, "" });
 		assertEqualsPair.add(new String[] { jsonCase1, jsonCase1 });
 		assertEqualsPair.add(new String[] { jsonStructureError, jsonStructureError });
 
-		assertEqualsPair.stream().forEach(pair -> validDataInExcelIsEquals(pair[0], pair[1]));
+		assertEqualsPair.stream().forEach(pair -> {
+			validDataInExcelIsEquals(pair[0], pair[1]);
+			validResultInExcelIsEquals(pair[0], pair[1]);
+		});
 
 		List<String[]> assertNotEqualsPair = new ArrayList<>();
 		assertNotEqualsPair.add(new String[] { null, jsonCase1 });
 		assertNotEqualsPair.add(new String[] { null, jsonStructureError });
 		assertNotEqualsPair.add(new String[] { jsonCase1, jsonCase2 });
 
-		assertNotEqualsPair.stream().forEach(pair -> validDataInExcelIsNotEquals(pair[0], pair[1]));
+		assertNotEqualsPair.stream().forEach(pair -> {
+			validDataInExcelIsNotEquals(pair[0], pair[1]);
+			validResultInExcelIsNotEquals(pair[0], pair[1]);
+		});
+	}
+
+	private void validResultInExcelIsNotEquals(String dataFromCht, String dataFromIISI) {
+		try {
+			String result = retrieveTestCaseResultFromExcel(dataFromCht, dataFromIISI, false);
+			log.info("Excel-Result : C2:{}",result);
+			assertEquals(resultDiff, result);
+		} catch (IOException e) {
+			throw new BusinessException(e.getMessage());
+		}
+	}
+
+	private void validResultInExcelIsEquals(String dataFromCht, String dataFromIISI) {
+		try {
+			String result = retrieveTestCaseResultFromExcel(dataFromCht, dataFromIISI, true);
+			log.info("Excel-Result : C2:{}",result);
+			assertEquals(resultNormal, result);
+		} catch (IOException e) {
+			throw new BusinessException(e.getMessage());
+		}
+	}
+
+	private String retrieveTestCaseResultFromExcel(String dataFromCht, String dataFromIISI , Boolean isAllCorrect) throws IOException {
+		return retrieveTestCaseResultFromExcel("0912345678", "Helloworld", dataFromCht, dataFromIISI, isAllCorrect);
+	}
+
+	private String retrieveTestCaseResultFromExcel(String telnum, String custId, String dataFromCht, String dataFromIISI, Boolean isAllCorrect) throws IOException {
+
+		Report report = mockInstanceOfReport(telnum, custId, dataFromCht, dataFromIISI,isAllCorrect);
+
+		try (XSSFWorkbook book = new XSSFWorkbook()) {
+			reportService.generateExcelByReport(book, report);
+			/*門號的比較結果固定放在sheet-Result的C2儲存格。*/
+			return retrieveValueOfExcelCell(book, 1, "C2");
+		}
 	}
 
 	private void validDataInExcelIsNotEquals(String dataFromCht, String dataFromIISI) {
 		try {
 			String result = retrieveComparedResultFromExcel(dataFromCht, dataFromIISI);
-			log.info("cht:{}, iisi:{}", dataFromCht, dataFromIISI);
+			log.info("NotEquals -> cht:{}, iisi:{}", dataFromCht, dataFromIISI);
 			assertEquals(resultNonEqual, result);
 		} catch (IOException e) {
 			throw new BusinessException(e.getMessage());
@@ -154,6 +182,7 @@ public class ReportServiceTest {
 	private void validDataInExcelIsEquals(String dataFromCht, String dataFromIISI) {
 		try {
 			String result = retrieveComparedResultFromExcel(dataFromCht, dataFromIISI);
+			log.info("Equals -> cht:{}, iisi:{}", dataFromCht, dataFromIISI);
 			assertEquals(resultEqual, result);
 		} catch (IOException e) {
 			throw new BusinessException(e.getMessage());
@@ -167,32 +196,27 @@ public class ReportServiceTest {
 	private String retrieveComparedResultFromExcel(String telnum, String custId, String dataFromCht,
 			String dataFromIISI) throws IOException {
 
-		List<ComparedData> list = new ArrayList<>();
-		list.add(ComparedData.builder().dataFromCht(dataFromCht).dataFromIISI(dataFromIISI).build());
-		TestCase testCase = TestCase.builder().telNum(telnum).custId(custId).comparedData(list).dataPath("./").build();
-		List<TestCase> caseList = new ArrayList<>();
-		caseList.add(testCase);
-
-		Report report = new Report();
-		report.setTestCases(caseList);
+		Report report = mockInstanceOfReport(telnum, custId, dataFromCht, dataFromIISI,true);
 
 		try (XSSFWorkbook book = new XSSFWorkbook()) {
 			reportService.generateExcelByReport(book, report);
-			return retrieveValueOfExcelCellF2(book);
+			/*CHT、IISI的比較結果固定放在sheet-TestCase的G2儲存格。*/
+			return retrieveValueOfExcelCell(book, 0,"G2");
 		}
 
 	}
 
 	/**
-	 * 取出G2儲存格value。 (CHT、IISI的比較結果固定放在Excel sheet的G2儲存格。)
-	 * 
-	 * @param filePath 目標Excel檔路徑
-	 * @return 位置為G2 cell value
+	 * 從目標sheet取出目標cell欄位值
+	 * @param book
+	 * @param sheetIndex 目標sheet
+	 * @param cellRef 目標cell
+	 * @return
 	 */
-	private String retrieveValueOfExcelCellF2(XSSFWorkbook book) {
-		XSSFSheet sheet = (XSSFSheet) book.getSheetAt(0);
+	private String retrieveValueOfExcelCell(XSSFWorkbook book,int sheetIndex, String cellRef){
+		XSSFSheet sheet = (XSSFSheet) book.getSheetAt(sheetIndex);
 
-		CellReference cellReference = new CellReference("G2");
+		CellReference cellReference = new CellReference(cellRef);
 		Row row = sheet.getRow(cellReference.getRow());
 		Cell cell = row.getCell(cellReference.getCol());
 		String cellValueOfCompareResult = cell.getStringCellValue();
@@ -233,5 +257,54 @@ public class ReportServiceTest {
 	
 	private QueryInput mockInstanceOfQueryInput() {
 		return QueryInput.builder().param(Params.builder().build()).build();
+	}
+
+	private Report mockInstanceOfReport(String telnum, String custId, String dataFromCht, String dataFromIISI, Boolean isAllCorrect){
+		List<ComparedData> list = new ArrayList<>();
+		list.add(ComparedData.builder().dataFromCht(dataFromCht).dataFromIISI(dataFromIISI).build());
+		TestCase testCase = TestCase.builder().telNum(telnum).custId(custId).comparedData(list).dataPath("./").isAllCorrect(isAllCorrect).build();
+		List<TestCase> caseList = new ArrayList<>();
+		caseList.add(testCase);
+
+		Report report = new Report();
+		report.setTestCases(caseList);
+
+		return report;
+	}
+
+	@Test
+	public void testUniqueTestCase(){
+		HashMap<String, Integer> map = new HashMap<>();
+		String phone1 = "09123";
+		String phone2 = "09456";
+		String superPhone = "88888888";
+		String cust1 = "A1234";
+		String cust2 = "A5678";
+		String superCust = "A8888888";
+
+		map.put(StringUtils.join(phone1,cust1),1);
+		map.put(StringUtils.join(phone1,cust2),11);
+		map.put(StringUtils.join(phone2,cust1),2);
+		map.put(StringUtils.join(phone2,cust2),21);
+		System.out.println("first : " + map);
+
+		if (unique(map,phone1,cust1) == false)
+			map.put(StringUtils.join(superPhone,superCust),888888888);
+
+		assertEquals(4,map.size());
+
+		if (unique(map,superPhone,superCust) == false)
+			map.put(StringUtils.join(superPhone,superCust),888888888);
+		System.out.println("second : " + map);
+
+		assertEquals(5,map.size());
+
+	}
+
+	private boolean unique(Map<String,Integer> map, String front, String back){
+		if (map.containsKey(StringUtils.join(front,back)))
+			return true;
+		else
+			return false;
 	}
 }

@@ -1,9 +1,10 @@
 package cht.bss.morder.dual.validate.vo;
 
-import java.util.Objects;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONException;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.DisposableBean;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,12 +38,11 @@ public class ComparedData implements Cloneable ,DisposableBean{
 
 	/**
 	 * 回傳dataFromCht與dataFromIISI的比對結果。
-	 * 
+	 *
 	 * @return
-	 * @throws JsonProcessingException 
-	 * @throws JsonMappingException 
+	 * @throws JSONException
 	 */
-	public CompareResultType getComparedResult(ObjectMapper mapper) throws JsonMappingException, JsonProcessingException {
+	public CompareResultType getComparedResult() throws JSONException{
 		if (StringUtils.isEmpty(getDataFromCht()) && StringUtils.isEmpty(getDataFromIISI())) {
 			return CompareResultType.EQUAL;
 		} else if (StringUtils.equals(getDataFromCht(), getDataFromIISI())) {
@@ -50,24 +50,21 @@ public class ComparedData implements Cloneable ,DisposableBean{
 		} else if (StringUtils.isEmpty(getDataFromCht()) || StringUtils.isEmpty(getDataFromIISI())) {
 			return CompareResultType.NONEQUAL;
 		} else {
-			return compareJsonStructure(mapper);
+			return compareJsonIgnoreOrder();
 		}
 	}
 
 	/**
 	 * 對dataFromCht與dataFromIISI，進行JsonNode比對。
-	 * @param mapper 
-	 * 
+	 *
 	 * @return
-	 * @throws JsonProcessingException 
-	 * @throws JsonMappingException 
+	 * @throws JSONException
 	 */
-	private CompareResultType compareJsonStructure(ObjectMapper mapper) throws JsonMappingException, JsonProcessingException {
-		JsonNode jsonDataFromCht = mapper.readTree(getDataFromCht());
-		JsonNode jsonDataFromIISI = mapper.readTree(getDataFromIISI());
-		if (jsonDataFromCht.equals(jsonDataFromIISI)) {
+	public CompareResultType compareJsonIgnoreOrder() throws JSONException {
+		try {
+			JSONAssert.assertEquals(getDataFromCht(),getDataFromIISI(),false);
 			return CompareResultType.EQUAL;
-		} else {
+		}catch (AssertionError exception){
 			log.error("Data From Cht :{}", getDataFromCht());
 			log.error("Data From IISI :{}", getDataFromIISI());
 			return CompareResultType.NONEQUAL;
@@ -92,5 +89,10 @@ public class ComparedData implements Cloneable ,DisposableBean{
 	public void destroy() throws Exception {
 		if(ObjectUtils.isNotEmpty(this))
 			this.queryInput = null;
+	}
+
+	/*Add IISI param , this method only suitable for CHT&IISI param must same, like phoneNumber or date*/
+	public void addIISIParam(){
+		this.setContentForIISI(this.getData());
 	}
 }
