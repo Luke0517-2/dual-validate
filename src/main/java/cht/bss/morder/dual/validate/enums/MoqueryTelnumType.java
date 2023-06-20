@@ -9,8 +9,7 @@ public enum MoqueryTelnumType implements MoqueryEnumInterface {
 	//use telnum
 	Agent5id("agent5id", "1", "%s"), 
 	Delcustinfoapply("delcustinfoapply", "1", "%s"),
-	Eformapplyrec("eformapplyrec", "1", "%s"), 
-	Numberusage("numberusage", "1", "%s"),//get contract
+	Eformapplyrec("eformapplyrec", "1", "%s"),
 	Npinrecord("npinrecord", "4" , "%s"),
 	;
 

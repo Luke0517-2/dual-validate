@@ -1,0 +1,12 @@
+{
+  "BMS":{
+    "result":"0",
+    "datalist":[
+      {
+        "contractid":"542393"
+      }
+    ],
+    "tablename":"order",
+    "querytype":"1"
+  }
+}
