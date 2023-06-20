@@ -12,19 +12,13 @@ import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 
+import cht.bss.morder.dual.validate.enums.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cht.bss.morder.dual.validate.adapter.FlexQueryTableAdapter;
-import cht.bss.morder.dual.validate.enums.MoqueryEnumForTwiceQuery;
-import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
-import cht.bss.morder.dual.validate.enums.MoqueryOrderNoType;
-import cht.bss.morder.dual.validate.enums.MoqueryRentCustNoType;
-import cht.bss.morder.dual.validate.enums.MoquerySpsvcType;
-import cht.bss.morder.dual.validate.enums.MoqueryTelnumType;
-import cht.bss.morder.dual.validate.enums.MoqueryTranscashIdType;
 import cht.bss.morder.dual.validate.factory.MoqueryInputFactory;
 import cht.bss.morder.dual.validate.factory.ResponseVOFactory;
 import cht.bss.morder.dual.validate.factory.ResponseVOFactory.ResponseType;
@@ -229,7 +223,7 @@ public class MoqueryService extends QueryService {
 
 	private Map<String, String> queryContractId(TestCase testCase) {
 		Map<String, String> map = new HashMap<>();
-		ComparedData comparedData = comparedDataProvider.getObject(null,testCase,(MoqueryEnumInterface) MoqueryTelnumType.Numberusage);
+		ComparedData comparedData = comparedDataProvider.getObject(null,testCase,(MoqueryEnumInterface) MoqueryTelnumsWithDateType.Order);
 		queryBothServer(comparedData);
 		ContractIDResponseVO voFromIISI = ContractIDResponseVO.builder(comparedData.getDataFromIISI());
 		ContractIDResponseVO voFromCht = ContractIDResponseVO.builder(comparedData.getDataFromCht());

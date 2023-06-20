@@ -111,7 +111,16 @@ public class MOrderFacadeFileImpl implements MOrderFacade {
 					testDiff = 0;
 					break;
 				}
-
+			case "order" :
+				if (testDiff == 0){
+					result = readFile("./jsonsample/order_output.json");
+					testDiff++;
+					break;
+				}else {
+					result = readFile("./jsonsample/order_output2.json");
+					testDiff = 0;
+					break;
+				}
 			case "specialsvc" :
 				if("MN".equals(input.getParam().getQueryitem().getContent().split("&")[1]))
 					result = readFile("./jsonsample/specsvcidmn_output.json");

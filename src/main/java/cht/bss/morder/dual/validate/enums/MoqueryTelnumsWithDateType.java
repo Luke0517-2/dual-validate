@@ -9,6 +9,7 @@ import lombok.Getter;
 public enum MoqueryTelnumsWithDateType implements MoqueryEnumInterface {
 
     Workingrecord("workingrecord", "1", "%s&%s&%s"), // 根據中華回應，門號都是給受理的行動門號
+    Order("order", "1", "%s&%s&%s"),//get contract
     ;
 
     private final String tableName;

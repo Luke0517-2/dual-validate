@@ -26,7 +26,7 @@ public class MoqueryRuleToEnumMapping {
 		HashSet<MoqueryEnumInterface> mapping = new HashSet<>();
 		queryRuleList.forEach(tableName -> {
 			switch (tableName.toLowerCase()) {
-			case "numberusage":
+			case "numberusage": case "order":
 				break;
 			case "agent5id":
 				mapping.add(MoqueryTelnumType.Agent5id);
