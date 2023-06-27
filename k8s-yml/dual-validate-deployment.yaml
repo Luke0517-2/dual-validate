@@ -1,5 +1,5 @@
 
---- 
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -26,11 +26,11 @@ spec:
         sidecar.istio.io/inject: 'true'
     spec:
       containers:
-      - name: dual-validate
-        image: >-
-          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
-        imagePullPolicy: Always
-        livenessProbe:
+        - name: dual-validate
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+          imagePullPolicy: Always
+          livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
@@ -40,7 +40,7 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        readinessProbe:
+          readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
@@ -50,29 +50,35 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: compares-data
-          mountPath: /app/comparelogs
-        env:
-        - name: MEMORY_REQUEST
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: requests.memory
-        - name: MEMORY_LIMIT
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: limits.memory
-        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
-          value: >-
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: compares-data
+              mountPath: /app/comparelogs
+            - name: logs-data
+              mountPath: /app/logs
+            - name: logback-spring
+              mountPath: /app/setting
+            - name: spring-application-config
+              mountPath: /app/config
+          env:
+            - name: MEMORY_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: requests.memory
+            - name: MEMORY_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: limits.memory
+            - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+              value: >-
                 /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
                 *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
-                /actuator/*      
-        - name: JAVA_OPTS
-          value: >-
+                /actuator/*
+            - name: JAVA_OPTS
+              value: >-
                 -Xms1G -Xmx7500m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
@@ -89,18 +95,28 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-
-        resources:
-          requests: 
-            memory: 8Gi
-            cpu: 500m
-          limits: 
-            memory: 1536Mi
-            cpu: "1"
+                -Dlogging.config=/app/setting/logback-spring.xml
+          resources:
+            requests:
+              memory: 8Gi
+              cpu: 500m
+            limits:
+              memory: 1536Mi
+              cpu: "1"
       volumes:
-      - name: compares-data
-        persistentVolumeClaim:
-          claimName: dualvalidateservice-data
+        - name: compares-data
+          persistentVolumeClaim:
+            claimName: dualvalidateservice-data
+        - name: logback-spring
+          configMap:
+            name: logback-spring
+            defaultMode: 420
+        - name: logs-data
+          persistentVolumeClaim:
+            claimName: logs-data
+        - name: spring-application-config
+          configMap:
+            name: spring-application-config
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -128,11 +144,11 @@ spec:
         sidecar.istio.io/inject: 'true'
     spec:
       containers:
-      - name: dual-validate
-        image: >-
-          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
-        imagePullPolicy: Always
-        livenessProbe:
+        - name: dual-validate
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+          imagePullPolicy: Always
+          livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
@@ -142,7 +158,7 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        readinessProbe:
+          readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
@@ -152,29 +168,31 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: compares-data
-          mountPath: /app/comparelogs
-        env:
-        - name: MEMORY_REQUEST
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: requests.memory
-        - name: MEMORY_LIMIT
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: limits.memory
-        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
-          value: >-
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: logs-data
+              mountPath: /app/logs
+            - name: logback-spring
+              mountPath: /app/setting
+          env:
+            - name: MEMORY_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: requests.memory
+            - name: MEMORY_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: limits.memory
+            - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+              value: >-
                 /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
                 *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
-                /actuator/*      
-        - name: JAVA_OPTS
-          value: >-
+                /actuator/*
+            - name: JAVA_OPTS
+              value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
@@ -191,20 +209,27 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-
-        resources:
-          requests: 
-            memory: 1Gi
-            cpu: 500m
-          limits: 
-            memory: 1536Mi
-            cpu: "1"
+                -Dlogging.config=/app/setting/logback-spring.xml
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 500m
+            limits:
+              memory: 1536Mi
+              cpu: "1"
       volumes:
-      - name: compares-data
-        persistentVolumeClaim:
-          claimName: dualvalidateservice-data
+        - name: compares-data
+          persistentVolumeClaim:
+            claimName: dualvalidateservice-data
+        - name: logback-spring
+          configMap:
+            name: logback-spring
+            defaultMode: 420
+        - name: logs-data
+          persistentVolumeClaim:
+            claimName: logs-data
 
---- 
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -231,11 +256,11 @@ spec:
         sidecar.istio.io/inject: 'true'
     spec:
       containers:
-      - name: dual-validate
-        image: >-
-          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
-        imagePullPolicy: Always
-        livenessProbe:
+        - name: dual-validate
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+          imagePullPolicy: Always
+          livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
@@ -245,7 +270,7 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        readinessProbe:
+          readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
@@ -255,29 +280,31 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: compares-data
-          mountPath: /app/comparelogs
-        env:
-        - name: MEMORY_REQUEST
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: requests.memory
-        - name: MEMORY_LIMIT
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: limits.memory
-        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
-          value: >-
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: logs-data
+              mountPath: /app/logs
+            - name: logback-spring
+              mountPath: /app/setting
+          env:
+            - name: MEMORY_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: requests.memory
+            - name: MEMORY_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: limits.memory
+            - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+              value: >-
                 /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
                 *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
-                /actuator/*     
-        - name: JAVA_OPTS
-          value: >-
+                /actuator/*
+            - name: JAVA_OPTS
+              value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
@@ -294,21 +321,28 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-
-        resources:
-          requests: 
-            memory: 1Gi
-            cpu: 500m
-          limits: 
-            memory: 1536Mi
-            cpu: "1"
+                -Dlogging.config=/app/setting/logback-spring.xml
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 500m
+            limits:
+              memory: 1536Mi
+              cpu: "1"
       volumes:
-      - name: compares-data
-        persistentVolumeClaim:
-          claimName: dualvalidateservice-data
+        - name: compares-data
+          persistentVolumeClaim:
+            claimName: dualvalidateservice-data
+        - name: logback-spring
+          configMap:
+            name: logback-spring
+            defaultMode: 420
+        - name: logs-data
+          persistentVolumeClaim:
+            claimName: logs-data
 
 
---- 
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -335,11 +369,11 @@ spec:
         sidecar.istio.io/inject: 'true'
     spec:
       containers:
-      - name: dual-validate
-        image: >-
-          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
-        imagePullPolicy: Always
-        livenessProbe:
+        - name: dual-validate
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+          imagePullPolicy: Always
+          livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
@@ -349,7 +383,7 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        readinessProbe:
+          readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
@@ -359,29 +393,31 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: compares-data
-          mountPath: /app/comparelogs
-        env:
-        - name: MEMORY_REQUEST
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: requests.memory
-        - name: MEMORY_LIMIT
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: limits.memory
-        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
-          value: >-
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: logs-data
+              mountPath: /app/logs
+            - name: logback-spring
+              mountPath: /app/setting
+          env:
+            - name: MEMORY_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: requests.memory
+            - name: MEMORY_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: limits.memory
+            - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+              value: >-
                 /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
                 *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
-                /actuator/*           
-        - name: JAVA_OPTS
-          value: >-
+                /actuator/*
+            - name: JAVA_OPTS
+              value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
@@ -398,21 +434,28 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-
-        resources:
-          requests: 
-            memory: 1Gi
-            cpu: 500m
-          limits: 
-            memory: 1536Mi
-            cpu: "1"
+                -Dlogging.config=/app/setting/logback-spring.xml
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 500m
+            limits:
+              memory: 1536Mi
+              cpu: "1"
       volumes:
-      - name: compares-data
-        persistentVolumeClaim:
-          claimName: dualvalidateservice-data
+        - name: compares-data
+          persistentVolumeClaim:
+            claimName: dualvalidateservice-data
+        - name: logback-spring
+          configMap:
+            name: logback-spring
+            defaultMode: 420
+        - name: logs-data
+          persistentVolumeClaim:
+            claimName: logs-data
 
 
---- 
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -439,11 +482,11 @@ spec:
         sidecar.istio.io/inject: 'true'
     spec:
       containers:
-      - name: dual-validate
-        image: >-
-          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
-        imagePullPolicy: Always
-        livenessProbe:
+        - name: dual-validate
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+          imagePullPolicy: Always
+          livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
@@ -453,7 +496,7 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        readinessProbe:
+          readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
@@ -463,29 +506,31 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: compares-data
-          mountPath: /app/comparelogs
-        env:
-        - name: MEMORY_REQUEST
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: requests.memory
-        - name: MEMORY_LIMIT
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: limits.memory
-        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
-          value: >-
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: logs-data
+              mountPath: /app/logs
+            - name: logback-spring
+              mountPath: /app/setting
+          env:
+            - name: MEMORY_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: requests.memory
+            - name: MEMORY_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: limits.memory
+            - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+              value: >-
                 /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
                 *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
-                /actuator/*           
-        - name: JAVA_OPTS
-          value: >-
+                /actuator/*
+            - name: JAVA_OPTS
+              value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
@@ -502,20 +547,27 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-
-        resources:
-          requests: 
-            memory: 1Gi
-            cpu: 500m
-          limits: 
-            memory: 1536Mi
-            cpu: "1"
+                -Dlogging.config=/app/setting/logback-spring.xml
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 500m
+            limits:
+              memory: 1536Mi
+              cpu: "1"
       volumes:
-      - name: compares-data
-        persistentVolumeClaim:
-          claimName: dualvalidateservice-data
+        - name: compares-data
+          persistentVolumeClaim:
+            claimName: dualvalidateservice-data
+        - name: logback-spring
+          configMap:
+            name: logback-spring
+            defaultMode: 420
+        - name: logs-data
+          persistentVolumeClaim:
+            claimName: logs-data
 
---- 
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -542,11 +594,11 @@ spec:
         sidecar.istio.io/inject: 'true'
     spec:
       containers:
-      - name: dual-validate
-        image: >-
-          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
-        imagePullPolicy: Always
-        livenessProbe:
+        - name: dual-validate
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+          imagePullPolicy: Always
+          livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
@@ -556,7 +608,7 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        readinessProbe:
+          readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
@@ -566,29 +618,31 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: compares-data
-          mountPath: /app/comparelogs
-        env:
-        - name: MEMORY_REQUEST
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: requests.memory
-        - name: MEMORY_LIMIT
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: limits.memory
-        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
-          value: >-
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: logs-data
+              mountPath: /app/logs
+            - name: logback-spring
+              mountPath: /app/setting
+          env:
+            - name: MEMORY_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: requests.memory
+            - name: MEMORY_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: limits.memory
+            - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+              value: >-
                 /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
                 *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
-                /actuator/*           
-        - name: JAVA_OPTS
-          value: >-
+                /actuator/*
+            - name: JAVA_OPTS
+              value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
@@ -605,20 +659,27 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-
-        resources:
-          requests: 
-            memory: 1Gi
-            cpu: 500m
-          limits: 
-            memory: 1536Mi
-            cpu: "1"
+                -Dlogging.config=/app/setting/logback-spring.xml
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 500m
+            limits:
+              memory: 1536Mi
+              cpu: "1"
       volumes:
-      - name: compares-data
-        persistentVolumeClaim:
-          claimName: dualvalidateservice-data
+        - name: compares-data
+          persistentVolumeClaim:
+            claimName: dualvalidateservice-data
+        - name: logback-spring
+          configMap:
+            name: logback-spring
+            defaultMode: 420
+        - name: logs-data
+          persistentVolumeClaim:
+            claimName: logs-data
 
---- 
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -645,11 +706,11 @@ spec:
         sidecar.istio.io/inject: 'true'
     spec:
       containers:
-      - name: dual-validate
-        image: >-
-          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
-        imagePullPolicy: Always
-        livenessProbe:
+        - name: dual-validate
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+          imagePullPolicy: Always
+          livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
@@ -659,7 +720,7 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        readinessProbe:
+          readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
@@ -669,29 +730,31 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: compares-data
-          mountPath: /app/comparelogs
-        env:
-        - name: MEMORY_REQUEST
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: requests.memory
-        - name: MEMORY_LIMIT
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: limits.memory
-        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
-          value: >-
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: logs-data
+              mountPath: /app/logs
+            - name: logback-spring
+              mountPath: /app/setting
+          env:
+            - name: MEMORY_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: requests.memory
+            - name: MEMORY_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: limits.memory
+            - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+              value: >-
                 /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
                 *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
-                /actuator/*           
-        - name: JAVA_OPTS
-          value: >-
+                /actuator/*
+            - name: JAVA_OPTS
+              value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
@@ -708,21 +771,28 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-
-        resources:
-          requests: 
-            memory: 1Gi
-            cpu: 500m
-          limits: 
-            memory: 1536Mi
-            cpu: "1"
+                -Dlogging.config=/app/setting/logback-spring.xml
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 500m
+            limits:
+              memory: 1536Mi
+              cpu: "1"
       volumes:
-      - name: compares-data
-        persistentVolumeClaim:
-          claimName: dualvalidateservice-data
+        - name: compares-data
+          persistentVolumeClaim:
+            claimName: dualvalidateservice-data
+        - name: logback-spring
+          configMap:
+            name: logback-spring
+            defaultMode: 420
+        - name: logs-data
+          persistentVolumeClaim:
+            claimName: logs-data
 
 
---- 
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -749,11 +819,11 @@ spec:
         sidecar.istio.io/inject: 'true'
     spec:
       containers:
-      - name: dual-validate
-        image: >-
-          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
-        imagePullPolicy: Always
-        livenessProbe:
+        - name: dual-validate
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+          imagePullPolicy: Always
+          livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
@@ -763,7 +833,7 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        readinessProbe:
+          readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
@@ -773,29 +843,31 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: compares-data
-          mountPath: /app/comparelogs
-        env:
-        - name: MEMORY_REQUEST
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: requests.memory
-        - name: MEMORY_LIMIT
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: limits.memory
-        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
-          value: >-
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: logs-data
+              mountPath: /app/logs
+            - name: logback-spring
+              mountPath: /app/setting
+          env:
+            - name: MEMORY_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: requests.memory
+            - name: MEMORY_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: limits.memory
+            - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+              value: >-
                 /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
                 *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
-                /actuator/*           
-        - name: JAVA_OPTS
-          value: >-
+                /actuator/*
+            - name: JAVA_OPTS
+              value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
@@ -812,20 +884,27 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-
-        resources:
-          requests: 
-            memory: 1Gi
-            cpu: 500m
-          limits: 
-            memory: 1536Mi
-            cpu: "1"
+                -Dlogging.config=/app/setting/logback-spring.xml
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 500m
+            limits:
+              memory: 1536Mi
+              cpu: "1"
       volumes:
-      - name: compares-data
-        persistentVolumeClaim:
-          claimName: dualvalidateservice-data
+        - name: compares-data
+          persistentVolumeClaim:
+            claimName: dualvalidateservice-data
+        - name: logback-spring
+          configMap:
+            name: logback-spring
+            defaultMode: 420
+        - name: logs-data
+          persistentVolumeClaim:
+            claimName: logs-data
 
---- 
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -852,11 +931,11 @@ spec:
         sidecar.istio.io/inject: 'true'
     spec:
       containers:
-      - name: dual-validate
-        image: >-
-          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
-        imagePullPolicy: Always
-        livenessProbe:
+        - name: dual-validate
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+          imagePullPolicy: Always
+          livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
@@ -866,7 +945,7 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        readinessProbe:
+          readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
@@ -876,29 +955,31 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: compares-data
-          mountPath: /app/comparelogs
-        env:
-        - name: MEMORY_REQUEST
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: requests.memory
-        - name: MEMORY_LIMIT
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: limits.memory
-        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
-          value: >-
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: logs-data
+              mountPath: /app/logs
+            - name: logback-spring
+              mountPath: /app/setting
+          env:
+            - name: MEMORY_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: requests.memory
+            - name: MEMORY_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: limits.memory
+            - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+              value: >-
                 /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
                 *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
-                /actuator/*           
-        - name: JAVA_OPTS
-          value: >-
+                /actuator/*
+            - name: JAVA_OPTS
+              value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
@@ -915,20 +996,27 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-
-        resources:
-          requests: 
-            memory: 1Gi
-            cpu: 500m
-          limits: 
-            memory: 1536Mi
-            cpu: "1"
+                -Dlogging.config=/app/setting/logback-spring.xml
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 500m
+            limits:
+              memory: 1536Mi
+              cpu: "1"
       volumes:
-      - name: compares-data
-        persistentVolumeClaim:
-          claimName: dualvalidateservice-data
+        - name: compares-data
+          persistentVolumeClaim:
+            claimName: dualvalidateservice-data
+        - name: logback-spring
+          configMap:
+            name: logback-spring
+            defaultMode: 420
+        - name: logs-data
+          persistentVolumeClaim:
+            claimName: logs-data
 
---- 
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -955,11 +1043,11 @@ spec:
         sidecar.istio.io/inject: 'true'
     spec:
       containers:
-      - name: dual-validate
-        image: >-
-          image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
-        imagePullPolicy: Always
-        livenessProbe:
+        - name: dual-validate
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/d210641/dual-validate:latest
+          imagePullPolicy: Always
+          livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
@@ -969,7 +1057,7 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        readinessProbe:
+          readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
@@ -979,29 +1067,31 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 5
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: compares-data
-          mountPath: /app/comparelogs
-        env:
-        - name: MEMORY_REQUEST
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: requests.memory
-        - name: MEMORY_LIMIT
-          valueFrom:
-            resourceFieldRef:
-              containerName: dual-validate
-              resource: limits.memory
-        - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
-          value: >-
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: logs-data
+              mountPath: /app/logs
+            - name: logback-spring
+              mountPath: /app/setting
+          env:
+            - name: MEMORY_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: requests.memory
+            - name: MEMORY_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  containerName: dual-validate
+                  resource: limits.memory
+            - name: ELASTIC_APM_TRANSACTION_IGNORE_URLS
+              value: >-
                 /VAADIN/*, /heartbeat*, /favicon.ico, *.js, *.css, *.jpg,
                 *.jpeg, *.png, *.gif, *.webp, *.svg, *.woff, *.woff2 ,
-                /actuator/*           
-        - name: JAVA_OPTS
-          value: >-
+                /actuator/*
+            - name: JAVA_OPTS
+              value: >-
                 -Xms1G -Xmx1536m -Dgit.branch=main
                 -javaagent:/app/elastic-apm-agent-1.28.3.jar 
                 -Delastic.apm.server_urls=http://apm.pdc-apm.svc.cluster.local:8200
@@ -1018,15 +1108,22 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-
-        resources:
-          requests: 
-            memory: 1Gi
-            cpu: 500m
-          limits: 
-            memory: 1536Mi
-            cpu: "1"
+                -Dlogging.config=/app/setting/logback-spring.xml
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 500m
+            limits:
+              memory: 1536Mi
+              cpu: "1"
       volumes:
-      - name: compares-data
-        persistentVolumeClaim:
-          claimName: dualvalidateservice-data
+        - name: compares-data
+          persistentVolumeClaim:
+            claimName: dualvalidateservice-data
+        - name: logback-spring
+          configMap:
+            name: logback-spring
+            defaultMode: 420
+        - name: logs-data
+          persistentVolumeClaim:
+            claimName: logs-data
