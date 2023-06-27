@@ -5,4 +5,4 @@ metadata:
 data:
   application.properties: |
     dual-validate.mode=FILE
-    convert-property.day=-1
+    convert-property.day=-30
