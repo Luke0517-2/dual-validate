@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-application-config
+data:
+  application.properties: |
+    dual-validate.mode=FILE
+    convert-property.day=-1

@@ -4,7 +4,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cht.bss.morder.dual.validate.common.YesterdayConvert;
+import cht.bss.morder.dual.validate.common.DaysConvert;
 import cht.bss.morder.dual.validate.common.exceptions.BusinessException;
 import cht.bss.morder.dual.validate.config.TransferProperties;
 import cht.bss.morder.dual.validate.enums.MoqueryEnumInterface;
@@ -31,7 +31,7 @@ public class QueryInputFactory {
 	private TransferProperties properties;
 	
 	@Autowired
-	private YesterdayConvert yesterdayConvert;
+	private DaysConvert yesterdayConvert;
 	
 
 	public ComparedData getComparedData(Enum type, TestCase testCase , MoqueryEnumInterface moquery) {		
@@ -64,11 +64,11 @@ public class QueryInputFactory {
 	}
 	
 	protected String getADDate() {
-		return yesterdayConvert.getYesterdayADDateString();
+		return yesterdayConvert.getConvertADDate();
 	}
 	
 	protected String getMinguoDate() {
-		return yesterdayConvert.getYesterdayMinguoDate();
+		return yesterdayConvert.getConvertMinguoDate();
 	}
 	
 }
