@@ -57,8 +57,6 @@ spec:
               mountPath: /app/comparelogs
             - name: logs-data
               mountPath: /app/logs
-            - name: logback-spring
-              mountPath: /app/setting
             - name: spring-application-config
               mountPath: /app/config
           env:
@@ -95,22 +93,18 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-                -Dlogging.config=/app/setting/logback-spring.xml
+                -Dlogging.config=/app/config/logback-spring.xml
           resources:
-            requests:
-              memory: 8Gi
-              cpu: 500m
             limits:
+              cpu: '1'
               memory: 1536Mi
-              cpu: "1"
+            requests:
+              cpu: 500m
+              memory: 1Gi
       volumes:
         - name: compares-data
           persistentVolumeClaim:
             claimName: dualvalidateservice-data
-        - name: logback-spring
-          configMap:
-            name: logback-spring
-            defaultMode: 420
         - name: logs-data
           persistentVolumeClaim:
             claimName: logs-data
@@ -171,10 +165,12 @@ spec:
           ports:
             - containerPort: 8080
           volumeMounts:
+            - name: compares-data
+              mountPath: /app/comparelogs
             - name: logs-data
               mountPath: /app/logs
-            - name: logback-spring
-              mountPath: /app/setting
+            - name: spring-application-config
+              mountPath: /app/config
           env:
             - name: MEMORY_REQUEST
               valueFrom:
@@ -209,7 +205,7 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-                -Dlogging.config=/app/setting/logback-spring.xml
+                -Dlogging.config=/app/config/logback-spring.xml
           resources:
             requests:
               memory: 1Gi
@@ -221,13 +217,12 @@ spec:
         - name: compares-data
           persistentVolumeClaim:
             claimName: dualvalidateservice-data
-        - name: logback-spring
-          configMap:
-            name: logback-spring
-            defaultMode: 420
         - name: logs-data
           persistentVolumeClaim:
             claimName: logs-data
+        - name: spring-application-config
+          configMap:
+            name: spring-application-config
 
 ---
 kind: Deployment
@@ -283,10 +278,12 @@ spec:
           ports:
             - containerPort: 8080
           volumeMounts:
+            - name: compares-data
+              mountPath: /app/comparelogs
             - name: logs-data
               mountPath: /app/logs
-            - name: logback-spring
-              mountPath: /app/setting
+            - name: spring-application-config
+              mountPath: /app/config
           env:
             - name: MEMORY_REQUEST
               valueFrom:
@@ -321,7 +318,7 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-                -Dlogging.config=/app/setting/logback-spring.xml
+                -Dlogging.config=/app/config/logback-spring.xml
           resources:
             requests:
               memory: 1Gi
@@ -333,13 +330,12 @@ spec:
         - name: compares-data
           persistentVolumeClaim:
             claimName: dualvalidateservice-data
-        - name: logback-spring
-          configMap:
-            name: logback-spring
-            defaultMode: 420
         - name: logs-data
           persistentVolumeClaim:
             claimName: logs-data
+        - name: spring-application-config
+          configMap:
+            name: spring-application-config
 
 
 ---
@@ -396,10 +392,12 @@ spec:
           ports:
             - containerPort: 8080
           volumeMounts:
+            - name: compares-data
+              mountPath: /app/comparelogs
             - name: logs-data
               mountPath: /app/logs
-            - name: logback-spring
-              mountPath: /app/setting
+            - name: spring-application-config
+              mountPath: /app/config
           env:
             - name: MEMORY_REQUEST
               valueFrom:
@@ -434,7 +432,7 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-                -Dlogging.config=/app/setting/logback-spring.xml
+                -Dlogging.config=/app/config/logback-spring.xml
           resources:
             requests:
               memory: 1Gi
@@ -446,13 +444,12 @@ spec:
         - name: compares-data
           persistentVolumeClaim:
             claimName: dualvalidateservice-data
-        - name: logback-spring
-          configMap:
-            name: logback-spring
-            defaultMode: 420
         - name: logs-data
           persistentVolumeClaim:
             claimName: logs-data
+        - name: spring-application-config
+          configMap:
+            name: spring-application-config
 
 
 ---
@@ -509,10 +506,12 @@ spec:
           ports:
             - containerPort: 8080
           volumeMounts:
+            - name: compares-data
+              mountPath: /app/comparelogs
             - name: logs-data
               mountPath: /app/logs
-            - name: logback-spring
-              mountPath: /app/setting
+            - name: spring-application-config
+              mountPath: /app/config
           env:
             - name: MEMORY_REQUEST
               valueFrom:
@@ -547,7 +546,7 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-                -Dlogging.config=/app/setting/logback-spring.xml
+                -Dlogging.config=/app/config/logback-spring.xml
           resources:
             requests:
               memory: 1Gi
@@ -559,13 +558,12 @@ spec:
         - name: compares-data
           persistentVolumeClaim:
             claimName: dualvalidateservice-data
-        - name: logback-spring
-          configMap:
-            name: logback-spring
-            defaultMode: 420
         - name: logs-data
           persistentVolumeClaim:
             claimName: logs-data
+        - name: spring-application-config
+          configMap:
+            name: spring-application-config
 
 ---
 kind: Deployment
@@ -621,10 +619,12 @@ spec:
           ports:
             - containerPort: 8080
           volumeMounts:
+            - name: compares-data
+              mountPath: /app/comparelogs
             - name: logs-data
               mountPath: /app/logs
-            - name: logback-spring
-              mountPath: /app/setting
+            - name: spring-application-config
+              mountPath: /app/config
           env:
             - name: MEMORY_REQUEST
               valueFrom:
@@ -659,7 +659,7 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-                -Dlogging.config=/app/setting/logback-spring.xml
+                -Dlogging.config=/app/config/logback-spring.xml
           resources:
             requests:
               memory: 1Gi
@@ -671,13 +671,12 @@ spec:
         - name: compares-data
           persistentVolumeClaim:
             claimName: dualvalidateservice-data
-        - name: logback-spring
-          configMap:
-            name: logback-spring
-            defaultMode: 420
         - name: logs-data
           persistentVolumeClaim:
             claimName: logs-data
+        - name: spring-application-config
+          configMap:
+            name: spring-application-config
 
 ---
 kind: Deployment
@@ -733,10 +732,12 @@ spec:
           ports:
             - containerPort: 8080
           volumeMounts:
+            - name: compares-data
+              mountPath: /app/comparelogs
             - name: logs-data
               mountPath: /app/logs
-            - name: logback-spring
-              mountPath: /app/setting
+            - name: spring-application-config
+              mountPath: /app/config
           env:
             - name: MEMORY_REQUEST
               valueFrom:
@@ -771,7 +772,7 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-                -Dlogging.config=/app/setting/logback-spring.xml
+                -Dlogging.config=/app/config/logback-spring.xml
           resources:
             requests:
               memory: 1Gi
@@ -783,13 +784,12 @@ spec:
         - name: compares-data
           persistentVolumeClaim:
             claimName: dualvalidateservice-data
-        - name: logback-spring
-          configMap:
-            name: logback-spring
-            defaultMode: 420
         - name: logs-data
           persistentVolumeClaim:
             claimName: logs-data
+        - name: spring-application-config
+          configMap:
+            name: spring-application-config
 
 
 ---
@@ -846,10 +846,12 @@ spec:
           ports:
             - containerPort: 8080
           volumeMounts:
+            - name: compares-data
+              mountPath: /app/comparelogs
             - name: logs-data
               mountPath: /app/logs
-            - name: logback-spring
-              mountPath: /app/setting
+            - name: spring-application-config
+              mountPath: /app/config
           env:
             - name: MEMORY_REQUEST
               valueFrom:
@@ -884,7 +886,7 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-                -Dlogging.config=/app/setting/logback-spring.xml
+                -Dlogging.config=/app/config/logback-spring.xml
           resources:
             requests:
               memory: 1Gi
@@ -896,13 +898,12 @@ spec:
         - name: compares-data
           persistentVolumeClaim:
             claimName: dualvalidateservice-data
-        - name: logback-spring
-          configMap:
-            name: logback-spring
-            defaultMode: 420
         - name: logs-data
           persistentVolumeClaim:
             claimName: logs-data
+        - name: spring-application-config
+          configMap:
+            name: spring-application-config
 
 ---
 kind: Deployment
@@ -958,10 +959,12 @@ spec:
           ports:
             - containerPort: 8080
           volumeMounts:
+            - name: compares-data
+              mountPath: /app/comparelogs
             - name: logs-data
               mountPath: /app/logs
-            - name: logback-spring
-              mountPath: /app/setting
+            - name: spring-application-config
+              mountPath: /app/config
           env:
             - name: MEMORY_REQUEST
               valueFrom:
@@ -996,7 +999,7 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-                -Dlogging.config=/app/setting/logback-spring.xml
+                -Dlogging.config=/app/config/logback-spring.xml
           resources:
             requests:
               memory: 1Gi
@@ -1008,13 +1011,12 @@ spec:
         - name: compares-data
           persistentVolumeClaim:
             claimName: dualvalidateservice-data
-        - name: logback-spring
-          configMap:
-            name: logback-spring
-            defaultMode: 420
         - name: logs-data
           persistentVolumeClaim:
             claimName: logs-data
+        - name: spring-application-config
+          configMap:
+            name: spring-application-config
 
 ---
 kind: Deployment
@@ -1070,10 +1072,12 @@ spec:
           ports:
             - containerPort: 8080
           volumeMounts:
+            - name: compares-data
+              mountPath: /app/comparelogs
             - name: logs-data
               mountPath: /app/logs
-            - name: logback-spring
-              mountPath: /app/setting
+            - name: spring-application-config
+              mountPath: /app/config
           env:
             - name: MEMORY_REQUEST
               valueFrom:
@@ -1108,7 +1112,7 @@ spec:
                 -Ddual-validate.baseurl.cht=https://apigw-qa.bss-tpe.cht.com.tw
                 -Dtransfer.property.m-order.oauth-properties.useOauth=false
                 -Ddual-validate.mode=FILE
-                -Dlogging.config=/app/setting/logback-spring.xml
+                -Dlogging.config=/app/config/logback-spring.xml
           resources:
             requests:
               memory: 1Gi
@@ -1120,10 +1124,9 @@ spec:
         - name: compares-data
           persistentVolumeClaim:
             claimName: dualvalidateservice-data
-        - name: logback-spring
-          configMap:
-            name: logback-spring
-            defaultMode: 420
         - name: logs-data
           persistentVolumeClaim:
             claimName: logs-data
+        - name: spring-application-config
+          configMap:
+            name: spring-application-config
