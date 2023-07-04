@@ -1,5 +1,6 @@
 package cht.bss.morder.dual.validate.factory;
 
+import cht.bss.morder.dual.validate.common.DaysConvert;
 import cht.bss.morder.dual.validate.enums.*;
 import cht.bss.morder.dual.validate.vo.*;
 import cht.bss.morder.dual.validate.vo.json.AbstractJSONPathModel;
@@ -7,6 +8,7 @@ import com.jayway.jsonpath.JsonPath;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +33,16 @@ public class QueryInputFactoryTest {
 	@Autowired
 	private ObjectProvider<ComparedData> comparedDataProvider;
 
-    private final String yesterday = LocalDate.now().minusDays(1).toString();
+    @Autowired
+    private DaysConvert daysConvert;
+
+    private String convertDayString;
+    private int convertDay;
     private final MoqueryContractType[] specialContractType = {MoqueryContractType.SpecsvcidMN, MoqueryContractType.SpecsvcidMV, MoqueryContractType.SpecsvcidF3};
 
-    private static String getMingGouString() {
-        int intYear = LocalDate.now().minusDays(1).getYear() - 1911;
-        int intMonth = LocalDate.now().minusDays(1).getMonthValue();
+    private String getMingGouString() {
+        int intYear = LocalDate.now().minusDays(convertDay).getYear() - 1911;
+        int intMonth = LocalDate.now().minusDays(convertDay).getMonthValue();
         String month;
         if (intMonth < 10) {
             month = "0" + intMonth;
@@ -45,6 +51,11 @@ public class QueryInputFactoryTest {
         return intYear + month;
     }
 
+    @BeforeEach
+    public void setConvertDay(){
+        convertDay = -(daysConvert.getDay());
+        convertDayString = LocalDate.now().minusDays(convertDay).toString();
+    }
     @Test
     public void testGetComparedData_In_QueryCustInfo_Telnum() {
         final String telnum = "0912345678";
@@ -208,7 +219,7 @@ public class QueryInputFactoryTest {
                             assertEquals(spsvc, comparedData.getData(), " Something wrong with " + value);
                             break;
                         case "%s&%s&%s":
-                            assertEquals(spsvc + "&" + yesterday + "&" + yesterday, comparedData.getData(), " Something wrong with " + value);
+                            assertEquals(spsvc + "&" + convertDayString + "&" + convertDayString, comparedData.getData(), " Something wrong with " + value);
                             break;
                         default:
                             throw new RuntimeException();
@@ -259,7 +270,7 @@ public class QueryInputFactoryTest {
                     assertNotNull(value.getTableName());
                     validataComparedData(comparedData);
                     validataComparedDataInMoquery(comparedData, value);
-                    assertEquals(contractId + "&" + yesterday, comparedData.getData());
+                    assertEquals(contractId + "&" + convertDayString, comparedData.getData());
                     assertEquals("moquery", comparedData.getQueryService());
                     assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
                 });
@@ -307,7 +318,7 @@ public class QueryInputFactoryTest {
                     assertNotNull(value.getTableName());
                     validataComparedData(comparedData);
                     validataComparedDataInMoquery(comparedData, value);
-                    assertEquals(contractId + "&" + yesterday + "&" + yesterday, comparedData.getData());
+                    assertEquals(contractId + "&" + convertDayString + "&" + convertDayString, comparedData.getData());
                     assertEquals("moquery", comparedData.getQueryService());
                     assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
                 });
@@ -331,7 +342,7 @@ public class QueryInputFactoryTest {
                     assertNotNull(value.getTableName());
                     validataComparedData(comparedData);
                     validataComparedDataInMoquery(comparedData, value);
-                    assertEquals(telnum + "&" + yesterday, comparedData.getData());
+                    assertEquals(telnum + "&" + convertDayString, comparedData.getData());
                     assertEquals("moquery", comparedData.getQueryService());
                     assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
                 });
@@ -379,7 +390,7 @@ public class QueryInputFactoryTest {
                     assertNotNull(value.getTableName());
                     validataComparedData(comparedData);
                     validataComparedDataInMoquery(comparedData, value);
-                    assertEquals(telnum + "&" + yesterday + "&" + yesterday, comparedData.getData());
+                    assertEquals(telnum + "&" + convertDayString + "&" + convertDayString, comparedData.getData());
                     assertEquals("moquery", comparedData.getQueryService());
                     assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
                 });
@@ -403,7 +414,7 @@ public class QueryInputFactoryTest {
                     assertNotNull(value.getTableName());
                     validataComparedData(comparedData);
                     validataComparedDataInMoquery(comparedData, value);
-                    assertEquals(yesterday + "&" + telnum + "&" + telnum, comparedData.getData());
+                    assertEquals(convertDayString + "&" + telnum + "&" + telnum, comparedData.getData());
                     assertEquals("moquery", comparedData.getQueryService());
                     assertEquals(value.getTableName(), comparedData.getQueryInput().getParam().getQueryitem().getTablename());
                 });

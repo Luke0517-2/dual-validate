@@ -1,0 +1,49 @@
+#*YAML命名規則:${環境代碼}-${對應 K8s API資源縮寫 (shortnames) }-${模組名稱|系統功能}-${opt 用途}
+#*metadata 命名規則：${對應 K8s API資源縮寫 (shortnames)}-${模組名稱|系統功能|NameSpace}-${opt 用途|敘述}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-dualvalidate
+data:
+  application.properties: |
+    dual-validate.mode=API
+    # 日期參數要距離執行雙軌比對幾天，例如：昨天(-1)、今天(0)
+    convert-property.day=-1
+    dual-validate.queryRuleList=order,agent5id,delcustinfoapply,eformapplyrec,npinrecord,contractret,pasuserec,projmember,modeldeliverdetail, \
+                                modelinsrec,suspresumerec,mdsvc,vpnsvc,sponsorspsvc,datashareinfo,data_share_rec,adjustbill,applytypechgrec, \
+                                chargeitem,chgcustrec,custdatainfo,data_share_rec_log,deductfee,delaydisc,discnttype,einvoicerec,empbusiness,empdiscntrec,f3svc, \
+                                f4svc,familysvc,modelinsrec_shop,newdiscntreserve,officialfee,or13d0log,packageservice,pascustomer,prepaidsvc,promofinereserve, \
+                                promoprodrecold,promoprodreserve,qosalert,querylog,recashmark,recotemp,refund,refundpaid,rfpaidlist,sernumusage,sharegroupdevice, \
+                                sharegroupmem,specsvcmember,subapplytype,susptemp,telsusptype,transcashfee,vspecialsvc,workingrecord
+  logback-spring.xml: |-
+    <?xml version="1.0" encoding="UTF-8"?>
+    <configuration> 
+        <property name="LOGS" value="/app/logs" />
+        <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+          <layout class="ch.qos.logback.classic.PatternLayout"> 
+            <Pattern>
+                %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}):%msg%n%throwable 
+            </Pattern> 
+          </layout> 
+        </appender>
+        <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+              <!--<file>${LOGS}/spring-boot-logger.log</file>--> 
+          <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"> 
+              <Pattern>%d %p %C{1.} [%t] %m%n</Pattern> 
+          </encoder>
+          <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily and when the file reaches 10 MegaBytes -->
+            <fileNamePattern>${LOGS}/${HOSTNAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern> 
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+              <maxFileSize>10MB</maxFileSize> 
+            </timeBasedFileNamingAndTriggeringPolicy>
+          </rollingPolicy>
+        </appender>
+        <root level="info"> 
+            <appender-ref ref="RollingFile" /> 
+            <appender-ref ref="Console" /> 
+        </root>
+        <logger name="com.cht" level="error" additivity="false"> 
+            <appender-ref ref="RollingFile" /> 
+            <appender-ref ref="Console" /> </logger>
+    </configuration>
