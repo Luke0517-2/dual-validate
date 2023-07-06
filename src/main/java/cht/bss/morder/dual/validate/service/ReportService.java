@@ -196,8 +196,18 @@ public class ReportService {
 							dataRow.createCell(6).setCellValue(compareResult);
 							if ("不相同".equals(compareResult)){
 								testCase.setAllCorrect(false);
-								dataRow.createCell(9).setCellValue(comparedData.getDataFromCht());
-								dataRow.createCell(10).setCellValue(comparedData.getDataFromIISI());
+								try {
+									dataRow.createCell(9).setCellValue(comparedData.getDataFromCht());
+								} catch (Exception e) {
+									dataRow.createCell(9).setCellValue("長度過長，請看raw data");
+									e.printStackTrace();
+								}
+								try {
+									dataRow.createCell(10).setCellValue(comparedData.getDataFromIISI());
+								} catch (Exception e) {
+									dataRow.createCell(10).setCellValue("長度過長，請看raw data");
+									e.printStackTrace();
+								}
 							}
 						} catch (JSONException e) {
 							log.error(e.getMessage());
